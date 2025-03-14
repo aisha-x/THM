@@ -93,6 +93,7 @@ of the Wi-Fi network using this website [Wigle.net](https://wigle.net/)
 in wigle.net page in the BSSID secion paste his Bssid and hit filter
 
 scroll around on the map till you find a purple circle locate in London
+![Alt](https://github.com/aisha-x/THM/blob/main/Challenges/OhSINT/Screenshot_2025-03-14_11_24_25.png)
 
 Ans: ***London***
 
