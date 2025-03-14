@@ -44,7 +44,7 @@ GPS Position                    : 54 deg 17' 41.27" N, 2 deg 15' 1.33" W
 
 1- What is this user's avatar of?
 
-google the copyright of the downloaded image which is: OWoodflint
+Google the copyright of the downloaded image which is: OWoodflint
 
 [x account](https://x.com/owoodflint)
 
@@ -67,7 +67,7 @@ ans: ***New York***
 
 if you look at the page source of [owoodflint Blog](https://oliverwoodflint.wordpress.com/author/owoodflint/)
 
-you will find this line. this password was hidden inside the page in a white text to match to the background
+you will find this line. this password was hidden inside the page in a white text to match the background
 
 ```
 <p>Im in New York right now, so I will update this site right away with new photos!</p>
@@ -88,9 +88,9 @@ which is the MAC address of his Wi-Fi access point, we can use this information 
 
 of the Wi-Fi network using this website [Wigle.net](https://wigle.net/)
 
-in wigle.net page in the BSSID secion paste his Bssid and hit filter
+in wigle.net page in the BSSID section paste his Bssid and hit filter
 
-scroll around on the map till you find a purple circle locate in London
+scroll around on the map till you find a purple circle located in London
 ![Alt](https://github.com/aisha-x/THM/blob/main/Challenges/OhSINT/Screenshot_2025-03-14_11_24_25.png)
 
 Ans: ***London***
@@ -99,7 +99,7 @@ Ans: ***London***
 --------------
 5- What is the SSID of the WAP he connected to?
 
-if you zoom in the hit mark you will find the SSID
+if you zoom in on the hit mark you will find the SSID
 
 Ans: ***UnileverWiFi***
 
@@ -109,7 +109,7 @@ Ans: ***UnileverWiFi***
 
 if you google OWoodflint again you will find a [gitHub page](https://github.com/OWoodfl1nt/people_finder)
 
-in the README.md page there is his email address
+On the README.md page, there is his email address
 
 Ans: ***OWoodflint@gmail.com***			
 
