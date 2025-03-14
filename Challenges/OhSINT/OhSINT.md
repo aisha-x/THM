@@ -82,9 +82,7 @@ Ans: ***pennYDr0pper.!***
 
 4- What city is this person in? hit: BSSID + Wigle.net
 
-in his [X page](https://x.com/owoodflint) he posted his 
-
-Bssid:B4:5D:50:AA:86:41
+in his [X page](https://x.com/owoodflint) he posted his Bssid:B4:5D:50:AA:86:41
 
 which is the MAC address of his Wi-Fi access point, we can use this information to determine the approximate location
 
