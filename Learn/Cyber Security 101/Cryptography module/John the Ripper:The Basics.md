@@ -97,15 +97,22 @@ Now that you know the syntax, modifiers, and methods for cracking basic hashes, 
 -/John-the-Ripper-The-Basics/Task04/
 on the attached virtual machine.
 
-q1. What type of hash1.txt? 
+q1. What type of hash1.txt?
+
 Ans: md5
+
 q2. what is the cracked value of hash1.txt? 
+
 Ans: biscuit
+
 Steps: 
 - view the file
-- identify the hash type using hash identifier
-- then specifiy the hash format of the hash file to crack the hash value
+- identify the hash type using the hash identifier
 ![image](https://github.com/user-attachments/assets/73810612-3092-4821-9d79-10326acac8a1)
+
+ - then specifiy the hash format of the hash file to crack the hash value
+ - ```John --format=raw-md5 --wordlista/usr/share/wordlists/rockyou.txt hash1.txt```
+
 ![image](https://github.com/user-attachments/assets/6b86d658-1436-4d1f-8b5d-cb1aedf6ee19)
 
 
