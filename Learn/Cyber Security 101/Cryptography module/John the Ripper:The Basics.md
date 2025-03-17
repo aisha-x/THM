@@ -1,6 +1,6 @@
 
 # John the Ripper: the Basics Walkthrough
---------------
+
 
 # task#1: Introduction
 
@@ -13,7 +13,6 @@ Upon the completion of this room, you learn about using John for:
   - Cracking password-protected RAR files
   - Cracking SSH keys
 
-.....................
 
 # task#2: basic Terms
 
@@ -24,7 +23,6 @@ and you know the hashing algorithm, you can use that hashing algorithm to hash a
 
 You can then compare these hashes to the one you're trying to crack to see if they match. If they do, you know what word corresponds to that hash- you've cracked it!
 
-..........................
 
 # Task#3: setting up your system
 
@@ -51,7 +49,6 @@ For all of the tasks in this room, we will use the infamous rockyou.txt wordlist
 
 Now that we have our hash cracker and wordlists all set up, let's move on to some hash cracking!
 
-......................
 
 # Task#4: Cracing Basic Hashes
 
@@ -106,6 +103,7 @@ q2. what is the cracked value of hash1.txt?
 Ans: ***biscuit***
 
 Steps: 
+
 1- view the file
 2- identify the hash type using the hash identifier
 ![image](https://github.com/user-attachments/assets/73810612-3092-4821-9d79-10326acac8a1)
@@ -186,6 +184,7 @@ q1. What is the root password?
 Ans: ***1234***
 
 Steps:
+
 1- use unshadow tool to combine the two files and send the output to hash.txt file
 - ```unshadow local_passwd local_shadow > hash.txt ```
 2- view the hash.txt
