@@ -144,6 +144,54 @@ Steps:
 
   
 
+# Task#6: Cracking /etc/shadow Hashes 
 
+Cracking Hashes from /etc/shadow
+The /etc/shadow file is the file on Linux machines where password hashes are stored. It also stores other information, such as the date of last password change and password expiratio information. It contains one entry per line for each user or user account of the system. This file is usually only accessible by the root user, so you must have sufficient privileges to access the hashes. However, if you do, there is a chance that you will be able to crack some of the hashes.
 
+Unshadowing
+John can be very particular about the formats it needs data in to be able to work with it; for this reason, to crack ```/ete/shadow``` passwords, you must combine it with the ```/etc/passwd``` file for John to understand the data it's being given. To do this, we use a tool built into the John suite of tools called **unshadow**. The basic syntax of unshadow is as follows:
+```unshadow [path to passwd) [path to shadow]```
+Invokes the unshadow tool
+ ◦ ﻿﻿(path to passwd]: The file that contains the copy of the ```/ete/passad``` file you've taken from the target machine
+ ◦ ﻿﻿[path to shadow): The file that contains the copy of the ```/etc/shadow``` file you've taken from the target machine
+Example Usage:
+```unshadow local_passwd local_shadow › unshadowed. txt```
+
+	<ins> Note on the files	</ins>
+When using **unshadow**. you can either use the entire ```/etc/passwd``` and ```/etc/shadow``` files, assuming you have them available, or you can use the relevant line from each, for example:
+FILE 1 - local_passwd
+Contains the /etc/passud line for the root user:
+```root:x:0:0::/ root:/bin/bash```
+
+FILE 2 - local_shadow
+Contains the /etc/shadow line for the root user:
+```root:$6$2nwjN454g-dv4HN/Sm9Z/r2xVfweYVkrr.v5Ft8Ws3/YYksfNwq96UL1FX003jY1L61.DS3KEVsZ9rOVLB/1dTeEL/OIhJZ4GMFMGA0:18576:::: : :```
+
+Cracking
+
+We can then feed the output from unshadow
+in our example use case called **unshadowed.txt**, directly into John. We should not need to specify a mode here as we have made the input
+specifically for John; however, in some cases, you will need to specify the format as we have done previously using: 
+```--format=sha512crypt```
+```john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt unshadowed.txt```
+
+Practical
+
+Now, see if you can follow the process to crack the password hash of the root user provided in the etchashes.txt file. Good luck! The files are located in
+~/John-the-Ripper-The-Basics/Task06/
+
+q1. What is the root password?
+
+Ans: ***1234***
+
+Steps:
+1- use unshadow tool to combine the two files and send the output to hash.txt file
+- ```unshadow local_passwd local_shadow > hash.txt ```
+2- view the hash.txt
+-![image](https://github.com/user-attachments/assets/48b91d01-e020-458b-8c36-3f1ca8da9509)
+
+3- using automatic cracking to let John automatically identify the hash type
+- ```John --wordlista/usr/share/wordlists/rockyou.txt hash.txt```
+- ![image](https://github.com/user-attachments/assets/87abdf90-7ece-4b0d-ab83-d880a86d593b)
 
