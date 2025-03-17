@@ -99,21 +99,50 @@ on the attached virtual machine.
 
 q1. What type of hash1.txt?
 
-Ans: md5
+Ans: ***md5***
 
 q2. what is the cracked value of hash1.txt? 
 
-Ans: biscuit
+Ans: ***biscuit***
 
 Steps: 
-- view the file
-- identify the hash type using the hash identifier
+1- view the file
+2- identify the hash type using the hash identifier
 ![image](https://github.com/user-attachments/assets/73810612-3092-4821-9d79-10326acac8a1)
 
- - then specifiy the hash format of the hash file to crack the hash value
+ 3- then specifiy the hash format of the hash file to crack the hash value
  - ```John --format=raw-md5 --wordlista/usr/share/wordlists/rockyou.txt hash1.txt```
 
 ![image](https://github.com/user-attachments/assets/6b86d658-1436-4d1f-8b5d-cb1aedf6ee19)
+
+
+# Task#5: Cracking Windows Authentication Hashes
+
+NTHash / NTLM
+NThash is the hash format modern Windows operating system machines use to store user and service passwords. It's also commonly referred to as NTLM, which references the previous version of Windows format for hashing passwords known as LM, thus NT/LM.
+
+In Windows, SAM (Security Account Manager) is used to store user account information, including usernames and hashed passwords. You can acquire NTHash/NTLM hashes by dumping the SAM database on a Windows machine, using a tool like Mimikatz, or using the Active Directory database: NTDS.dit
+- You may not have to crack the hash to continue privilege escalation, as you can often conduct a "pass the hash" attack instead, but sometimes, hash cracking is a viable option if there is a weak password policy.
+
+Practical
+Now that you know the theory behind it, see if you can use the techniques we practiced in the last task and the knowledge of what type of hash this is to crack the ntin. txt fi is located in ~/John-the-Ripper-The-Basics/Task05/
+
+q1. what do you need to set the ```--format``` flag to, in order to crack this hash? 
+
+Ans : ***nt***
+
+q2. what is the cracked value of this hash?
+
+Ans:***mushroom***
+
+Steps:
+1- use ```python3 hash-identifier``` to identify the hash
+- ![image](https://github.com/user-attachments/assets/e0d5f60a-9888-4dcd-9b3b-18741775c9d1)
+
+2- use the identified hash to added it to the ```--format ``` flag: ```John --format=nt --wordlista/usr/share/wordlists/rockyou.txt ntlm.txt```
+- ![image](https://github.com/user-attachments/assets/66ed064f-7fa3-4735-8c6e-a41c2b3f24f5)
+
+  
 
 
 
