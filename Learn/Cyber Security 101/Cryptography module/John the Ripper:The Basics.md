@@ -464,4 +464,63 @@ Ans: ***THM(r4r_4rchlve5_th15_tlm3)***
 ![image](https://github.com/user-attachments/assets/b5c81481-39fb-4f18-b23a-c14bff74d183)
 
 
+# Task11: Cracking SSH keys with john
+
+**Cracking SSH Key Passwords**
+
+using John to crack the SSH private key password of id_rsa files. Unless configured otherwise, you authenticate your SSH login using a password. However, you can configure key-based authentication, which lets you use your private key, id_rsa , as an authentication key to log in to a remote machine over SSH. However, doing so will often require a password to access the private key; here, we will be
+using John to crack this password to allow authentication over SSH using the key.
+
+**SSH2John**
+
+Who could have guessed it, another conversion tool? Well, that's what working with John is all about. As the name suggests, ```ssh2john``` converts the id_sa private key, which is used to log in to the SSH session, into a hash format that John can work with. Jokes aside, it's another beautiful example of John's versatility. The syntax is about what you'd expect. Note that if you don't have ssh2john installed, you can use ```sshzjohn.py```, located in the ```/opt/john/ssh2john.py```. If you're doing this on the AttackBox, replace the ```ssh2john``` command with ```python3 /opt/john/ssh2john.py ```or on Kali, ```python /usr/share/john/ssh2john.py```
+
+```ssh2john [id_rsa private key file] › [output file]```
+
+ - ﻿﻿ssh2john : Invokes the ssh2john tool
+ - [id rsa private key file]: The path to the id_rsa file you wish to get the hash of
+ - › : This is the output director. We're using it to redirect the output from this command to another file.
+- [output file]: This is the file that will store the output from
+
+**Example Usage**
+
+```/opt/john/ssh2john.py id_rsa › id_rsa_hash.txt```
+
+**Cracking**
+
+For the final time, we're feeding the file we output from ssh2john, which in our example use case is called id rsa hash. txt and, as we did with rar2john, we can use this seamlessly with John:
+
+```john --wordlist=/usr/share/wordlists/rockyou.txt id rsa hash.txt```
+
+**Practical**
+
+Now, I'd like you to crack the hash of the id_rsa file relevant to this task! The file is located in
+```~/John-the-Ripper-The-Basics/Task11/```
+
+**Q1. What is the SSH private key password?**
+
+Ans: ***mango***
+
+**Steps:**
+1- convert the protected password on the private key to a hash format using this command ```/opt/john/ssh2john.py id_rsa › sshhash.txt```
+
+
+![image](https://github.com/user-attachments/assets/12b91cd2-607f-4fff-89a5-cc0de008cc9e)
+
+2- now crack the password using the converted hash file with this command 
+```john --wordlist=/usr/share/wordlists/rockyou.txt sshhash.txt```
+
+![image](https://github.com/user-attachments/assets/b47ea91a-61d6-493f-a100-8899d2f50f51)
+
+
+
+........................................................................................
+
+# the end
+
+
+I followed this video
+https://www.youtube.com/watch?v=V405LPqqCCA
+
+
 
