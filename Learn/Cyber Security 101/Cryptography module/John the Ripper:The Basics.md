@@ -145,6 +145,7 @@ Ans:***mushroom***
 
   
 
+
 # Task#6: Cracking /etc/shadow Hashes 
 
 Cracking Hashes from /etc/shadow
@@ -161,14 +162,19 @@ Invokes the unshadow tool
 **Example Usage:**
 ```unshadow local_passwd local_shadow › unshadowed. txt```
 
-	<ins> Note on the files	</ins>
-When using **unshadow**. you can either use the entire ```/etc/passwd``` and ```/etc/shadow``` files, assuming you have them available, or you can use the relevant line from each, for example:
+***Note on the files***	
+When using **unshadow**. you can either use the entire ```/etc/passwd``` and ```/etc/shadow``` files, assuming you have them available or you can use the relevant line from each, for example:
+
 FILE 1 - local_passwd
+
 Contains the /etc/passud line for the root user:
+
 ```root:x:0:0::/ root:/bin/bash```
 
 FILE 2 - local_shadow
+
 Contains the /etc/shadow line for the root user:
+
 ```root:$6$2nwjN454g-dv4HN/Sm9Z/r2xVfweYVkrr.v5Ft8Ws3/YYksfNwq96UL1FX003jY1L61.DS3KEVsZ9rOVLB/1dTeEL/OIhJZ4GMFMGA0:18576:::: : :```
 
 **Cracking**
@@ -176,7 +182,9 @@ Contains the /etc/shadow line for the root user:
 We can then feed the output from unshadow
 in our example use case called **unshadowed.txt**, directly into John. We should not need to specify a mode here as we have made the input
 specifically for John; however, in some cases, you will need to specify the format as we have done previously using: 
+
 ```--format=sha512crypt```
+
 ```john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt unshadowed.txt```
 
 **Practical**
@@ -206,14 +214,15 @@ Now, see if you can follow the process to crack the password hash of the root us
 So far, we've been using John's wordlist mode to brute-force simple and not-so-simple hashes. But John also has another mode, called the **Single Crack mode**. In this mode, John uses only the information provided in the username to try and work out possible passwords heuristically by slightly changing the letters and numbers contained within the username.
 
 **Word Mangling**
+
 The best way to explain Single Crack mode and word mangling is to go through an example:
 Consider the username "Markus".
 
 Some possible passwords could be:
 
- ◦ ﻿﻿Markus1, Markus2, Markus3 (etc.)
- ◦ ﻿﻿MArkus, MARkus, MARKus (etc.)|
- ◦ ﻿﻿Markus!, Markus$, Markus* (etc.)
+ - ﻿﻿Markus1, Markus2, Markus3 (etc.)
+ - ﻿﻿MArkus, MARkus, MARKus (etc.)|
+ - ﻿﻿Markus!, Markus$, Markus* (etc.)
  
 This technique is called**word mangling**. John is building its dictionary based on the information it has been fed and uses a set of rules called "mangling rules," which define how it can mutate the word it started with to generate a wordlist based on relevant factors for the target you're trying to crack. This exploits how poor passwords can be based on information about the username or the service they're logging into.
 
@@ -222,9 +231,13 @@ This technique is called**word mangling**. John is building its dictionary based
 John's implementation of word mangling also features compatibility with the GECOS field of the UNIX operating system, as well as other UNIX-like operating systems such as Linux.
 GECOS stands for **General Electric Comprehensive Operating System**. In the last task, we looked at the entries for both /etc/shadow and /etc/passwd Looking closely, you will notice that the fields are separated by a colon ```:``` The fith field in the user account record is the GECOS field. stores general information about the user, such as the user's full name, office number, and telephone number, among other things. John can take information stored in those records, such as full name and home directory name, to add to the wordlist it generates when cracking /etc/shadow hashes with single crack mode.
 
+
 **Using Single Crack Mode**
+
 To use single crack mode, we use roughly the same syntax that we've used so far; for example, if we wanted to crack the password of the user named "Mike", using the single mode, we'd
+
 ```john --single --format=[format] [path to file]```
+
  ◦ ﻿﻿--single : This flag lets John know you want to use the single hash-cracking mode
  ◦ ﻿﻿--format=[format] : As always, it is vital to identify the proper format.
  
@@ -236,9 +249,11 @@ To use single crack mode, we use roughly the same syntax that we've used so far;
 
 If you're cracking hashes in single crack mode, you need to change the file format that you're feeding John for it to understand what data to create a wordlist from. You do this by prepending the hash with the username that the hash belongs to, so according to the above example, we would change the file hashes.txt
 From ```lefee03cdcb96d90ad48ccc7b8666033```
+
 To ```mike:1efee03cdcb96d90ad48cCc7b8666033```
 
 **Practical**
+
 Now that you're familiar with the Syntax for John's single crack mode, access the hash and crack it, assuming that the user it belongs to is called "Joker". The file is located in ```~/ John-the-Ripper-The-Basics/Task07/```
 
 **Q1.What is the Joker's password?**
@@ -248,7 +263,10 @@ Ans:***Jok3r***
 **Steps:**
 
 1- identify the hash type using the hash-identifier website
+
 ![image](https://github.com/user-attachments/assets/c4625a1d-558f-432e-90bc-f057dcaf0cc5)
+
+
 
 2- view the hash and use nano text editor to modify the file and add Joker's name next to the hash value
 ![image](https://github.com/user-attachments/assets/60d57132-6387-469b-9254-648f86f988e9)
