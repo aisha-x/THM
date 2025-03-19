@@ -276,4 +276,148 @@ value to the hash we want to crack.
 ![image](https://github.com/user-attachments/assets/baacbd85-08f8-4965-8cfe-6590f26bd06e)
 
 
+# Task 8: Custom Rules
+
+**What are Custom Rules?**
+
+As we explored what John can do in Single Crack Mode, you may have some ideas about some good mangling patterns or what patterns your passwords often use that could be replicated with a particular mangling pattern. The good news is that you can define your rules, which John will use to create passwords dynamically. The ability to define such rules is beneficial when you know more information about the password structure of whatever your target is.
+
+**Common Custom Rules**
+
+Many organizations will require a certain level of password complexity to try and combat dictionary attacks. In other words, when creating a new account or changing your password, if you attempt a password like polopassword, it will most likely not work. The reason would be the enforced password complexity. As a result, you may receive a prompt telling you that passwords have to contain at least one character from each of the following:
+ - ﻿﻿Lowercase letter
+ - ﻿﻿Uppercase letter
+ - ﻿﻿Number
+ - ﻿﻿Symbol
+   
+Password complexity is good! However, we can exploit the fact that most users will be predictable in the location of these symbols. For the above criteria, many users will use something like the following:
+
+```Polopassword1!```
+
+Consider the password with a capital letter first and a number followed by a symbol at the end. This familiar pattern of the password, appended and prepended by modifiers (such as capital letters or symbols), is a memorable pattern that people use and reuse when creating passwords. This pattern can let us exploit password complexity predictability.
+
+Now, this does meet the password complexity requirements; however, as attackers, we can exploit the fact that we know the likely position of these added elements to create dynamic passwords from our wordlist.
+
+**How to create Custom Rules**
+
+Custom rules are defined in the **john.conf file**. This file can be found in ```/opt/john/john.conf``` on the TryHackMe Attackbox. It is usually located in ```/etc/john/john.conf``` if you have installed John using a package manager or built from source with make
+
+Let's go over the syntax of these custom rules, using the example above as our target pattern. Note that you can define a massive level of granular control in these rules. 
+The first line:
+
+```[List.Rules:THMRules]```
+
+is used to define the name of your rule; this is what you will use to call your custom rule a John argument.
+We then use a regex style pattern match to define where the word will be modified; again, we will only cover the primary and most common modifiers here:
+
+  -Az: Takes the word and appends it with the characters you define
+  -A0: Takes the word and prepends it with the characters you define
+  -c: Capitalises the character positionally
+  
+These can be used in combination to define where and what in the word you want to modify.
+Lastly, we must define what characters should be appended, prepended or otherwise included. We do this by adding character sets in square brackets ```[ ]``` where they should be used. These follow the modifier patterns inside double quotes```""```. Here are some common examples:
+
+-```[0-9]```: Will include numbers 0-9
+-```[0]```: Will include only the number o
+-```[A-z]```: Will include both upper and lowercase
+-```[A-Z]```: Will include only uppercase letters
+-```[a-z]```: Will include only lowercase letters
+
+**Please note that:**
+
+ ◦ ﻿﻿[a]: Will include only a
+ ◦ ﻿﻿[!%$#@]: Will include the symbols !,%,$,# and @
+ 
+Putting this all together, to generate a wordlist from the rules that would match the example password ```Polopassword!``` (assuming the word polopassword was in our wordlist), we would create a rule entry that looks like this:
+
+```[List.Rules:PoloPassword]```
+
+```cAz"[0-9]﻿﻿ [!%$#@]"```
+
+**Utilises the following:**
+
+ - ﻿﻿c: Capitalises the first letter
+ - Az: Appends to the end of the word
+ - ﻿﻿[0-9] : A number in the range 0-9
+ - [!%$#@]: The password is followed by one of these symbols
+
+**Using Custom Rules:**
+
+We could then call this custom rule a John argument using the rule-PoloPassworal tag.
+As a full command: ```john --wordlist=[path to wordlist] --rule=PoloPassword [path to file]```
+
+As a note, I find it helpful to talk out the patterns if you're writing a rule; as shown above, the same applies to writing RegEx patterns.
+Jumbo John already has an extensive list of custom rules containing modifiers for use in almost all cases. If you get stuck, try looking at those rules [around line 678] if your syntax isn't working correctly.
+
+**Q1. What do custom rules allow us to exploit?**
+
+Ans: ***password complexity predictability***
+
+**Q2. What rule would we use to add all capital letters to the end of the word**
+
+Ans: ***Az"[A-Z]"***
+
+**Q3. What falg would we use to call a custom rule called ```THMRules```?**
+
+Ans: ***--rule=THMRules***
+
+
+# Task:9 Cracking password-protected Zip Files
+
+Yes! You read that right. We can use John to crack the password on password-protected Zip files. Again, we'll use a separate part of the John suite of tools to convert the Zip file into a format that John will understand, but we'll use the syntax you're already familiar with for all intents and purposes.
+
+**Zip2John**
+
+Similarly to the unshadow tool we used previously, we will use the ```zip2john``` tool to convert the Zip file into a hash format that John can understand and hopefully crack. The primary usage is like this:
+
+```zip2john [options] [zip file] > [output file]```
+
+ - ﻿﻿[options] : Allows you to pass specific checksum options to zip2john ; this shouldn't often be necessary
+ - ﻿﻿[zip file]: The path to the Zip file you wish to get the hash of
+ - ﻿﻿>: This redirects the output from this command to another file
+ - ﻿﻿[output filel: This is the file that will store the output
+
+   
+**Example Usage**
+
+```zip2john zipfile.zip › zip_hash.txt```
+
+**Cracking**
+
+We're then able to take the file we output from zip2john in our example use case, zip hash.txt.
+, and, as we did with unshadow, feed it directly into John as we have made the input
+specifically for it.
+
+```john --wordlist=/usr/share/wordlists/rockyou.txt zip_hash.txt```
+
+**Practical**
+
+Now, have a go at cracking a "secure" Zip file! The file is located in ```~/John-the-Ripper-The-Basics/Task09/```
+
+**Q1. What is the password for the secure.zip file?**
+
+Ans: ***pass123***
+
+**Q2. What is the contents of the flag inside the zip file?**
+
+Ans: *** ***
+
+**Steps**
+
+1- list the files inside the directory, and as you can see, there is the secure.zip file and when we try to unzip it, it will ask for the password
+![image](https://github.com/user-attachments/assets/c1801152-0b66-4c5e-a20b-1c616d98cd92)
+
+2- to crack the protected zip file, first we need to convert the Zip file to hash format using this command ```zip2john secure.zip › ziphash.txt ```
+![image](https://github.com/user-attachments/assets/dab2f1d2-cd7d-49bc-9875-e2447240f47c)
+
+
+3- now crack the password of the protected Zip file using this command ```john --wordlist=/usr/share/wordlists/rockyou.txt ziphash.txt ```. we didn't specify the hash format, we will let John automatically identify it
+
+![image](https://github.com/user-attachments/assets/7146cb5c-cdc1-4a84-8c77-c444e313c241)
+
+4- use the returned password to unlock the protected zip file and view the content of the flag
+![image](https://github.com/user-attachments/assets/c956c698-feee-4839-9fbc-f096c7530dca)
+
+
+
 
