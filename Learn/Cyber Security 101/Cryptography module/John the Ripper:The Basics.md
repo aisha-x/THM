@@ -400,7 +400,7 @@ Ans: ***pass123***
 
 **Q2. What is the contents of the flag inside the zip file?**
 
-Ans: *** ***
+Ans: ***THM{w3l|_dOn3_h4sh_rOy4l}***
 
 **Steps**
 
@@ -418,6 +418,50 @@ Ans: *** ***
 4- use the returned password to unlock the protected zip file and view the content of the flag
 ![image](https://github.com/user-attachments/assets/c956c698-feee-4839-9fbc-f096c7530dca)
 
+
+
+# Task10: Cracking password protected RAR archives
+
+Cracking a Password-Protected RAR Archive
+We can use a similar process to the one we used in the last task to obtain the password for RAR archives. If you aren't familiar, RAR archives are compressed files created by the WinRAR archive manager. Like Zip files, they compress folders and files.
+
+**Rar2John**
+
+Almost identical to the zip2john tool, we will use the rar2john tool to convert the RAR file into a hash format that John can understand. The basic syntax is as follows:
+```rar2john [rar filel › [output filel]```
+
+**Example Usage**
+
+```/opt/john/rar2john rarfile.rar › rar_hash.txt```
+
+**Cracking**
+
+Once again, we can take the file we output from ```rar2john``` in our example use case, rar_hash. txt, and feed it directly into John as we did with ```zip2john```
+
+```john --wordlist=/usr/share/wordlists/rockyou.txt rar_hash.txt```
+
+**Practical**
+
+Now, have a go at cracking a "secure" RAR file! The file is located in ```~/John-the-Ripper-The-Basics/Task10/```
+
+**Q1. What is the password for the secure.rar file?**
+
+Ans: ***password***
+
+**Q2. What is the contents of the flag inside the rar file?**
+
+Ans: ***THM(r4r_4rchlve5_th15_tlm3)***
+
+**Steps:**
+
+1- convert the rar file to a hash format ```rar2john secure.rar › rarhash.txt```
+![image](https://github.com/user-attachments/assets/aab575b5-49a3-4a6d-8516-2deecf0859d4)
+
+2- crack the protected rar using the hashed file ```john --wordlist=/usr/share/wordlists/rockyou.txt rarhash.txt```
+![image](https://github.com/user-attachments/assets/961f6aab-3f1c-47a5-8e70-93c7e761cc26)
+
+3- extract the rar file using the password returned and view the flag.txt file
+![image](https://github.com/user-attachments/assets/b5c81481-39fb-4f18-b23a-c14bff74d183)
 
 
 
