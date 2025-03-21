@@ -21,7 +21,7 @@ Each level of the pyramid allows you to detect and prevent various indicators of
 
 # Questions
 
-**What is the first flag you receive after successfully detecting sample1.exe?**
+**1- What is the first flag you receive after successfully detecting sample1.exe?**
 
 We need to follow Sphinx’s instructions and help see if PicoSecure’s security tools can detected the malware samples executed by him. He will start with something sample, 
 
@@ -50,7 +50,10 @@ You prevented sample1.exe from executing by detecting its unique hash value.
 Answer: ***THM{f3cbf08151a11a6a331db9c6cf5f4fe4}***
 
 
-**What is the second flag you receive after successfully detecting sample2.exe?**
+
+
+
+**2- What is the second flag you receive after successfully detecting sample2.exe?**
 
 Good work. That detection you added blocked my malware from executing. Since file hashes and digests are unique to each file, they are, by far, the highest confidence indicators out there. You can be sure it’s my malware sample the next time you see that hash.
 
@@ -81,7 +84,9 @@ Save the rule and you should get a message that a new mail has arrived, with the
 Answer: ***THM{2ff48a3421a938b388418be273f4806d}***
 
 
-**What is the third flag you receive after successfully detecting sample3.exe?**
+
+
+**3- What is the third flag you receive after successfully detecting sample3.exe?**
 
 It seems like you stopped me again. You must have found the IP address to which my malware sample connected. Clever!
 
@@ -115,7 +120,7 @@ Answer: ***THM{4eca9e2f61a19ecd5df34c788e7dce16}***
 
 
 
-**What is the fourth flag you receive after successfully detecting sample4.exe?**
+**4- What is the fourth flag you receive after successfully detecting sample4.exe?**
 
 It looks like you were able to block my domain this time because every new IP address I try gets detected.
 
@@ -147,7 +152,7 @@ Create the rule, and you will get a new mail!
 
 Answer: ***THM{c956f455fc076aea829799c0876ee399}***
 
-**What is the fifth flag you receive after successfully detecting sample5.exe?**
+**5- What is the fifth flag you receive after successfully detecting sample5.exe?**
 
 I finally have sample5.exe for you to detect. Different approach this time. In this sample, all of the “heavy lifting” and instruction occurs on my back-end server, so I can easily change the types of protocols I use and the artifacts I leave on the host. You’ll have to find something unique or abnormal about the behavior of my tool to detect it.
 
@@ -173,7 +178,8 @@ It succeeds and you will get another mail with the fifth flag!
 Answer: ***THM{46b21c4410e47dc5729ceadef0fc722e}***
 
 
-**What is the final flag you receive from Sphinx?**
+
+**6- What is the final flag you receive from Sphinx?**
 
 For my last trick, I have sample6.exe. This time, you will need more than artifacts or tool detection to help you. You’ll need to focus on something extremely hard for me to change subconsciously – my techniques and procedures.
 
