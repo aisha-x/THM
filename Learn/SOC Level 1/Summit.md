@@ -27,5 +27,6 @@ but each sample will be more dificult.This first file (sample1.exe) will need to
 
 Maybe there’s a unique way for us to distinguish this file and add a detection rule to block it.
 
-scan sample1.exe
-(alt)[https://www.jalblas.com/wp-content/uploads/2024/12/Screenshot-2024-12-26-210010.jpg.webp]
+scan sample1.exe:
+
+![alt](https://www.jalblas.com/wp-content/uploads/2024/12/Screenshot-2024-12-26-210010.jpg.webp)
