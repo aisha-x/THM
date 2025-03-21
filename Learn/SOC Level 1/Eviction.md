@@ -173,6 +173,19 @@ Answer: ***THM{c8951b2ad24bbcbac60c16cf2c83d92c}***
 
 **10- Although the APT had collected the data, it could not connect to the C2 for data exfiltration. To thwart any attempts to do that, what types of proxy might the APT use? (Answer format: <technique 1> and <technique 2>)**
 
+under the Command and Control Tactic, in the Proxy technique
+![image](https://github.com/user-attachments/assets/74d4a0d0-e823-442e-9372-40fafb67dabd)
+
+[External Proxy](https://attack.mitre.org/techniques/T1090/002/)
+
+[Multi-hop Proxy](https://attack.mitre.org/techniques/T1090/003/)
+
+
+Answer: ***External Proxy and Multi-hop Proxy***
+
+
+
+
 
 
 
