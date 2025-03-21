@@ -42,4 +42,38 @@ Answer: ***Spearphishing link***
 **2- Sunny identified that the APT might have moved forward from the recon phase. Which accounts might the APT compromise while developing resources?**
 
 
+![image](https://github.com/user-attachments/assets/24be3292-cb55-4cba-a762-949c32bc3eb6)
+
+Adversaries can use compromised email accounts to further their operations, such as leveraging them to conduct Phishing for Information, Phishing, or large-scale spam email campaigns. 
+Read more about this technique [here](https://attack.mitre.org/techniques/T1586/002)
+
+Answer: ***Email accounts***
+
+
+--------------------------------------------------------------------------------------------------------
+
+
+**3- E-corp has found that the APT might have gained initial access using social engineering to make the user execute code for the threat actor. Sunny wants to identify if the APT was also successful in execution. What two techniques of user execution should Sunny look out for? (Answer format: <technique 1> and <technique 2>)**
+
+look under the execution tactic 
+
+![image](https://github.com/user-attachments/assets/dd212eaa-5e24-4ecf-8675-b5be623826b7)
+
+since the technique used to perform reconnaissance and gain access was ***spearphishing link***. then the execution was made by the user clicking a malicious link.
+
+read more about this technique 
+
+[Malicious Link](https://attack.mitre.org/techniques/T1204/001/)
+
+[Malicious File](https://attack.mitre.org/techniques/T1204/002/)
+
+
+Answer: ***Malicious File and Malicious Link***
+
+
+
+--------------------------------------------------------------------------------------------------------
+
+
+
 
