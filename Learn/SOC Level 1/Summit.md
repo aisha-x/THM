@@ -49,11 +49,7 @@ You prevented sample1.exe from executing by detecting its unique hash value.
 
 Answer: ***THM{f3cbf08151a11a6a331db9c6cf5f4fe4}***
 
-.
-.
-.
-.
-
+........................................................................................................................................................................
 
 
 **2- What is the second flag you receive after successfully detecting sample2.exe?**
@@ -87,6 +83,7 @@ Save the rule and you should get a message that a new mail has arrived, with the
 Answer: ***THM{2ff48a3421a938b388418be273f4806d}***
 
 
+........................................................................................................................................................................
 
 
 **3- What is the third flag you receive after successfully detecting sample3.exe?**
@@ -121,6 +118,7 @@ You should also have received a new email with the third flag:
 Answer: ***THM{4eca9e2f61a19ecd5df34c788e7dce16}***
 
 
+........................................................................................................................................................................
 
 
 **4- What is the fourth flag you receive after successfully detecting sample4.exe?**
@@ -155,6 +153,9 @@ Create the rule, and you will get a new mail!
 
 Answer: ***THM{c956f455fc076aea829799c0876ee399}***
 
+........................................................................................................................................................................
+
+
 **5- What is the fifth flag you receive after successfully detecting sample5.exe?**
 
 I finally have sample5.exe for you to detect. Different approach this time. In this sample, all of the “heavy lifting” and instruction occurs on my back-end server, so I can easily change the types of protocols I use and the artifacts I leave on the host. You’ll have to find something unique or abnormal about the behavior of my tool to detect it.
@@ -179,6 +180,8 @@ The size should be set to 97 byes, the frequency to 1800s (every half hour), and
 It succeeds and you will get another mail with the fifth flag!
 
 Answer: ***THM{46b21c4410e47dc5729ceadef0fc722e}***
+
+........................................................................................................................................................................
 
 
 
