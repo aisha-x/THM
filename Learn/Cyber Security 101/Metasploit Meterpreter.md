@@ -47,7 +47,7 @@ If you run the help command, you will see Meterpreter commands are listed under 
 
 Please note that the list above was taken from the output of the help command on the Windows version of Meterpreter (windows/x64/meterpreter/reverse_tcp). These will be different for other Meterpreter versions.
 
-Meterpreter commands
+**Meterpreter commands**
 
 Core commands will be helpful to navigate and interact with the target system. Below are some of the most commonly used. Remember to check all available commands running the help command once a Meterpreter session has started.
 
