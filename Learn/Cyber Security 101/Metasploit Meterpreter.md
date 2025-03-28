@@ -488,9 +488,7 @@ Loading extension kiwi...
  '## v ##'        Vincent LE TOUX            ( vincent.letoux@gmail.com )
   '#####'         > http://pingcastle.com / http://mysmartlogon.com  ***/
 ```
-```
-Success.
-```
+
 
 These will change according to the loaded menu, so running the `help` command after loading a module is always a good idea.
 
@@ -560,6 +558,55 @@ but there is another way to enumerate shares using the command `shell` to launch
 
 ![image](https://github.com/user-attachments/assets/501f0ebc-3ae2-4343-bb65-d3411d9a1945)
 
+Ans: ***speedster***
 
 
+**4- What is the NTLM hash of the jchambers user?**
+
+what is `hashdump` command?
+
+is a Meterpreter post-exploitation module in Metasploit used to extract password hashes from the SAM (Security Account Manager) database on a compromised Windows system. It is commonly used after gaining SYSTEM privileges on a target machine.
+How It Works:
+
+	1.	The SAM database stores hashed passwords of local user accounts.
+	2.	The hashdump command extracts these hashes, allowing attackers to perform offline password cracking (e.g., using John the Ripper or Hashcat).
+	3.	It requires SYSTEM privileges, which can be obtained through privilege escalation techniques.
+
+Usage:
+
+After gaining a Meterpreter session on a target system, use:
+
+`meterpreter > hashdump`
+
+This will display a list of usernames and their corresponding NTLM hashes, like:
+`
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:e52cac67419a9a224a3b108f3fa6cb6d:::
+User1:1001:aad3b435b51404eeaad3b435b51404ee:8846f7eaee8fb117ad06bdd830b7586c:::
+`
+
+in our case `hashdump` command didn't work, why? because **the Meterpreter session does not have SYSTEM privileges or does not have access to the LSASS process** where credentials are stored
+
+to solve this issue, you need to **Migrate** the Meterpreter session to a process running as SYSTEM, such as lsass.exe or explorer.exe
+
+1- check current User Privileges
+
+![image](https://github.com/user-attachments/assets/d481605e-aede-434e-ba2b-f8f6c31bc6c4)
+
+it says **NT AUTHORITY/SYSTEM**, which mean we already have SYSTEM privilege, and `hashdump` command should work. if not go to the next step
+
+2- List Running Processes `ps`
+
+![image](https://github.com/user-attachments/assets/e28eb7ef-f34b-4000-bdc8-713b53378c96)
+
+3- Migrate to lsass.exe process which is the process number 760. `migrate <PID>`
+
+![image](https://github.com/user-attachments/assets/f934ceba-c779-4d5d-80d6-0a88e6fa4e6c)
+
+4- Now we are in the process, check if it has SYSTEM privileges then `hashdump` it
+
+![image](https://github.com/user-attachments/assets/ec288497-9edb-44af-9204-9528ea4a2e45)
+
+use the second hash of the user jchambers
+
+Ans: ***69596c7aa1e8daee17f8e78870e25a5c***
 
