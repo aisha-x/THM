@@ -613,7 +613,7 @@ Ans: ***69596c7aa1e8daee17f8e78870e25a5c***
 
 **5- What is the cleartext password of the jchambers user?**
 
-you can use `John` tool to crack the hash but we will use [CrackStation Website](https://crackstation.net/) to crack the hash
+you can use `John` tool to crack the hash but we will use [CrackStation Website](https://crackstation.net/) 
 
 ![image](https://github.com/user-attachments/assets/eac68abd-20f4-487b-9eca-f88bcbe43e71)
 
