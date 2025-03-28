@@ -610,3 +610,46 @@ use the second hash of the user jchambers
 
 Ans: ***69596c7aa1e8daee17f8e78870e25a5c***
 
+
+**5- What is the cleartext password of the jchambers user?**
+
+you can use `John` tool to crack the hash but we will use [CrackStation Website](https://crackstation.net/) to crack the hash
+
+![image](https://github.com/user-attachments/assets/eac68abd-20f4-487b-9eca-f88bcbe43e71)
+
+Ans: ***Trustno1***
+
+**6-Where is the “secrets.txt” file located? (Full path of the file)**
+
+Use the command `search -f secrets.txt` to search a file by its name
+
+![image](https://github.com/user-attachments/assets/c9c63d52-12ef-4252-98f3-716a1a8a9a91)
+
+Ans: ***c:\Program Files (x86)\Windows Multimedia Platform\secrets.txt***
+
+**7-What is the Twitter password revealed in the “secrets.txt” file?**
+
+you can't cat the file like this `cat c:\Program Files (x86)\Windows Multimedia Platform\secrets.txt` cause it has spaces in it, so put a quotation mark between the file path then cat it `cat "c:\Program Files (x86)\Windows Multimedia Platform\secrets.txt" `
+
+![image](https://github.com/user-attachments/assets/39d5382e-8e05-4724-82c7-5b28eba90212)
+
+Ans: ***KDSvbsw3849!***
+
+**8- Where is the “realsecret.txt” file located? (Full path of the file)**
+
+![image](https://github.com/user-attachments/assets/e0dd7d18-0293-46b7-9de6-e2bec85e7412)
+
+Ans: ***c:\inetpub\wwwroot\realsecret.txt***
+
+**8-  What is the real secret?**
+
+![image](https://github.com/user-attachments/assets/e616d7b1-5b7f-490d-8366-d4f0a4beed8d)
+
+Ans: ***The Flash is the fastest man alive***
+
+
+***reference:***
+
+https://tryhackme.com/room/meterpreter
+
+https://www.youtube.com/watch?v=dJ6KDFFQcSM
