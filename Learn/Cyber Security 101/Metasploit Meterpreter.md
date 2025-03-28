@@ -448,3 +448,118 @@ Microsoft Windows [Version 6.1.7601]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 C:\Windows\system32>
 ```
+
+# Task 5: Post-Exploitation Challenge
+
+Meterpreter provides several important post-exploitation tools.
+
+Commands mentioned previously, such as getsystem and hashdump will provide important leverage and information for privilege escalation and lateral movement. Meterpreter is also a good base you can use to run post-exploitation modules available on the Metasploit framework. Finally, you can also use the load command to leverage additional tools such as Kiwi or even the whole Python language.
+
+**Loading Python**
+
+```
+meterpreter > load python
+Loading extension python...Success.
+meterpreter > python_execute "print 'TryHackMe Rocks!'"
+[+] Content written to stdout:
+TryHackMe Rocks!
+```
+```
+meterpreter >
+```
+
+The post-exploitation phase will have several goals; Meterpreter has functions that can assist all of them.
+
+ - Gathering further information about the target system.
+ - Looking for interesting files, user credentials, additional network interfaces, and generally interesting information on the target system.
+ - Privilege escalation.
+ - Lateral movement.
+
+Once any additional tool is loaded using the `load` command, you will see new options on the help menu. The example below shows commands added for the Kiwi module (using the `load kiwi` command).
+
+**Loading Kiwi**
+```
+meterpreter > load kiwi
+Loading extension kiwi...
+  .#####.   mimikatz 2.2.0 20191125 (x64/windows)
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'        Vincent LE TOUX            ( vincent.letoux@gmail.com )
+  '#####'         > http://pingcastle.com / http://mysmartlogon.com  ***/
+```
+```
+Success.
+```
+
+These will change according to the loaded menu, so running the `help` command after loading a module is always a good idea.
+
+The updated help menu
+```
+Kiwi Commands
+=============
+    Command                Description
+    -------                -----------
+    creds_all              Retrieve all credentials (parsed)
+    creds_kerberos         Retrieve Kerberos creds (parsed)
+    creds_msv              Retrieve LM/NTLM creds (parsed)
+    creds_ssp              Retrieve SSP creds
+    creds_tspkg            Retrieve TsPkg creds (parsed)
+    creds_wdigest          Retrieve WDigest creds (parsed)
+    dcsync                 Retrieve user account information via DCSync (unparsed)
+    dcsync_ntlm            Retrieve user account NTLM hash, SID and RID via DCSync
+    golden_ticket_create   Create a golden kerberos ticket
+    kerberos_ticket_list   List all kerberos tickets (unparsed)
+    kerberos_ticket_purge  Purge any in-use kerberos tickets
+    kerberos_ticket_use    Use a kerberos ticket
+    kiwi_cmd               Execute an arbitary mimikatz command (unparsed)
+    lsa_dump_sam           Dump LSA SAM (unparsed)
+    lsa_dump_secrets       Dump LSA secrets (unparsed)
+    password_change        Change the password/hash of a user
+    wifi_list              List wifi profiles/creds for the current user
+    wifi_list_shared       List shared wifi profiles/creds (requires SYSTEM)
+```
+
+The questions below will help you have a better understanding of how Meterpreter can be used in post-exploitation.
+
+You can use the credentials below to simulate an initial compromise over SMB (Server Message Block) (using `exploit/windows/smb/psexec`)
+
+Username: ballen
+
+Password: Password1
+
+**Questions:**
+
+**1- What is the computer name?**
+
+first use the exploit module then set the required parameters 
+
+![image](https://github.com/user-attachments/assets/c25562c9-b188-40d5-9049-e91b7c8c2787)
+
+run the exploit
+![image](https://github.com/user-attachments/assets/cc91ec94-74d2-4346-9169-610e76db0466)
+
+run the command `sysinfo` to return the system information
+![image](https://github.com/user-attachments/assets/d351027d-8556-4832-b1d8-c8c03063720b)
+
+Ans: ***ACME-TEST***
+
+**2- What is the target domain?**
+
+in the hint it says use `post/windows/gather/enum_domain` and you need to background Meterpreter first and set the `SESSION` parameter
+
+but it is already shown in `sysinfo` command next to domain 
+
+Ans: ***FLASH***
+
+**3- What is the name of the share likely created by the user?**
+
+in hint, it says background meterpreter and use `post/windows/gather/enum_share` module then set the `SESSION` parameter then run the exploit
+
+but there is another way to enumerate shares using the command `shell` to launch a regular command-line shell on the target system, then use `net share` command which will display information about all of the resources that are shared on the local computer.
+
+![image](https://github.com/user-attachments/assets/501f0ebc-3ae2-4343-bb65-d3411d9a1945)
+
+
+
+
