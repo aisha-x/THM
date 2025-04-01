@@ -208,7 +208,7 @@ Ans: ***No answer needed***
 
 **Q4.Run! If this doesn't work, try completing the exploit from the previous task once more.**
 
-Now we have a Meterpreter shell! `use 2` to select meterprter shell
+Now we have a Meterpreter shell! `use 2` to select it
 
 ![show-sessions2](https://github.com/user-attachments/assets/32246468-6be0-41c0-847b-b5fde4969d5c)
 
