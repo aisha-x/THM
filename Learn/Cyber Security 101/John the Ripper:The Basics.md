@@ -56,9 +56,9 @@ Now that we have our hash cracker and wordlists all set up, let's move on to som
 
 The basic syntax of John the Ripper commands is as follows. We will cover the specific options and modifiers used as we use them.
 ```john [options] [file path]```
-• john: Invokes the John the Ripper program
-• [options]: Specifies the options you want to use
-• [file path]: The file containing the hash you're trying to crack; if it's in the same directory, you won't need to name a path, just the file.
+- john: Invokes the John the Ripper program
+- [options]: Specifies the options you want to use
+- [file path]: The file containing the hash you're trying to crack; if it's in the same directory, you won't need to name a path, just the file.
 
 **Automatic Cracking**
 
