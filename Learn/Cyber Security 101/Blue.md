@@ -172,4 +172,76 @@ Ans: ***No answer needed***
 
 ![show-options-eternalblue](https://github.com/user-attachments/assets/1a526898-d601-4b3b-8ea5-59b0ce1d4837)
 
+Ans: ***exploit/windows/smb/ms17_010_eternalblue***
+
+**Q3.Show options and set the one required value. What is the name of this value? (All caps for submission)**
+
+Ans: ***RHOSTS***
+
+**Q5.Confirm that the exploit has run correctly. You may have to press enter for the DOS shell to appear. Background this shell (CTRL + Z). If this failed, you may have to reboot the target VM. Try running it again before a reboot of the target.**
+
+And with that, we have gained access!
+
+![gaining_access](https://github.com/user-attachments/assets/12871f7d-0fe5-4973-8ae0-979c05dc1ee9)
+
+# Escalate
+
+**Questions:**
+
+**Q1.If you haven't already, background the previously gained shell (CTRL + Z). Research online how to convert a shell to meterpreter shell in metasploit. What is the name of the post module we will use? (Exact path, similar to the exploit we previously selected)**
+
+`search shell_to_meterpreter`
+
+Ans: ***post/multi/manage/shell_to_meterpreter***
+
+**Q2. Select this (use MODULE_PATH). Show options, what option are we required to change?**
+
+![shell-to-meterpreter](https://github.com/user-attachments/assets/6c007520-9007-4c63-8dea-47516160398c)
+
+Ans: ***SESSION***
+
+**Q3. Set the required option, you may need to list all of the sessions to find your target here.**
+
+`sessions` to list all the sessions
+
 Ans: ***No answer needed***
+
+**Q4.Run! If this doesn't work, try completing the exploit from the previous task once more.**
+
+Now we have a Meterpreter shell! `use 2` to select meterprter shell
+
+![show-sessions2](https://github.com/user-attachments/assets/32246468-6be0-41c0-847b-b5fde4969d5c)
+
+Ans: ***No answer needed***
+
+**Q5.Once the meterpreter shell conversion completes, select that session for use.**
+
+Ans: ***No answer needed***
+
+**Q6.Verify that we have escalated to NT AUTHORITY\SYSTEM. Run getsystem to confirm this. Feel free to open a dos shell via the command 'shell' and run 'whoami'. This should return that we are indeed system. Background this shell afterwards and select our meterpreter session for usage again.**
+
+![getsystem](https://github.com/user-attachments/assets/6aa5bee9-b44b-4ffc-b129-8af0567f7622)
+
+![whoami](https://github.com/user-attachments/assets/67b7f642-e005-4012-a35d-54cbeebaf060)
+
+Ans: ***No answer needed***
+
+
+**Q7.List all of the processes running via the 'ps' command. Just because we are system doesn't mean our process is. Find a process towards the bottom of this list that is running at NT AUTHORITY\SYSTEM and write down the process id (far left column).**
+
+`ps` 
+
+![ps](https://github.com/user-attachments/assets/1f2ad3c5-bb7e-41a7-b259-70609e5c7fba)
+
+Ans: ***No answer needed***
+
+
+**Q8.Migrate to this process using the 'migrate PROCESS_ID' command where the process id is the one you just wrote down in the previous step. This may take several attempts, migrating processes is not very stable. If this fails, you may need to re-run the conversion process or reboot the machine and start once again. If this happens, try a different process next time.**
+
+`migrate 596 ` which is lsass.exe process
+
+Ans: ***No answer needed***
+
+# Cracking
+
+
