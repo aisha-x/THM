@@ -244,4 +244,59 @@ Ans: ***No answer needed***
 
 # Cracking
 
+**Questions:**
+
+**Q1.Within our elevated meterpreter shell, run the command 'hashdump'. This will dump all of the passwords on the machine as long as we have the correct privileges to do so. What is the name of the non-default user?**
+
+![hashdump](https://github.com/user-attachments/assets/c8517709-24d4-4d86-a8c0-b290dc95cfb3)
+
+Ans: ***Jon***
+
+**Q2.Copy this password hash to a file and research how to crack it. What is the cracked password?**
+
+identify the hash type using hash-identifier website
+
+![hash-identifier](https://github.com/user-attachments/assets/6781821b-a186-474e-b622-71bc1b8cb713)
+
+I used John to crack the hash, but first search for NTLM  list format to select the right one
+
+`john --list=formats |  grep -iF "NT"`
+
+![nt_search](https://github.com/user-attachments/assets/06f32aea-b1b9-4847-ad83-b9c4706e3e40)
+
+`john --format=nt --wordlist=/usr/share/wordlists/rockyou.txt ntlm.txt`
+
+![passwd](https://github.com/user-attachments/assets/bab7db07-fc65-41e7-87cb-e3f5bbfb3d02)
+
+Ans: ***alqfna22***
+
+# finding flags
+
+**Questions:**
+
+**q1.Flag1? This flag can be found at the system root.**
+
+`search flag1.txt`
+`cat C:/flag1.txt`
+
+Ans: ***flag{access_the_machine}***
+
+**q2.Flag2? This flag can be found at the location where passwords are stored within Windows.**
+
+![flag2,3](https://github.com/user-attachments/assets/82ebbe42-7d6a-44e7-93e9-8281d9ccffdf)
+
+`
+search -f flag2.txt
+cat c:/Windows/System32/config/flag2.txt
+`
+Ans: ***flag{sam_database_elevated_access}***
+
+**q3.flag3? This flag can be found in an excellent location to loot. After all, Administrators usually have pretty interesting things saved.**
+
+`
+search -f flag3.txt
+cat c:/Users/Jon/Documents/flag3.txt
+`
+Ans: ***flag{admin_documents_can_be_valuable}***
+
 
