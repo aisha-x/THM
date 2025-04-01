@@ -274,29 +274,31 @@ Ans: ***alqfna22***
 
 **Questions:**
 
-**q1.Flag1? This flag can be found at the system root.**
+**Q1.Flag1? This flag can be found at the system root.**
 
-`search flag1.txt`
+`search -f flag1.txt`
+
 `cat C:/flag1.txt`
 
 Ans: ***flag{access_the_machine}***
 
-**q2.Flag2? This flag can be found at the location where passwords are stored within Windows.**
+**Q2.Flag2? This flag can be found at the location where passwords are stored within Windows.**
 
 ![flag2,3](https://github.com/user-attachments/assets/82ebbe42-7d6a-44e7-93e9-8281d9ccffdf)
 
-`
-search -f flag2.txt
-cat c:/Windows/System32/config/flag2.txt
-`
+
+`search -f flag2.txt`
+
+`cat c:/Windows/System32/config/flag2.txt`
+
 Ans: ***flag{sam_database_elevated_access}***
 
-**q3.flag3? This flag can be found in an excellent location to loot. After all, Administrators usually have pretty interesting things saved.**
+**Q3.flag3? This flag can be found in an excellent location to loot. After all, Administrators usually have pretty interesting things saved.**
 
-`
-search -f flag3.txt
-cat c:/Users/Jon/Documents/flag3.txt
-`
+`search -f flag3.txt`
+
+`cat c:/Users/Jon/Documents/flag3.txt`
+
 Ans: ***flag{admin_documents_can_be_valuable}***
 
 
