@@ -133,7 +133,8 @@ Want to see all tables in your database? `SHOW TABLES;` will list them out. It�
 **DESCRIBE:**
 
 If you need a peek at what columns and types make up a table, run `DESCRIBE your_table_name;`. It’s like an X-ray for your table structure.
-Modifying Tables
+
+**Modifying Tables**
 
 **ALTER:**
 
@@ -153,3 +154,235 @@ Answer: ***THM{575a947132312f97b30ee5aeebba629b723d30f9}***
 **Question: In the list of available databases, you should also see the task_4_db database. Set this as your active database and list all tables in this database; what is the flag present here?**
 
 Answer: ***THM{692aa7eaec2a2a827f4d1a8bed1f90e5e49d2410}***
+
+
+# TASK 5: CRUD Operations
+
+In the world of databases, CRUD is king! The big four — Create, Read, Update, Delete — are the bread and butter of data management. Here’s a rundown of each, using MySQL’s books table for all the real-world action. Ready? Let’s dive in!
+
+**Create (INSERT)**
+
+Creating records is like adding fresh ingredients to your data stew. Need a new entry? INSERT INTO is here to help:
+```
+INSERT INTO books (id, name, published_date, description)
+VALUES (1, "Android Security Internals", "2014–10–14", "An In-Depth Guide to Android's Security Architecture");
+```
+Just like that, a book called “Android Security Internals” is now saved in our books table. Voilà! Fresh data added.
+
+**Read (SELECT)**
+
+Reading is where we play detective and uncover data mysteries. The SELECT statement lets you peek into your table’s soul:
+
+`SELECT * FROM books;`
+This retrieves all the columns, but if you only want specific details like name and description, use:
+
+`SELECT name, description FROM books;`
+Perfect for when you just need the highlights!
+
+**Update (UPDATE)**
+
+Sometimes things change, and our data has to keep up! The UPDATE command is like editing a typo in a story:
+```
+UPDATE books
+SET description = "An In-Depth Guide to Android's Security Architecture."
+WHERE id = 1;
+```
+This updates the description for the book with id = 1. Remember to specify which record to update with WHERE, or SQL will get a little overzealous and update everything.
+
+**Delete (DELETE)**
+
+Deleting data is like Marie Kondo-ing your table — it clears out what no longer “sparks joy.”
+
+`DELETE FROM books WHERE id = 1;`
+This removes the record with id = 1 from the books table. Use WHERE wisely here too, unless you want to say goodbye to all your data!
+
+**Quick Summary**
+
+ - **Create**: `INSERT` — Add new data to the table.
+ - **Read**: `SELECT` — Retrieve data from the table.
+ - **Update**: `UPDATE` — Modify existing data.
+ - **Delete**: `DELETE` — Remove data from the table.
+
+And there you have it — CRUD is the magic toolkit for managing data in your database! Now go forth and wield your new database superpowers. 🦸‍♂️
+
+**Question: Using the tools_db database, what is the name of the tool in the hacking_tools table that can be used to perform man-in-the-middle attacks on wireless networks?**
+
+Answer: ***Wi-Fi Pineapple***
+
+**Question: Using the tools_db database, what is the shared category for both USB Rubber Ducky and Bash Bunny?**
+
+Answer: ***USB attacks***
+
+# TASK 6: Clauses
+
+Let’s take a look at some SQL clauses that put you in control, helping your database return results your way. Meet DISTINCT, GROUP BY, ORDER BY, and HAVING — the squad that keeps your data clean, organized, and precise!
+
+**DISTINCT: No Duplicates Allowed!**
+
+Got some duplicates? DISTINCT helps you by filtering them out! Check this out:
+
+`SELECT DISTINCT name FROM books;`
+
+If you have two copies of “Ethical Hacking” in your books table, DISTINCT makes sure you only see it once. It’s like a bouncer keeping out duplicates at the data club!
+
+**GROUP BY: Grouping Like a Pro**
+
+When you need to aggregate data, GROUP BY is the go-to. It’s the secret to counting, summing, and more:
+
+`SELECT name, COUNT(*) FROM books GROUP BY name;`
+
+With this, you’ll see how many times each book shows up. It’s like grouping your socks by color so you know exactly how many pairs you have!
+
+**ORDER BY: Setting the Perfect Order**
+
+Sorting data? ORDER BY has your back. You can use it to sort in ascending (ASC) or descending (DESC) order:
+
+`SELECT * FROM books ORDER BY published_date ASC;`
+
+Now your books are in date order, perfect for when you want to binge-read in chronological order! Want it in reverse? Just change to DESC.
+
+**HAVING: The Cool Filter for Groups**
+
+When you want to filter groups after you’ve grouped them, HAVING steps in. It’s like WHERE’s cooler cousin:
+
+`SELECT name, COUNT(*) FROM books GROUP BY name HAVING name LIKE '%Hack%';`
+
+This filters the results of the grouped data to show only books with “Hack” in their title — giving you a filtered view based on your group criteria.
+
+**Quick Recap**
+
+- `DISTINCT` — Filters out duplicates.
+- `GROUP BY` — Groups your data for summaries.
+- `ORDER BY` — Sorts your data, just like Netflix’s “latest releases.”
+- `HAVING` — Filters your grouped data based on conditions.
+
+Now, armed with these clauses, your SQL game just leveled up!
+
+**Question: Using the tools_db database, what is the total number of distinct categories in the hacking_tools table?**
+
+Answer: ***6***
+
+**Question: Using the tools_db database, what is the first tool (by name) in ascending order from the hacking_tools table?**
+
+Answer: ***Bash Bunny***
+
+**Question: Using the tools_db database, what is the first tool (by name) in descending order from the hacking_tools table?**
+
+Answer: ***Wi-Fi Pineapple***
+
+# TASK 7: Operators
+
+SQL operators are like the controls of a powerful data filter. Here’s a breakdown of key operators that can help you build more precise and effective queries in SQL.
+
+**Logical Operators**
+
+**LIKE:**
+
+Searches for a specified pattern within a column.
+
+`SELECT * FROM books WHERE description LIKE "%guide%";`
+
+This returns records where the description contains “guide.”
+
+**AND:**
+
+Combines multiple conditions and returns results where all conditions are true.
+
+`SELECT * FROM books WHERE category = "Offensive Security" AND name = "Bug Bounty Bootcamp";`
+
+This finds books in the “Offensive Security” category that match the exact name.
+
+**OR:**
+
+Combines conditions and returns results where any condition is true.
+
+`SELECT * FROM books WHERE name LIKE "%Android%" OR name LIKE "%iOS%";`
+
+This fetches records with either “Android” or “iOS” in the name.
+
+**NOT:**
+
+Excludes specific conditions.
+
+`SELECT * FROM books WHERE NOT description LIKE "%guide%";`
+
+This excludes results where “guide” appears in the description.
+
+**BETWEEN:**
+
+Checks if a value falls within a specified range.
+
+`SELECT * FROM books WHERE id BETWEEN 2 AND 4;`
+
+This selects books with IDs from 2 to 4.
+
+**Comparison Operators**
+
+**Equal To (=):**
+
+Finds exact matches.
+
+`SELECT * FROM books WHERE name = "Designing Secure Software";`
+
+This finds records with the exact name “Designing Secure Software.”
+
+**Not Equal To (!=):**
+
+Excludes specific values.
+
+`SELECT * FROM books WHERE category != "Offensive Security";`
+
+This selects records where the category is anything other than “Offensive Security.”
+
+**Less Than (<):**
+
+Finds values smaller than a specified amount.
+
+`SELECT * FROM books WHERE published_date < "2020–01–01";`
+
+This fetches books published before January 1, 2020.
+
+**Greater Than (>):**
+
+Finds values larger than a specified amount.
+
+`SELECT * FROM books WHERE published_date > "2020–01–01";`
+
+This retrieves books published after January 1, 2020.
+
+**Less Than or Equal To (<=):**
+
+Selects values that are less than or equal to a specified amount.
+
+`SELECT * FROM books WHERE published_date <= "2021–11–15";`
+
+This query returns books published on or before November 15, 2021.
+
+**Greater Than or Equal To (>=):**
+
+Selects values that are greater than or equal to a specified amount.
+
+`SELECT * FROM books WHERE published_date >= "2021–11–02";`
+
+This query shows books published on or after November 2, 2021.
+
+**Quick Recap**
+
+- `LIKE`: Filters patterns in strings.
+- `AND` / `OR`: Combines multiple conditions.
+-`NOT`: Excludes specified conditions.
+- `BETWEEN`: Finds values within ranges.
+- Comparison Operators (`=`, `!=`, `<`, `>`, `<=`, `>=`): Checks for specific value comparisons.
+With these operators in your SQL toolkit, you can filter data exactly as needed. Use them to keep your queries powerful and precise!
+
+**Question: Using the tools_db database, which tool falls under the Multi-tool category and is useful for pentesters and geeks?**
+
+Answer: ***Flipper Zero***
+
+**Question: Using the tools_db database, what is the category of tools with an amount greater than or equal to 300?**
+
+Answer: ***RFID cloning***
+
+**Question: Using the tools_db database, which tool falls under the Network intelligence category with an amount less than 100?**
+
+Answer: ***Lan Turtle***
