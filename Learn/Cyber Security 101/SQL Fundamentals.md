@@ -386,3 +386,78 @@ Answer: ***RFID cloning***
 **Question: Using the tools_db database, which tool falls under the Network intelligence category with an amount less than 100?**
 
 Answer: ***Lan Turtle***
+
+# TASK 8: Functions
+
+SQL functions are powerful tools for manipulating data, enabling us to streamline queries, transform data, and gain insights. Here’s a guide to some essential SQL functions.
+
+**String Functions**
+
+**CONCAT():**
+
+Joins multiple strings into one.
+`SELECT CONCAT(name, " is a type of ", category, " book.") AS book_info FROM books;`
+This concatenates book names and categories into a single sentence.
+
+**GROUP_CONCAT():**
+
+Concatenates values from multiple rows into a single field, useful for grouping.
+`SELECT category, GROUP_CONCAT(name SEPARATOR ", ") AS books FROM books GROUP BY category;`
+This groups books by category, listing book titles in a single string for each category.
+
+**SUBSTRING():**
+
+Extracts a part of a string starting at a specified position.
+`SELECT SUBSTRING(published_date, 1, 4) AS published_year FROM books;`
+This extracts the year from the published_date, storing it as published_year.
+
+**LENGTH():**
+
+Returns the number of characters in a string (including spaces and punctuation).
+`SELECT LENGTH(name) AS name_length FROM books;`
+This calculates and displays the length of each book title.
+
+**Aggregate Functions**
+
+**COUNT():**
+
+Counts the number of rows that match the criteria.
+`SELECT COUNT(*) AS total_books FROM books;`
+This counts the total books in the table, displaying it as total_books.
+
+**SUM():**
+
+Adds up all values in a column.
+`SELECT SUM(price) AS total_price FROM books;`
+This calculates the total price of all books.
+
+**MAX():**
+
+Finds the maximum value in a column.
+`SELECT MAX(published_date) AS latest_book FROM books;`
+This retrieves the latest publication date.
+
+**MIN():**
+
+Finds the minimum value in a column.
+`SELECT MIN(published_date) AS earliest_book FROM books;`
+This retrieves the earliest publication date.
+
+**Summary**
+
+- **String Functions** (`CONCAT`, `GROUP_CONCAT`, `SUBSTRING`, `LENGTH`): Manipulate and transform text.
+- **Aggregate Functions** (`COUNT`, `SUM`, `MAX`, `MIN)`: Perform calculations across multiple rows, providing insights into data.
+  
+With these functions, you can streamline your SQL queries to perform efficient data transformations and aggregations.
+
+**Question: Using the tools_db database, what is the tool with the longest name based on character length?**
+
+Answer: ***USB Rubber Ducky***
+
+**Question: Using the tools_db database, what is the total sum of all tools?**
+
+Answer: ***1444***
+
+**Question: Using the tools_db database, what are the tool names where the amount does not end in 0, and group the tool names concatenated by " & ".**
+
+Answer: ***Flipper Zero & iCopy-XS***
