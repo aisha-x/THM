@@ -209,7 +209,14 @@ rule CISA_10450442_01 : LEMURLOOT webshell communicates_with_c2 remote_access
 - **SHA256_1**: A known hash of a malware sample.
 
 #### `strings:`
-- `$s1`: Byte pattern for "MOVEit.DMZ" — possibly part of the code/library.
+The strings section contains byte sequences, text, or regular expressions to match against files:
+- `$s1`: Looks for the byte pattern corresponding to "MOVEit.DMZ", likely part of the code or a library that the webshell interacts with.
+The string "4d 4f 56 45 69 74 2e 44 4d 5a" is a sequence of hexadecimal values. Each pair of characters represents a byte, and each byte can be converted to its ASCII representation to decode the string.
+
+Here's the decoding of our string:
+
+String Hexadecimals    ASCII Conversion
+4d                       M
 - `$s2`: ASPX language declaration indicator.
 - `$s3`: Refers to "MySQL" interactions.
 - `$s4`: Indicates potential "Azure" usage.
