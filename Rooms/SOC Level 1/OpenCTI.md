@@ -74,7 +74,7 @@ The **Analysis** tab contains the input entities in reports analysed and associa
 - Analysts can add their investigation notes and other external resources for knowledge enrichment. 
 - Example: Analysis of the Triton Software report published by MITRE ATT&CK.
 
-![image](https://github.com/user-attachments/assets/eef6874c-954e-4566-a32a-0ffcf38abc00)
+![analysis](https://github.com/user-attachments/assets/01f2b0d8-daa2-47f2-a891-5e7f45bae619)
 
 ---
 
@@ -83,7 +83,7 @@ The **Analysis** tab contains the input entities in reports analysed and associa
 - Security analysts investigate and hunt for events involving suspicious and malicious activities across their organizational network.
 - Within the **Events** tab, analysts can record their findings and enrich their threat intel by creating associations for their incidents.
 
-![image](https://github.com/user-attachments/assets/a7e7830e-84b7-49af-b9e7-0dc04b283eaf)
+![events](https://github.com/user-attachments/assets/c80a68c0-ab7f-4005-8b6c-10396e0244ad)
 
 ---
 
@@ -92,6 +92,8 @@ The **Analysis** tab contains the input entities in reports analysed and associa
 - Technical elements, detection rules and artefacts identified during a cyber attack are listed under this tab: one or several identifiable makeup indicators.
 - Assist analysts in mapping out threat events during a hunt.
 - Perform correlations between what they observe in their environments against the intel feeds.
+
+![obsrv](https://github.com/user-attachments/assets/7f9e171e-cef5-466f-8e7c-4e2157c262d5)
 
 ---
 
@@ -102,6 +104,8 @@ Information classified as threatening to an organisation includes:
 - **Threat Actors**: Individuals or groups propagating malicious actions.
 - **Intrusion Sets**: TTPs, tools, malware, and infrastructure used by threat actors.
 - **Campaigns**: Series of attacks with specific objectives initiated by advanced persistent threats (APTs).
+
+![image](https://github.com/user-attachments/assets/06d7c45d-cddf-44c0-8d85-59225f915a44)
 
 ---
 
@@ -114,6 +118,8 @@ Lists all items related to an attack and any legitimate tools identified:
 - **Courses of Action (CoA)**: Techniques mapped by MITRE to prevent attacks.
 - **Tools**: Legitimate tools (e.g., CMD) possibly exploited by adversaries.
 - **Vulnerabilities**: Known bugs and exposures (e.g., CVEs imported via connector).
+
+![arsenal](https://github.com/user-attachments/assets/94ba62be-8048-4e1e-9a23-d25255b2247c)
 
 ---
 
@@ -128,15 +134,117 @@ Categorises entities based on:
 
 This information allows for knowledge enrichment on attacks, organizations or intrusion sets.
 
+![entites](https://github.com/user-attachments/assets/98c6f6ea-aacb-488e-825d-f4808b19b3d2)
+
 ---
 
 ### Q&A
 
 **Q:** What is the name of the group that uses the 4H RAT malware?  
-**A:** Putter Panda
+**A:** ***Putter Panda***
 
 **Q:** What kill-chain phase is linked with the Command-Line Interface Attack Pattern?  
-**A:** execution-ics
+**A:** ***execution-ics***
 
 **Q:** Within the Activities category, which tab would house the Indicators?  
-**A:** Observations
+**A:** ***Observations***
+
+---
+
+# General Tabs Navigation
+
+The day-to-day usage of OpenCTI involves navigating through different entities within the platform to understand and utilize information for any threat analysis. Below is a walkthrough using the Cobalt Strike malware entity found under the Arsenal tab.
+
+### Overview Tab
+- Displays general information about an entity.
+- Information includes:
+  - Entity ID
+  - Confidence level
+  - Description
+  - Related threats, intrusion sets, and attack patterns
+  - Reports mentioning the entity
+  - External references
+
+![image](https://github.com/user-attachments/assets/9a99b7ea-6e79-487f-93d2-9114d26b7b48)
+
+### Knowledge Tab
+- Presents linked information associated with the selected entity.
+- Includes:
+  - Associated reports
+  - Indicators
+  - Relations
+  - Attack pattern timeline
+- Right-hand pane shows:
+  - Threats
+  - Attack vectors
+  - Events
+  - Observables
+
+ ![knowledgetab](https://github.com/user-attachments/assets/b6438715-c6aa-4287-b096-6a374e78282f)
+
+### Analysis Tab
+- Displays reports where the identified entity has been seen.
+- Provides usable threat information for investigation tasks.
+
+![image](https://github.com/user-attachments/assets/02165e52-b053-46cc-add1-05149c382fac)
+
+### Indicators Tab
+- Shows IOCs identified for all threats and entities.
+
+### Data Tab
+- Contains uploaded or generated files related to the entity.
+- Used for communicating threat information in technical or non-technical formats.
+
+### History Tab
+- Tracks changes made to the element, attributes, and relations.
+- Changes are monitored by the platform worker.
+
+---
+
+## Knowledge Check - Cobalt Strike
+
+**Q: What Intrusion sets are associated with the Cobalt Strike malware with a Good confidence level?**
+- **A:** ***CopyKittens, FIN7***
+
+**Q: Who is the author of the entity?**
+- **A:** ***The MITRE Corporation***
+
+---
+
+## Analyst Assignment: Investigating CaddyWiper Malware and APT37 Group
+
+**Q: What is the earliest date recorded related to CaddyWiper?**
+
+![image](https://github.com/user-attachments/assets/665182e1-39b4-4eac-bdad-0787155ed5b7)
+
+- **A:** ***2022/03/15***
+
+**Q: Which Attack technique is used by the malware for execution?**
+
+![image](https://github.com/user-attachments/assets/a4639f83-2fa5-4c3e-a48d-3ab5995512b5)
+
+- **A:** ***Native API***
+
+**Q: How many malware relations are linked to this Attack technique?**
+
+![image](https://github.com/user-attachments/assets/785456cf-0365-4207-9c03-2883ef578814)
+
+- **A:** ***113***
+
+**Q: Which 3 tools were used by the Attack Technique in 2016?**
+
+![image](https://github.com/user-attachments/assets/310a0b1a-f263-49cc-85ab-2345a9833e35)
+
+- **A:** ***ShimRatReporter, Empire, Bloodhound***
+
+**Q: What country is APT37 associated with?**
+
+![image](https://github.com/user-attachments/assets/94edfc1c-8f65-4ce1-9c5e-09666e646c6d)
+
+- **A:** ***North Korea***
+
+**Q: Which Attack techniques are used by the group for initial access?**
+
+![image](https://github.com/user-attachments/assets/9bdf22eb-f0d2-41d4-8a76-67fdfbf2b32c)
+
+- **A:** ***T1189, T1566***
