@@ -126,5 +126,99 @@ In this example, `HighEntropy` clearly indicates that the rule targets files wit
 
 ---
 
+# The Structure of a YARA Rule
+
+YARA rules provide a way for researchers to identify patterns within files, making it a powerful tool for malware detection. YARA's proprietary rule-writing language is intuitive yet demands a deep understanding of the desired patterns.
+
+Essential to every YARA command are two arguments:
+- the rule file, and
+- the target (file, directory, or process ID).
+
+For instance, suppose we aim to apply the rule `threatDetect.yar` on a directory named `suspiciousFiles`. The appropriate command would be:
+
+```bash
+yara threatDetect.yar suspiciousFiles
+```
+
+Each rule must possess a unique name and a defining condition. 
+
+For instance, in the rule below named `malwarePattern`, the condition checks if a certain string pattern, `maliciousCode`, is present:
+
+```yara
+rule malwarePattern {
+    strings:
+        $codePattern = "maliciousCode"
+
+    condition:
+        $codePattern
+}
+```
+
+Here, `malwarePattern` is the unique name, and the presence of the string `maliciousCode` serves as its defining condition.
+
+---
+
+## What Is an Example of a YARA Rule?
+
+In this instance, we will explore a YARA rule aimed at identifying malicious actions associated with the MOVEit Transfer Zero Day Vulnerability.
+
+This rule has been shared by CISA in their CL0P Ransomware Gang Cybersecurity Advisory. 
+
+> 🔗 [CISA Advisory Alert AA23-158A](https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-158a)
+
+```yara
+rule CISA_10450442_01 : LEMURLOOT webshell communicates_with_c2 remote_access
+{
+  meta:
+      Author = "CISA Code & Media Analysis"
+      Incident = "10450442"
+      Date = "2023-06-07"
+      Last_Modified = "20230609_1200"
+      Actor = "n/a"
+      Family = "LEMURLOOT"
+      Capabilities = "communicates-with-c2"
+      Malware_Type = "webshell"
+      Tool_Type = "remote-access"
+      Description = "Detects ASPX webshell samples"
+      SHA256_1 = "3a977446ed70b02864ef8cfa3135d8b134c93ef868a4cc0aa5d3c2a74545725b"
+
+  strings:
+      $s1 = { 4d 4f 56 45 69 74 2e 44 4d 5a }  // "MOVEit.DMZ"
+      $s2 = { 25 40 20 50 61 67 65 20 4c 61 6e 67 75 61 67 65 3d }  // ASPX page language declaration
+      $s3 = { 4d 79 53 51 4c }  // "MySQL"
+      $s4 = { 41 7a 75 72 65 }  // "Azure"
+      $s5 = { 58 2d 73 69 4c 6f 63 6b 2d }  // "X-siLock-"
+
+  condition:
+      all of them
+}
+```
+
+### Rule Breakdown
+
+#### `meta:`
+- **Author**: Creator or maintainer of the rule (e.g., "CISA Code & Media Analysis").
+- **Incident**: Incident number associated with the threat.
+- **Date** & **Last_Modified**: Track creation and modification times.
+- **Actor**: Threat actor ("n/a" if unknown).
+- **Family**: Malware family targeted ("LEMURLOOT").
+- **Capabilities**: Describes what the malware can do (e.g., "communicates-with-c2").
+- **Malware_Type**: Type of malware (e.g., "webshell").
+- **Tool_Type**: Tool type (e.g., "remote-access").
+- **Description**: Summary of what this rule detects.
+- **SHA256_1**: A known hash of a malware sample.
+
+#### `strings:`
+- `$s1`: Byte pattern for "MOVEit.DMZ" — possibly part of the code/library.
+- `$s2`: ASPX language declaration indicator.
+- `$s3`: Refers to "MySQL" interactions.
+- `$s4`: Indicates potential "Azure" usage.
+- `$s5`: A custom header or marker (e.g., for authentication or command execution).
+
+#### `condition:`
+- `all of them`: The rule triggers only if **all five strings** are present in a scanned file.
+
+
+
 
 
