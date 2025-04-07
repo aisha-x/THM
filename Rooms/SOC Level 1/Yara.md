@@ -6,11 +6,15 @@ Due to the poor explanation of the Yara tool in this room, I used external resou
 
 # Contents:
 
-1- Understanding YARA Rules
-2- The Structure of a YARA Rule
-3- Use Cases for YARA
-4- Yara Modules
-5- Yara tools
+1. Understanding YARA Rule  
+2. The Structure of a YARA Rule  
+3. Use Cases for YARA  
+4. YARA Modules  
+5. YARA Tools  
+6. Loki Scanner  
+7. Creating a Custom YARA Rule  
+8. Using Valhalla for Threat Intelligence  
+
 ---
 
 # 1- Understanding YARA Rules
@@ -430,6 +434,12 @@ Allows access to file timestamp data, useful for detecting anomalous or forged t
 
 YARA tools are utilities used to work with YARA rules for detecting and classifying malware. These tools assist in scanning files, directories, or memory dumps based on user-defined YARA rules. There are plenty of [GitHub resources](https://github.com/InQuest/awesome-yara) and open-source tools (along with commercial products) that can be utilized to leverage Yara in hunt operations and/or incident response engagements.
 
+### Yara Generate
+Automates rule creation by generating rules from a collection of files. Useful for detecting common malware patterns across multiple files.
+Example command:
+
+`python yara_generate.py -d <directory> -o output.yar`
+
 ### Loki - Simple IOC and YARA Scanner
 LOKI is a free open-source IOC (Indicator of Compromise) scanner created/written by Florian Roth.
 
@@ -447,6 +457,10 @@ Detection is based on four detection methods:
 4. C2 Back Connect Check
    Compares process connection endpoints with C2 IOCs (new since version v.10)
 ```
+Example command to scan a file:
+
+`python Loki.py -p <file_directory>`
+
 Use Case: Ideal for detecting threats that do not leave traces on disk (fileless malware) or for scanning the runtime memory of a compromised system.
 
 for more details, go to the page source: [Loki](https://github.com/Neo23x0/Loki/blob/master/README.md) 
@@ -462,6 +476,46 @@ YAYA was created by the EFF (Electronic Frontier Foundation) and released in Sep
 
 Note: Currently, YAYA will only run on Linux systems.
 
+---
+# 6- Loki Scanner
+As a security analyst, you may need to research various threat intelligence reports, blog postings, etc. and gather information on the latest tactics and techniques used in the wild, past or present. Typically in these readings, IOCs (hashes, IP addresses, domain names, etc.) will be shared so rules can be created to detect these threats in your environment, along with Yara rules. On the flip side, you might find yourself in a situation where you’ve encountered something unknown, that your security stack of tools can’t/didn’t detect. Using tools such as Loki, you will need to add your own rules based on your threat intelligence gathers or findings from an incident response engagement (forensics).
+
+### Scanning Files for Malware
+A directory containing two suspicious files (file1 and file2) is scanned using Loki.
+The command used:
+
+`python Loki.py -p suspicious_files`
+
+The scan result shows that file1 is malicious and flagged as a web shell.
+
+### Inspecting the Yara Rule Match
+
+The detection output contains:
+- Matched Rule Name
+- Matched Strings
+- Reason for Flagging the File
+The flagged file is classified as a web shell, which could be used for unauthorized access.
+
+# 7- Creating a Custom Yara Rule
+
+- Using **Yara Generate**, a custom rule is created to detect the same malware in future scans.
+- The rule is stored in a .yar file and tested against other files using:
+`yara custom_rule.yar <directory>`
+
+# 8- Using Valhalla for Threat Intelligence
+Valhalla is a commercial service developed by Nextron Systems (the same folks behind THOR and Loki) that provides High-quality, curated YARA rules for threat detection.
+Think of Valhalla as a threat intelligence feed made of constantly updated and highly effective YARA rules for detecting APTs, malware families, and suspicious files.
+
+### 1- Searching for a Malware Hash
+- A file’s SHA256 hash is checked in Valhalla to see if it has been flagged.
+- If found, it may be linked to a known **APT** attack.
+
+### 2- Inspecting VirusTotal Reports
+The malware hash is submitted to VirusTotal.
+The report shows:
+- Antivirus detections of the file.
+- File classification (Malicious, Suspicious, or Benign).
+- Known variants of the malware.
 
 
 ## Resources
@@ -469,6 +523,7 @@ Note: Currently, YAYA will only run on Linux systems.
 - [YARA Official Documentation](https://yara.readthedocs.io/en/stable/)
 - [Cuckoo Sandbox](https://cuckoosandbox.org/)
 - [VirusTotal YARA Module Reference](https://developers.virustotal.com/reference/yara-rules)
+- http://motasem-notes.net/yara-rules-explained-complete-tutorial-tryhackme-yara/
 
 
 
