@@ -431,7 +431,7 @@ Allows access to file timestamp data, useful for detecting anomalous or forged t
 YARA tools are utilities used to work with YARA rules for detecting and classifying malware. These tools assist in scanning files, directories, or memory dumps based on user-defined YARA rules. There are plenty of [GitHub resources](https://github.com/InQuest/awesome-yara) and open-source tools (along with commercial products) that can be utilized to leverage Yara in hunt operations and/or incident response engagements.
 
 ### Loki - Simple IOC and YARA Scanner
-Scanner for Simple Indicators of Compromise
+LOKI is a free open-source IOC (Indicator of Compromise) scanner created/written by Florian Roth.
 
 Detection is based on four detection methods:
 ``` 
@@ -452,6 +452,18 @@ Use Case: Ideal for detecting threats that do not leave traces on disk (fileless
 for more details, go to the page source: [Loki](https://github.com/Neo23x0/Loki/blob/master/README.md) 
 
 ### THOR (superhero named programs for a superhero blue teamer)
+THOR Lite is Florian’s newest multi-platform IOC AND YARA scanner. There are precompiled versions for Windows, Linux, and macOS. A nice feature with THOR Lite is its scan throttling to limit exhausting CPU resources. For more information and/or to download the binary, start [here](https://www.nextron-systems.com/thor-lite/). You need to subscribe to their mailing list to obtain a copy of the binary. Note that THOR is geared towards corporate customers. THOR Lite is the free version.
+
+### FENRIR (naming convention still mythical themed)
+This is the 3rd tool created by Neo23x0 (Florian Roth). The updated version was created to address the issue from its predecessors, where requirements must be met for them to function. Fenrir is a bash script; it will run on any system capable of running bash (nowadays even Windows).
+
+### YAYA (Yet Another Yara Automaton)
+YAYA was created by the EFF (Electronic Frontier Foundation) and released in September 2020. Based on their website, “YAYA is a new open-source tool to help researchers manage multiple YARA rule repositories. YAYA starts by importing a set of high-quality YARA rules and then lets researchers add their own rules, disable specific rulesets, and run scans of files.”
+
+Note: Currently, YAYA will only run on Linux systems.
+
+
+
 ## Resources
 
 - [YARA Official Documentation](https://yara.readthedocs.io/en/stable/)
