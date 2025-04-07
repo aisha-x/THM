@@ -1,6 +1,6 @@
 # TryHackMe Yara Room
 
-Room URL: 
+Room URL: https://tryhackme.com/room/yara
 
 Due to the poor explanation of the Yara tool in this room, I used external resources.
 
@@ -523,6 +523,7 @@ The report shows:
 - [YARA Official Documentation](https://yara.readthedocs.io/en/stable/)
 - [Cuckoo Sandbox](https://cuckoosandbox.org/)
 - [VirusTotal YARA Module Reference](https://developers.virustotal.com/reference/yara-rules)
+- [Tryhackme](https://tryhackme.com/room/yara)
 - http://motasem-notes.net/yara-rules-explained-complete-tutorial-tryhackme-yara/
 
 
