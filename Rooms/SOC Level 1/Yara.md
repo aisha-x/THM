@@ -264,19 +264,19 @@ In summary, this YARA rule will trigger if it detects a file (likely an ASPX fil
 # 3- Use Cases for YARA
 To help you better understand YARA rules, let’s take a look at some use cases:
 
-#### YARA Rules for Malware Detection:
+### YARA Rules for Malware Detection:
 YARA rules can be created to detect specific malware or malware families, whether it’s variants of malware or specific strains of malware.
 
-#### Signature-based YARA:
+### Signature-based YARA:
 YARA rules can be created to detect malware-based hashes, specific strings, phrases, or code snippets, including registry keys and even malware based on byte sequences.
 
-#### YARA Rules for File Types:
+### YARA Rules for File Types:
 YARA rules can also apply to file types or extensions like .pdf or .exe. This allows you to find specific malware files that are already known.
 
-#### YARA Rules and Threat Intelligence:
+### YARA Rules and Threat Intelligence:
 YARA rules can be integrated with threat intelligence tools to create rules based on the latest threat data. This helps in identifying new or emerging threats.
 
-#### Ransomware Detection with YARA Rules:
+### Ransomware Detection with YARA Rules:
 According to Veeam’s 2024 Cybersecurity Trends Report, the number of ransomware victims surged by 50% year-over-year in 2023. Top data protection companies, such as Veeam, offer built-in signature-based backup malware detection scanners to maintain health and recoverability. Other features include backup file size analyzers, anomaly detection, and indicators of compromise (IOC) tool detection.
 
 However, for specific rules that search for specific malware or patterns that can execute a ransomware attack, a YARA rule is the best option to find malicious software and alert administrators.
