@@ -4,7 +4,16 @@ Room URL:
 
 Due to the poor explanation of the Yara tool in this room, I used external resources.
 
-# Understanding YARA Rules
+# Contents:
+
+1- Understanding YARA Rules
+2- The Structure of a YARA Rule
+3- Use Cases for YARA
+4- Yara Modules
+5- Yara tools
+---
+
+# 1- Understanding YARA Rules
 
 **YARA**, humorously dubbed "Yet Another Ridiculous Acronym," is a framework for large-scale pattern matching, most often used in malware detection and classification. YARA rules enable analysts to describe malware families using text or binary patterns.
 
@@ -84,7 +93,12 @@ rule ExampleRule {
     $a
 }
 ```
-In this rule, `$a` searches for specific function names or DLL references indicative of malicious behavior.
+In this example:
+
+$a is a regular expression that searches for any of the terms "RegCreateKeyA", "CreatePipe", or "KERNEL32.dll".
+The rule will be considered a match if the string pattern $a (as defined above) is found within the analyzed file or data. In simpler terms, if you run a file through YARA with this rule, YARA will flag the file as a match to "ExampleRule" if it contains any of the strings "RegCreateKeyA", "CreatePipe", or "KERNEL32.dll".
+
+The importance of the strings section cannot be overstated. The precision and accuracy of these strings determine the rule's efficacy. Well-defined strings can drastically reduce false positives and false negatives, making the rule a potent tool in malware detection and threat hunting.
 
 ---
 
@@ -126,7 +140,7 @@ In this example, `HighEntropy` clearly indicates that the rule targets files wit
 
 ---
 
-# The Structure of a YARA Rule
+# 2- The Structure of a YARA Rule
 
 YARA rules provide a way for researchers to identify patterns within files, making it a powerful tool for malware detection. YARA's proprietary rule-writing language is intuitive yet demands a deep understanding of the desired patterns.
 
@@ -241,7 +255,208 @@ So, combining all the ASCII characters together gives you the string "MOVEit.DMZ
 In summary, this YARA rule will trigger if it detects a file (likely an ASPX file given the indicators) that contains all the mentioned strings, suggesting it's an instance of the LEMURLOOT webshell.
 
 
+---
 
+# 3- Use Cases for YARA
+To help you better understand YARA rules, let’s take a look at some use cases:
+
+#### YARA Rules for Malware Detection:
+YARA rules can be created to detect specific malware or malware families, whether it’s variants of malware or specific strains of malware.
+
+#### Signature-based YARA:
+YARA rules can be created to detect malware-based hashes, specific strings, phrases, or code snippets, including registry keys and even malware based on byte sequences.
+
+#### YARA Rules for File Types:
+YARA rules can also apply to file types or extensions like .pdf or .exe. This allows you to find specific malware files that are already known.
+
+#### YARA Rules and Threat Intelligence:
+YARA rules can be integrated with threat intelligence tools to create rules based on the latest threat data. This helps in identifying new or emerging threats.
+
+#### Ransomware Detection with YARA Rules:
+According to Veeam’s 2024 Cybersecurity Trends Report, the number of ransomware victims surged by 50% year-over-year in 2023. Top data protection companies, such as Veeam, offer built-in signature-based backup malware detection scanners to maintain health and recoverability. Other features include backup file size analyzers, anomaly detection, and indicators of compromise (IOC) tool detection.
+
+However, for specific rules that search for specific malware or patterns that can execute a ransomware attack, a YARA rule is the best option to find malicious software and alert administrators.
+
+One example of a YARA rule that can prevent ransomware is CTBLocker ransomware, which can be found by looking for klospad.pdb. A YARA rule will scan for those files and alert you immediately if they are found within the backup or at the time of recovery.
+
+---
+
+# 4- YARA Modules 
+
+YARA’s modular design allows you to extend its core functionality using built-in modules. These modules provide specialized functions and access to structured data for more complex rule creation and analysis. Below are some of the most widely used YARA modules:
+
+---
+
+## PE Module
+
+### Purpose:
+The PE module is used for analyzing Windows Portable Executable (PE) files such as `.exe` and `.dll`. It allows inspection of headers, sections, imports, exports, and other PE-specific attributes.
+
+### Common Fields & Functions:
+- `pe.is_pe`: Checks if a file is a valid PE file.
+- `pe.number_of_sections`: Number of sections in the PE file.
+- `pe.entry_point`: The address of the entry point.
+- `pe.sections[i].name`: Name of the i-th section.
+- `pe.sections[i].entropy`: Entropy value of the i-th section.
+
+### Example:
+```yara
+import "pe"
+
+rule suspicious_entropy {
+  condition:
+    pe.is_pe and pe.sections[1].entropy > 7.0
+}
+```
+
+---
+
+## ELF Module
+
+### Purpose:
+Used to inspect ELF (Executable and Linkable Format) files common in Unix/Linux environments.
+
+### Common Fields:
+- `elf.machine`: Architecture type (e.g., `elf.EM_X86_64`).
+- `elf.section_names`: Access section names.
+
+### Example:
+```yara
+import "elf"
+
+rule detect_x64_elf {
+  condition:
+    elf.machine == elf.EM_X86_64
+}
+```
+
+---
+
+## Hash Module
+
+### Purpose:
+Provides hashing functions (MD5, SHA1, SHA256) for content comparison or fingerprinting.
+
+### Functions:
+- `hash.md5(offset, size)`
+- `hash.sha1(offset, size)`
+- `hash.sha256(offset, size)`
+
+### Example:
+```yara
+import "hash"
+
+rule md5_match_example {
+  condition:
+    hash.md5(0, filesize) == "d41d8cd98f00b204e9800998ecf8427e"
+}
+```
+
+---
+
+## Magic Module
+
+### Purpose:
+Uses libmagic to detect file types and MIME types.
+
+### Fields:
+- `magic.mime_type`
+- `magic.description`
+
+### Example:
+```yara
+import "magic"
+
+rule detect_pdf_file {
+  condition:
+    magic.mime_type == "application/pdf"
+}
+```
+
+---
+
+## Cuckoo Module
+
+### Purpose:
+Interacts with behavioral analysis results from the Cuckoo Sandbox.
+
+### Fields:
+- `cuckoo.network.http.url`
+- `cuckoo.behavior.calls[*].api`
+
+### Example:
+```yara
+import "cuckoo"
+
+rule network_indicator {
+  condition:
+    cuckoo.network.http.url contains "suspicious"
+}
+```
+
+---
+
+## Math Module
+
+### Purpose:
+Provides mathematical functions like entropy calculations.
+
+### Functions:
+- `math.entropy(offset, size)`
+
+### Example:
+```yara
+import "math"
+
+rule high_entropy_file {
+  condition:
+    math.entropy(0, filesize) > 7.5
+}
+```
+
+---
+
+## Time Module
+
+### Purpose:
+Allows access to file timestamp data, useful for detecting anomalous or forged timestamps.
+
+### Functions:
+- `time.now()`: Current system time.
+- `time.seconds_since(epoch)`: Seconds since a specified epoch.
+
+---
+# 5- Yara Tools
+
+YARA tools are utilities used to work with YARA rules for detecting and classifying malware. These tools assist in scanning files, directories, or memory dumps based on user-defined YARA rules. There are plenty of [GitHub resources](https://github.com/InQuest/awesome-yara) and open-source tools (along with commercial products) that can be utilized to leverage Yara in hunt operations and/or incident response engagements.
+
+### Loki - Simple IOC and YARA Scanner
+Scanner for Simple Indicators of Compromise
+
+Detection is based on four detection methods:
+``` 
+1. File Name IOC
+   Regex match on full file path/name
+
+2. Yara Rule Check
+   Yara signature match on file data and process memory
+
+3. Hash Check
+   Compares known malicious hashes (MD5, SHA1, SHA256) with scanned files
+   
+4. C2 Back Connect Check
+   Compares process connection endpoints with C2 IOCs (new since version v.10)
+```
+Use Case: Ideal for detecting threats that do not leave traces on disk (fileless malware) or for scanning the runtime memory of a compromised system.
+
+for more details, go to the page source: [Loki](https://github.com/Neo23x0/Loki/blob/master/README.md) 
+
+### THOR (superhero named programs for a superhero blue teamer)
+## Resources
+
+- [YARA Official Documentation](https://yara.readthedocs.io/en/stable/)
+- [Cuckoo Sandbox](https://cuckoosandbox.org/)
+- [VirusTotal YARA Module Reference](https://developers.virustotal.com/reference/yara-rules)
 
 
 
