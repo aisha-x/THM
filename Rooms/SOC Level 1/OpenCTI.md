@@ -2,6 +2,7 @@
 
 Room URL: 
 
+---
 # OpenCTI Threat Intelligence Platform Overview
 
 This room will cover the concepts and usage of OpenCTI, an open-source threat intelligence platform. The room will help you understand and answer the following questions:
@@ -53,7 +54,7 @@ According to OpenCTI, connectors fall under the following classes:
 
 Once connected to the platform, the opening dashboard showcases various visual widgets summarizing the threat data ingested into OpenCTI. Widgets on the dashboard showcase the current state of entities ingested on the platform via the total number of entities, relationships, reports and observables ingested, and changes to these properties noted within 24 hours.
 
-![image](https://github.com/user-attachments/assets/0d1a2dfb-dc6a-443d-bbb4-3ac771714abd)
+![image](https://github.com/user-attachments/assets/0d1a2dfb-dc6a-443d-bbb4-3ac771714abd.gif)
 
 ## Activities & Knowledge
 
