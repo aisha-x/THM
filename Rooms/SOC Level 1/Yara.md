@@ -215,15 +215,31 @@ The string "4d 4f 56 45 69 74 2e 44 4d 5a" is a sequence of hexadecimal values. 
 
 Here's the decoding of our string:
 
-String Hexadecimals    ASCII Conversion
-4d                       M
-- `$s2`: ASPX language declaration indicator.
-- `$s3`: Refers to "MySQL" interactions.
-- `$s4`: Indicates potential "Azure" usage.
-- `$s5`: A custom header or marker (e.g., for authentication or command execution).
+| String Hexadecimals | ASCII Conversion |
+|---------------------|------------------|
+| 4d                  | M                |
+| 4f                  | O                |
+| 56                  | V                |
+| 45                  | E                |
+| 69                  | i                |
+| 74                  | t                |
+| 2e                  | .                |
+| 44                  | D                |
+| 4d                  | M                |
+| 5a                  | Z                |
+
+So, combining all the ASCII characters together gives you the string "MOVEit.DMZ".
+
+
+- `$s2`: Looks for the byte pattern which translates to a typical declaration in ASPX files setting the language, possibly indicating an ASPX page.
+- `$s3`: Searches for the byte pattern corresponding to "MySQL", hinting that the webshell interacts with MySQL databases.
+- `$s4`: Searches for the byte pattern corresponding to "Azure", suggesting that the webshell may have functionalities related to Azure.
+- `$s5`: Looks for the byte pattern "X-siLock-", which could be related to a specific HTTP header or parameter the webshell uses for authentication or command execution.
 
 #### `condition:`
 - `all of them`: The rule triggers only if **all five strings** are present in a scanned file.
+In summary, this YARA rule will trigger if it detects a file (likely an ASPX file given the indicators) that contains all the mentioned strings, suggesting it's an instance of the LEMURLOOT webshell.
+
 
 
 
