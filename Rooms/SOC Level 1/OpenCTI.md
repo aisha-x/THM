@@ -1,6 +1,6 @@
 # OpenCTI TryHackMe Walkthrough
 
-Room URL: 
+Room URL: https://tryhackme.com/room/opencti
 
 ---
 # OpenCTI Threat Intelligence Platform Overview
@@ -17,6 +17,8 @@ Cyber Threat Intelligence is typically a managerial mystery to handle, with orga
 # OpenCTI
 
 OpenCTI is another open-sourced platform designed to provide organisations with the means to manage CTI through the storage, analysis, visualisation and presentation of threat campaigns, malware and IOCs.
+
+[OpenCTI Getting Started](https://docs.opencti.io/latest/usage/getting-started/)
 
 ### Objective
 
