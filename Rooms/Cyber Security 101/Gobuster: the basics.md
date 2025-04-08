@@ -123,7 +123,15 @@ Answer: ***4***
 
 ### Mode: `vhost`
 
-Discovers virtual hosts on the same IP by modifying the `Host` HTTP header.
+Discovers virtual hosts on the same IP by modifying the `Host` HTTP header. A VHost is not a user, it’s a domain name or hostname that a web server uses to serve different websites on the same IP address.
+
+Let’s say a single server has the IP address 192.168.1.10. That server might be hosting multiple websites:
+
+- www.example.com
+- admin.example.com
+- test.example.com
+
+These are virtual hosts — each one can show a completely different website, but they all go to the same server IP. The web server (like Apache or Nginx) uses the Host header in the HTTP request to decide which "website" to show.
 
 ### Common Flags:
 | Flag         | Description                        |
