@@ -1,6 +1,6 @@
 # SQLMap: the Basics Tryhackme Walkthrough 
 
-Room URL:
+Room URL: https://tryhackme.com/room/sqlmapthebasics
 
 
 ---
