@@ -47,7 +47,6 @@ The password part now reads:
 
 So the database just shrugs and lets them in. The `--` tells the database to ignore the rest, bypassing the real password check.
 
-**Lesson Learned:** Clean up your input fields, or you might just hand out the keys to the kingdom, courtesy of SQL Injection!
 
 **Question: Which boolean operator checks if at least one side of the operator is true for the condition to be true?**
 
@@ -82,7 +81,6 @@ Once you’ve confirmed a vulnerable URL:
 - Use `--tables` to browse inside
 - Use `--dump` to get all the records
 
-In a few commands, you’re a digital Indiana Jones uncovering the secrets of SQL!
 
 **Question: Which flag in the SQLMap tool is used to extract all the databases available?**
 
@@ -97,7 +95,7 @@ sqlmap -u http://sqlmaptesting.thm/search/cat=1 -D members --tables
 ```
 
 ---
-# TASK 4: Practical Exercise
+# Task 4: Practical Exercise
 
 ### Extract the Full GET Request URL:
 To view GET parameters, right-click on the page and select “Inspect.”
