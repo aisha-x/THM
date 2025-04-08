@@ -2,6 +2,7 @@
 
 Room URL: https://tryhackme.com/room/hydra
 
+---
 # Introduction
 
 ### What is Hydra?
@@ -44,8 +45,29 @@ For example, `hydra -l root -P passwords.txt MACHINE_IP -t 4 ssh` will run with 
 - It will try the passwords in the `passwords.txt` file
 - There will be four threads running in parallel as indicated by `-t 4`
 
+
 ### Post Web Form
 We can use Hydra to brute force web forms too. You must know which type of request it is making; GET or POST methods are commonly used. You can use your browser’s network tab (in developer tools) to see the request types or view the source code.
 
 `sudo hydra <username> <wordlist> MACHINE_IP http-post-form "<path>:<login_credentials>:<invalid_response>"`
 
+| Option           | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| `-l`             | The username for (web form) login                                           |
+| `-P`             | The password list to use                                                    |
+| `http-post-form` | Indicates the form uses HTTP POST method                                    |
+| `<path>`         | The login page URL (e.g., `login.php`)                                      |
+| `<login_credentials>` | The username and password field values (e.g., `username=^USER^&password=^PASS^`) |
+| `<invalid_response>`  | Part of the server response when login fails                           |
+| `-V`             | Verbose output for every login attempt                                      |
+
+Below is a more concrete example Hydra command to brute force a POST login form:
+
+`hydra -l <username> -P <wordlist> MACHINE_IP http-post-form "/:username=^USER^&password=^PASS^:F=incorrect" -V`
+
+- The login page is only `/`, i.e., the main IP address.
+- The `username` is the form field where the username is entered
+- The specified username(s) will replace `^USER^`
+- The `password` is the form field where the password is entered
+- The provided passwords will be replacing `^PASS^`
+- Finally, `F=incorrect` is a string that appears in the server reply when the login fails
