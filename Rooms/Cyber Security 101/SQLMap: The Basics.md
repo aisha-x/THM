@@ -6,15 +6,12 @@ Room URL: https://tryhackme.com/room/sqlmapthebasics
 ---
 ## Task 1: Introduction
 
-Let’s talk about one of the sneakiest tricks in the hacker’s toolkit: **SQL Injection**! 
+### What is SQL injection (SQLi)?
+SQL injection (SQLi) is a web security vulnerability that allows an attacker to interfere with the queries that an application makes to its database. This can allow an attacker to view data that they are not normally able to retrieve. This might include data that belongs to other users, or any other data that the application can access. In many cases, an attacker can modify or delete this data, causing persistent changes to the application's content or behavior.
 
-Imagine a website as a polite waiter taking orders from users and delivering them to a database "kitchen" in the back. When you search for something or log in, you’re basically telling the waiter, “Hey, go grab this info from the kitchen.” And the waiter (website) sends your request to the database in SQL, the language it understands.
+In some situations, an attacker can escalate a SQL injection attack to compromise the underlying server or other back-end infrastructure. It can also enable them to perform denial-of-service attacks.
 
-Now, here’s where things get spicy: SQL Injection is like whispering extra instructions to the waiter to mess with the kitchen. Instead of just ordering a burger, you slyly add, “And also sneak me the manager’s password list.” The unassuming waiter takes it back to the kitchen without question, leading to all sorts of mayhem!
-
-But how is this even possible? Databases work with a system that uses SQL, like MySQL or PostgreSQL, to manage all that data. When websites don’t secure their database connections, attackers can input special SQL commands to trick the website into coughing up sensitive info. This is why SQL injection remains one of the top vulnerabilities in cybersecurity.
-
-So, buckle up, because in this session, you’ll dive deep into SQL Injection basics, learn how it’s done, and even try it out yourself in a hands-on challenge! Who knew hacking could be this educational?
+Source: [portswigger](https://portswigger.net/web-security/sql-injection)
 
 **Question: Which language builds the interaction between a website and its database?**
 
