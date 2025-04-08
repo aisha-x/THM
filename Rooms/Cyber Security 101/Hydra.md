@@ -21,7 +21,8 @@ This shows the importance of using a strong password; if your password is common
  installing Hydra on an Ubuntu or Fedora system: `apt install hydra` or `dnf install hydra`
 
  Furthermore, you can download it from its official [THC-Hydra repository](https://github.com/vanhauser-thc/thc-hydra).
----
+ 
+ ---
  # Using Hydra
 
 ### Hydra Commands
