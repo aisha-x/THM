@@ -25,6 +25,7 @@ With a deep breath, a focused mind, and the longing desire to go home, you began
 
 Ans: ***Oliver Bennett***
 
+---
 **Q2- What is the SHA1 hash of the file “pRsm.dll” inside samples.zip?**
 
 1. Download the attachment file in the email sent *sample.zip*
@@ -85,4 +86,46 @@ When analyzing malware, one of the **first steps** is to compute its hash. A has
 
 **Q3- Which malware framework utilizes these DLLs as add-on modules?**
 
-Ans: ***Oliver Bennett***
+- Search for pRsm.dll malware framework
+- You will see this article [Evasive Panda APT ](https://www.welivesecurity.com/2023/04/26/evasive-panda-apt-group-malware-updates-popular-chinese-software/#h2-6) 
+- ![image](https://github.com/user-attachments/assets/7af2e7c6-3def-46f9-8ecf-b100d970f201)
+
+Ans: ***MgBot***
+
+---
+**Q4- Which MITRE ATT&CK Technique is linked to using pRsm.dll in this malware framework?**
+
+- search in MITRE ATT&CK techniques section in the same article for prsm.dll module 
+- ![image](https://github.com/user-attachments/assets/1ce14fbd-3d84-4ffa-b748-5047be45ef17)
+
+Ans: ***T1123***
+
+---
+**Q5- What is the CyberChef defanged URL of the malicious download location first seen on 2020–11–02?**
+
+- we need to defang a URL to prevent anyone from accidentally clicking on it
+- Search for the malicious download location 
+- ![image](https://github.com/user-attachments/assets/6caaa085-e759-4f6e-86fc-fd79a32ef5aa)
+- defang the URL using [CyberChef](https://gchq.github.io/CyberChef/) 
+- ![image](https://github.com/user-attachments/assets/8c01648c-0d86-4403-bf02-d7568aa3f957)
+
+Ans: ***hxxp[://]update[.]browser[.]qq[.]com/qmbs/QQ/QQUrlMgr_QQ88_4296[.]exe***
+
+---
+**Q6- What is the CyberChef defanged IP address of the C&C server first detected on 2020–09–14 using these modules?**
+
+- we can simple `Ctr + f` to search for 2020 
+-![image](https://github.com/user-attachments/assets/8131b423-d682-4a62-a7c4-051e66bc6406)
+
+- then go to CyberChef and select defang IP Addresses, you need to remove the brackets around the last period so the output change
+  
+-![image](https://github.com/user-attachments/assets/89510edf-17bf-49d1-a821-4178171b56e8)
+
+Ans: ***122[.]10[.]90[.]12***
+
+---
+**Q7- What is the SHA1 hash of the spyagent family spyware hosted on the same IP targeting Android devices on November 16, 2022?**
+
+- Go to [VirusTotal]() and search for the this ip address `122.10.90.12`
+- ![image](https://github.com/user-attachments/assets/099eba24-51cb-4cfd-8334-08a582d36f17)
+
