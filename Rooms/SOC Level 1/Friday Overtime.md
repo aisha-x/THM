@@ -116,9 +116,7 @@ Ans: ***hxxp[://]update[.]browser[.]qq[.]com/qmbs/QQ/QQUrlMgr_QQ88_4296[.]exe***
 
 - we can simple `Ctr + f` to search for 2020 
 -![image](https://github.com/user-attachments/assets/8131b423-d682-4a62-a7c4-051e66bc6406)
-
 - then go to CyberChef and select defang IP Addresses, you need to remove the brackets around the last period so the output change
-  
 -![image](https://github.com/user-attachments/assets/89510edf-17bf-49d1-a821-4178171b56e8)
 
 Ans: ***122[.]10[.]90[.]12***
@@ -128,4 +126,8 @@ Ans: ***122[.]10[.]90[.]12***
 
 - Go to [VirusTotal]() and search for the this ip address `122.10.90.12`
 - ![image](https://github.com/user-attachments/assets/099eba24-51cb-4cfd-8334-08a582d36f17)
+- in the Relations tab, the one that stands out is the Android type under Communicating Files. check this by clicking on it
+- ![image](https://github.com/user-attachments/assets/345f1e4d-c9a6-496a-b2ea-2dd793b48380)
+- 
+
 
