@@ -1,6 +1,6 @@
 # Friday Overtime : Tryhackme walkthrough
 
-Room URL: 
+Room URL: https://tryhackme.com/room/fridayovertime
 
 ---
 # Task 1 Challenge Scenario
@@ -128,6 +128,8 @@ Ans: ***122[.]10[.]90[.]12***
 - ![image](https://github.com/user-attachments/assets/099eba24-51cb-4cfd-8334-08a582d36f17)
 - in the Relations tab, the one that stands out is the Android type under Communicating Files. check this by clicking on it
 - ![image](https://github.com/user-attachments/assets/345f1e4d-c9a6-496a-b2ea-2dd793b48380)
-- 
+- Go to the Details tab for this malware and copy SHA-1 hash value
+- ![image](https://github.com/user-attachments/assets/6594a1fc-6c10-4cab-99fe-5065ceb454d3)
 
+Ans: ***1c1fe906e822012f6235fcc53f601d006d15d7be***
 
