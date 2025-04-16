@@ -1,6 +1,6 @@
 # TryHackMe — Shells Overview walkthrough
 
-Room URL: 
+Room URL: https://tryhackme.com/room/shellsoverview
 
 ---
 #  Shell Overview
@@ -653,7 +653,7 @@ Ans: ***THM{0f28b3e1b00becf15d01a1151baf10fd713bc625}***
 
 - First create a `shell.php` file in your machine
 - ![image](https://github.com/user-attachments/assets/f294d5d7-66fe-43b0-b1e5-86a5ee473743)
-- upload the `shell.php` file to `10.10.170.217:8082`
+- upload the `shell.php` file to the web application that is vulnerable to an unrestricted file upload.
 - ![image](https://github.com/user-attachments/assets/c129ce6d-40db-4b75-a961-ec3a4eb6bc15)
 - in the hint, it says that all files are stored in the `/uploads/` directory of the website
 - navigate to the `10.10.170.217:8082/uploads/shell.php?cmd=cat /flag.txt` and feed the command to` cat flag.txt` file
