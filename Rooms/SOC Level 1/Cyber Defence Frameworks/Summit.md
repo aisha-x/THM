@@ -1,10 +1,10 @@
 # Smmit Walkthrough
 
-In this room we chase a simulated adversary up the Pyramid of Pain until they finally back down? This is a room to test the knowledge gained during the Cyber Defense Frameworks module.
+In this room, we chase a simulated adversary up the Pyramid of Pain until they finally back down? This is a room to test the knowledge gained during the Cyber Defense Frameworks module.
 
 This room is part of the SOC Level 1 Path.
 
-[room url](https://tryhackme.com/r/room/summit)
+Room URL: https://tryhackme.com/r/room/summit
 
 
 
