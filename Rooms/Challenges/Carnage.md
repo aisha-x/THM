@@ -1,6 +1,10 @@
-#TryHackme -- Carnage Walkthrough
+# TryHackme -- Carnage Walkthrough
 
 Room URL: 
+
+
+
+
 
 **Q1.What was the date and time for the first HTTP connection to the malicious IP?** 
 
@@ -27,7 +31,8 @@ Ans: ***documents.zip***
 
 - right click on the http packet and follow HTTP stream
 - in the http request header you can see the domain that hosting this malicious file
-- pic 
+- ![q3](https://github.com/user-attachments/assets/66f80c1c-50d3-49e2-ada4-4ba206250d3a)
+ 
 
 Ans: ***attirenepal.com*** 
 
@@ -205,7 +210,7 @@ Ans: ***api.ipify.org***
 **Q19.Looks like there was some malicious spam (malspam) activity going on. What was the first MAIL FROM address observed in the traffic?**
 
 - filter for `tcp contains MAIL` and select the first packet has MAIL FROM addres info
-- pic
+- ![q19 ans](https://github.com/user-attachments/assets/0abfe173-b422-4a26-903b-6d6d82879f72)
 
 Ans: ***farshin@mailfa.com***
 
