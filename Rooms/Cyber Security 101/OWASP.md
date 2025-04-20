@@ -162,3 +162,71 @@ Ans: ***todo.db***
 
 Ans: ***THM{Just_a_tiny_misconfiguration}***
 
+---
+# 6. Vulnerable and Outdated Components - Lab
+
+**Q1.What is the content of the /opt/flag.txt file?**
+
+- Search for unauthenticated bookstore apps RCEs. 
+- ![image](https://github.com/user-attachments/assets/67a18b9e-b1db-4e2b-bb24-2be224eb175f)
+- download the exploit. This exploit targets a vulnerable PHP web application called Online Book Store 1.0. it allows 
+  unauthenticated RCE by uploading a malicious PHP file (web shell) to the server.
+- run the exploit python 47887.py http://10.10.112.172:84/ 
+- ![image](https://github.com/user-attachments/assets/1750a5f1-2a34-465d-977f-694555294562)
+
+Ans: ***THM{But_1ts_n0t_my_f4ult!}***
+
+
+---
+# 7. Identification and Authentication Failures Practical
+
+
+- go to the mentioned website `http://10.10.24.67:8088/` and reregister two existing usernames by adding a space at the start of the username
+" darren" " arthur"
+- ![image](https://github.com/user-attachments/assets/9c75c3c4-a45f-48e4-be09-0d856223e240)
+
+---
+**Q1. What is the flag that you found in darren's account?**
+
+- login with the username " darren", don't forget the space at the start, then the registered password, and you will get the flag!
+
+Ans: ***fe86079416a21a3c99937fea8874b667***
+
+---
+**Q3. What is the flag that you found in arthur's account?**
+- Same thing with arthur
+
+Ans: ***d9ac0f7db4fda460ac3edeb75d75e16e***
+
+---
+# 8. Data Integrity Failures
+
+**Q1. Try logging into the application as guest. What is guest's account password?**
+
+Ans: ***guest***
+
+---
+**If your login was successful, you should now have a JWT stored as a cookie in your browser. Press F12 to bring out the Developer Tools.**
+- pic
+
+**Q2. What is the name of the website's cookie containing a JWT token?**
+
+Ans: ***jwt-session***
+
+---
+**Q3. Use the knowledge gained in this task to modify the JWT token so that the application thinks you are the user "admin".**
+
+- First take the guest token without the signature part and base64 decode it, modify it, and encode it again 
+- ![image](https://github.com/user-attachments/assets/e10afd9e-3ef9-4652-83f8-1a415248531e)
+
+
+---
+**Q4. What is the flag presented to the admin user?**
+
+- Modify the token by setting `alg` to `none` to prevent any signature check, and `username` as `admin` 
+- `{"typ":"JWT","alg":"HS256"}{"username":"guest","exp":1743919879}` To -> `{"typ":"JWT","alg":"none"}{"username":"admin","exp":1743919879}`
+- Compile them and set the new token in the cookie section, but without the signature part!
+- `eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzQzOTE5ODc5fQ.`
+- ![image](https://github.com/user-attachments/assets/c1dd18c5-5c06-4194-a392-93a336a1652a)
+
+Ans: ***THM{Dont_take_cookies_from_strangers}***
