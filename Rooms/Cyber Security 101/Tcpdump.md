@@ -67,7 +67,7 @@ Ans: ***mirrors.rockylinux.org***
 | Operator | Name | Function                                 |
 |----------|------|------------------------------------------|
 | `&`      | AND  | Returns 1 only if both bits are 1        |
-| `|`      | OR   | Returns 1 if at least one bit is 1       |
+|  |       | OR   | Returns 1 if at least one bit is 1       |
 | `!`      | NOT  | Inverts the bit (1 → 0, 0 → 1)           |
 
 ---
@@ -89,11 +89,11 @@ proto[offset:size]
 
 ## TCP Flag Filtering
 
-| Command Example                                      | Description                                                    |
-|-----------------------------------------------------|----------------------------------------------------------------|
-| `tcpdump "tcp[tcpflags] == tcp-syn"`                | Capture packets with **only** SYN flag set                     |
-| `tcpdump "tcp[tcpflags] & tcp-syn != 0"`            | Capture packets where **SYN** is set (can include others too) |
-| `tcpdump "tcp[tcpflags] & (tcp-syn|tcp-ack) != 0"`  | Capture packets with **SYN or ACK** flags set                 |
+| Command Example                                         | Description                                                    |
+|---------------------------------------------------------|----------------------------------------------------------------|
+| `tcpdump "tcp[tcpflags] == tcp-syn"`                    | Capture packets with **only** SYN flag set                     |
+| `tcpdump "tcp[tcpflags] & tcp-syn != 0"`                | Capture packets where **SYN** is set (can include others too)  |
+| `tcpdump "tcp[tcpflags] & (tcp-syn|tcp-ack) != 0"`      | Capture packets with **SYN or ACK** flags set                  |
 
 
 **Answer the Questions Below:**
