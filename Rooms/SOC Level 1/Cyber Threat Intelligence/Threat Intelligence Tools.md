@@ -1,6 +1,6 @@
 # TryHackMe: Threat Intelligence Tools
 
-Room URL: 
+Room URL: https://tryhackme.com/room/threatinteltools
 
 ---
 # Threat Intelligence Overview
@@ -38,11 +38,12 @@ Threat Intelligence is the analysis of data and information using tools and tech
 > **Note:** Threat Intel bridges the gap between the operational environment and the adversary to support better defense strategies.
 
 
+
+
+---
+# Threat Intelligence Tools
 > **Note:**  
 > This section below is a summarized version based on external resources and is **not directly sourced from the TryHackMe platform**.
-
-
-# Threat Intelligence Tools
 
 ## 🔍 Threat Intelligence Platforms (TIPs)
 - **[MISP (Malware Information Sharing Platform)](https://www.misp-project.org/)** — Open-source platform for sharing indicators of compromise (IOCs).
