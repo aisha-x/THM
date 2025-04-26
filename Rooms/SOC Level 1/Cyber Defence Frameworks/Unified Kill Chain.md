@@ -127,4 +127,36 @@ With stolen credentials and elevated privileges, the attacker moves across the n
 # Phase: Out (Action on Objectives)
 This phase wraps up the journey of an adversary’s attack on an environment, where they have critical asset access and can fulfil their attack goals. These goals are usually geared toward compromising the confidentiality, integrity and availability (CIA) triad.
 
+## Collection [MITRE ATT&CK:TA0009](https://attack.mitre.org/tactics/TA0009/)
+After gaining access and locating valuable assets, the adversary gathers sensitive data. This compromises the confidentiality of information and sets up the next phase—Exfiltration. Main target sources include:
+
+- Drives
+- Web browsers
+- Audio and video files
+- Emails
+
+
+
+## Exfiltration [MITRE ATT&CK: TA0010](https://attack.mitre.org/tactics/TA0010/)
+The adversary attempts to steal the gathered data, often encrypting and compressing it to evade detection. Previously established Command & Control (C2) channels and tunnels are used for this operation.
+
+
+## Impact [MITRE ATT&CK:TA0040](https://attack.mitre.org/tactics/TA0040/)
+The adversary compromises the integrity and availability of assets by manipulating, interrupting, or destroying them. Techniques may include:
+
+- Removing account access
+- Performing disk wipes
+- Encrypting data (e.g., ransomware)
+- Defacing websites
+- Launching denial of service (DoS) attacks
+
+
+
+## Objectives
+After gaining full control over systems and networks, the adversary aims to achieve their strategic goals, which may include:
+
+- Financial extortion (e.g., encrypting files with ransomware and demanding payment).
+- Damaging the organization’s reputation by leaking sensitive information to the public.
+
+
 ---
