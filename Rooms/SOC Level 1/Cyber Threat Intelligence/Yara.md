@@ -524,6 +524,7 @@ The report shows:
 - [VirusTotal YARA Module Reference](https://developers.virustotal.com/reference/yara-rules)
 - [Tryhackme](https://tryhackme.com/room/yara)
 - http://motasem-notes.net/yara-rules-explained-complete-tutorial-tryhackme-yara/
+- https://valhalla.nextron-systems.com/
 
 
 
