@@ -155,18 +155,20 @@ alert tcp any any -> any 445 (msg: "Exploit Detected!"; flow: to_server, establi
 - extracted strings from the snort log: ![Screenshot 2025-04-29 104239](https://github.com/user-attachments/assets/22c50a8a-e9da-49b9-8113-74ab3a923cc2)
 
 
-**Use local-1.rules empty file to write a new rule to detect payloads containing the "\IPC$" keyword.**
+### Use local-1.rules empty file to write a new rule to detect payloads containing the "\IPC$" keyword.
 
 - `alert tcp any any -> any 445 (msg: "Exploit Detected!"; flow: to_server, established; content:"IPC$"; sid:2094285444; rev: 1;)`
-- pic of the contained strings in snort log
+- extracted strings from snort log: ![Screenshot 2025-04-29 104817](https://github.com/user-attachments/assets/a481f0a5-7308-49ba-ac1b-f4889914df69)
+
 
 
 ---
 # Using External Rules (Log4j)
 
 
-**Use the given rule file (local.rules) to investigate the log4j exploitation.**
+### Use the given rule file (local.rules) to investigate the log4j exploitation.
 
+- local.rule file: 
 ```
 
 # ----------------
@@ -197,21 +199,66 @@ alert tcp any any -> any any (msg:"FOX-SRT – Exploit – Possible Apache Log4j
 
 ```
 
-- pic of the result (alert= 26)
-- pic of the alert file
-- pic of the contained strings in the log
+- result: ![Screenshot 2025-04-29 105954](https://github.com/user-attachments/assets/133c61f2-d003-4029-b74f-c8b6656542de)
 
----
-**Use local-1.rules empty file to write a new rule to detect packet payloads between 770 and 855 bytes.**
+- alert file: ![Screenshot 2025-04-29 110909](https://github.com/user-attachments/assets/e9c735ed-9b30-4012-8d6c-d5c4463194fe)
+
+- extracted strings from snort log: ![Screenshot 2025-04-29 111231](https://github.com/user-attachments/assets/29c21813-566b-454b-98c7-038e42a56f9b)
+
+
+
+### Use local-1.rules empty file to write a new rule to detect packet payloads between 770 and 855 bytes.
 
 - `alert tcp any any -> any any (msg:"detected packet payload len between 770 and 855";flow:established, to_server; dsize:770<>855;sid:21003726; rev:1;)`
-- pic of the contained strings in snort log (base64)
+- extracted strings from snort log: ![Screenshot 2025-04-29 121835](https://github.com/user-attachments/assets/8945214c-dc3b-4b83-b7de-bd85e7775e36)
 - to decode a base64 command
-   - grep "Base64" from snort log using strings command
-   - redirect the output to a text file
-   - this time, you have to take only the base64 encoded part and store it in a different file then decode it.
-   - if you noticed, there are three encoded base64 commands, put them into one file separated by a new line. then decoded them
-   - i only stored the first encoded command and decode it
+   - grep "Base64" from the snort log using `strings` command
+   - Redirect the output to a text file
+   - You have to take only the base64-encoded part, store it in a different file, and then decode it.
+   - If you noticed, there are three encoded base64 commands, put them into one file separated by a new line. then decoded them
+   - I put them into separate files, then used this command to decode it `based64 --decode <encoded base64 file>`
    
- - pic
- - pic   
+ - ![Screenshot 2025-04-29 123325](https://github.com/user-attachments/assets/d96c1c3b-8985-4570-a4e6-63b50d1dc726)
+
+ - ![Screenshot 2025-04-29 123917](https://github.com/user-attachments/assets/1f636b14-e546-4378-88f8-507b066d449d)
+
+
+
+---
+# summary
+
+| **Option**         | **Description**                                                                 | **Example**                                            |
+|--------------------|----------------------------------------------------------------------------------|--------------------------------------------------------|
+| `msg`              | Message shown when the rule triggers.                                           | `msg:"Possible Log4j RCE";`                           |
+| `flow`             | Direction and state of TCP connection.                                          | `flow:established, to_server;`                        |
+| `content`          | Searches for specific string in the packet payload.                            | `content:"${jndi:";`                                  |
+| `nocase`           | Makes `content` match case-insensitive.                                        | `content:"%7bjndi:"; nocase;`                         |
+| `fast_pattern`     | Optimizes rule matching with pattern matcher.                                  | `fast_pattern:only;` or just `fast_pattern;`          |
+| `http_uri`         | Match `content` in the HTTP URI portion.                                       | `content:"${"; http_uri;`                             |
+| `http_header`      | Match `content` in HTTP headers.                                                | `content:"${"; http_header;`                          |
+| `http_client_body` | Match `content` in HTTP body from client (POST data).                          | `content:"${"; http_client_body;`                     |
+| `distance`         | Sets byte distance from previous match to next `content`.                      | `distance:0;`                                         |
+| `within`           | Max number of bytes after previous `content` to search for next.               | `within:10;`                                          |
+| `depth`            | Limits how deep into the packet to search for a `content`.                     | `depth:50;`                                           |
+| `offset`           | Number of bytes from the start to begin searching.                             | `offset:20;`                                          |
+| `flowbits`         | Sets or checks custom state flags across multiple rules.                       | `flowbits:set, apachelog4j.rce;`                      |
+| `pcre`             | Perl-compatible regex match in payload.                                        | `pcre:"/\\$\\{jndi\\:(rmi|ldaps|dns)\\:/";`           |
+| `threshold`        | Limits how often alerts are generated.                                         | `threshold:type limit, track by_dst, count 1, seconds 3600;` |
+| `reference`        | External reference URL for more context.                                       | `reference:url,http://...;`                           |
+| `metadata`         | Tags for rule classification, like CVE or tool (used by Suricata).             | `metadata:CVE 2021-44228;`                            |
+| `priority`         | Priority level of alert (1 = high, 3 = low).                                   | `priority:3;`                                         |
+| `sid`              | Snort rule ID — must be unique.                                                | `sid:21003731;`                                       |
+| `rev`              | Revision number for rule maintenance.                                          | `rev:1;`                                              |
+| `dsize`            | Tests payload size. Can be used as: `<`, `>`, `!=`, `=`, or a single value.    | `dsize:>100;` or `dsize:100<>200;` *(Suricata only)*  |
+|
+
+
+---
+# reference
+
+- *https://docs.snort.org/welcome*
+- *https://tryhackme.com/room/snort*
+- *https://www.solarwinds.com/serv-u/tutorials/225-226-227-230-ftp-response-codes*
+- *https://www.rapidtables.com/convert/number/hex-to-ascii.html*
+- *https://www.tenable.com/plugins/nessus/97737*
+  
