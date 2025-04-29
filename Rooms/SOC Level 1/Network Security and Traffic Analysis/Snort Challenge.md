@@ -2,7 +2,7 @@
 
 Room URL: https://tryhackme.com/room/snortchallenges1
 
-**This room is all about how to write rule**
+**This room is all about how to write IDS Rules**
 
 ---
 # Task2: Writing IDS Rules (HTTP)
