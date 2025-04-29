@@ -67,7 +67,7 @@ alert tcp any 80 <> any any (msg:"TCP port 80 inbound traffic detected";sid:1000
 ### Write a rule to detect the GIF file in the given pcap.
 
 - `alert ip any any <> any any  (msg: "GIF file Found";content:"GIF"; sid: 100001; rev:1;)`
-- to fine readable strings`sudo strings <snort.log>`
+- to fine readable strings `sudo strings <snort.log>`
 
 ---
 # Writing IDS Rules (Torrent Metafile)
@@ -113,10 +113,9 @@ alert tcp any 80 <> any any (msg:"TCP port 80 inbound traffic detected";sid:1000
 # Using External Rules (MS17-010)
 
 
-**Use the given rule file (local.rules) to investigate the ms1710 exploitation.**
+### Use the given rule file (local.rules) to investigate the ms1710 exploitation.
 
-- local.rule file
--
+- local.rule file: 
 ``` 
 
 # ----------------
@@ -149,9 +148,12 @@ alert tcp any any -> any 445 (msg:"OS-WINDOWS Microsoft Windows SMB remote code 
 alert tcp any any -> any 445 (msg: "Exploit Detected!"; flow: to_server, established; pcre:"/|57 69 6e 64 6f 77 73 20 37 20 48 6f 6d 65 20 50|/"; pcre: "/|72 65 6d 69 75 6d 20 37 36 30 31 20 53 65 72 76|/"; pcre:"/|69 63 65 20 50 61 63 6b 20 31|/"; reference: ExploitDatabase (ID’s - 42030, 42031, 42315); priority: 10; sid: 2094284; rev: 2;)
 
 ```
-- pic of the analysis
-- pic of the alert file
-- pic of the contained strings in snort log
+- result: ![Screenshot 2025-04-29 103713](https://github.com/user-attachments/assets/6e28034a-bafd-4def-8c3a-2ccfb68d5cda) ![Screenshot 2025-04-29 103727](https://github.com/user-attachments/assets/724c0f16-b547-41bb-a143-0610a340fd14)
+
+- alert file: ![Screenshot 2025-04-29 103817](https://github.com/user-attachments/assets/3c09b999-c4ab-408f-9883-f0374288dc12)
+
+- extracted strings from the snort log: ![Screenshot 2025-04-29 104239](https://github.com/user-attachments/assets/22c50a8a-e9da-49b9-8113-74ab3a923cc2)
+
 
 **Use local-1.rules empty file to write a new rule to detect payloads containing the "\IPC$" keyword.**
 
