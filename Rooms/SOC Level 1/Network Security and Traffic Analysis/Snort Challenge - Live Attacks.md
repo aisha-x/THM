@@ -1,4 +1,4 @@
-# TryHackMe: Snort Challenge - Live Attacks
+# TryHackMe: Snort Challenge - Live Attacks Walkthrough
 
 Room URL: https://tryhackme.com/room/snortchallenges2
 
