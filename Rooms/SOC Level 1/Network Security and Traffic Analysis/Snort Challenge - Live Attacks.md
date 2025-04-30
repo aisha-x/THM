@@ -14,8 +14,7 @@ Room URL: https://tryhackme.com/room/snortchallenges2
 
 1. `ifconfig` to learn network information
    -![Screenshot 2025-04-30 110501](https://github.com/user-attachments/assets/03d0cb09-1514-4343-8552-74b9374e345c)
-   - `eth0`: MTU 9001 → used for high-speed or high-throughput communication, likely tuned for performance. such as Cloud environments (e.g., AWS EC2 instances), Data center networks, or Storage networks (like iSCSI or NFS over Ethernet)
-   - `eth1`: MTU 1500 → used for standard networking, compatible with most systems.
+  
 
 2. started with sniffing mode to take an overview on the traffic  
     - `sudo snort -vXi eth0:eth1`
