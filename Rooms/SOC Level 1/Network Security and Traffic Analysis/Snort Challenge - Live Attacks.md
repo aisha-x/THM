@@ -5,6 +5,11 @@ Room URL: https://tryhackme.com/room/snortchallenges2
 ---
 # scenario 1 | Brute-Force:
 
+### Your Mission:
+**You must:**
+- Analyze traffic with Snort.
+- Detect the anomaly (the brute-force behavior).
+- Write a Snort rule to stop the attacker and protect Shot4J.
 
 
 1. `ifconfig` to learn network information
@@ -29,4 +34,12 @@ Room URL: https://tryhackme.com/room/snortchallenges2
 6. this is the alert file
    - ![image](https://github.com/user-attachments/assets/9c2caf3a-123c-4d08-a6a6-befdba93af14)
 
+### Answers:
 
+1. the flag -> ***THM{81b7fef657f8aaa6e4e200d616738254}***
+2. The name of the service under attack -> ***SSH***
+3. the used protocol/port in the attack -> ***TCP/22***
+
+
+--- 
+# Scenario 2 | Reverse-Shell
