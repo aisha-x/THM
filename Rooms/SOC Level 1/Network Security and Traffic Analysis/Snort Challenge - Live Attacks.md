@@ -60,39 +60,39 @@ Room URL: https://tryhackme.com/room/snortchallenges2
 
 
 1. Print network information
-      - ![Screenshot 2025-04-30 152142](https://github.com/user-attachments/assets/032d4f63-953a-464c-9786-0035dc32c1b5)
+   - ![Screenshot 2025-04-30 152142](https://github.com/user-attachments/assets/032d4f63-953a-464c-9786-0035dc32c1b5)
  
 
 2. start with snort sniff mode and log the result for inspection. 
-      - `sudo snort -vXi eth0 -l .`
+   - `sudo snort -vXi eth0 -l .`
 
 3- There are multiple connections from this IP `10.10.144.156:4444` -> `10.10.196.55`
 
 4- I used `strings` command to extract readable characters from the payload: 
 
-     - ![Screenshot 2025-04-30 165002](https://github.com/user-attachments/assets/2e31c733-01fe-4e54-8334-c95b64592409)
+   - ![Screenshot 2025-04-30 165002](https://github.com/user-attachments/assets/2e31c733-01fe-4e54-8334-c95b64592409)
 
-     1. The attacker echoes base64-encoded binary to a file (`/tmp/NlsQY.b64`).
-     - This is the file after being decoded as a binary file:
-     - ![Screenshot 2025-04-30 164305](https://github.com/user-attachments/assets/ebc97ca6-d1d8-441d-8e2c-82f6a3c985cd)
+   1. The attacker echoes base64-encoded binary to a file (`/tmp/NlsQY.b64`).
+   - This is the file after being decoded as a binary file:
+   - ![Screenshot 2025-04-30 164305](https://github.com/user-attachments/assets/ebc97ca6-d1d8-441d-8e2c-82f6a3c985cd)
 
-     2. Tries to decode it using `base64`, `openssl`, `python`, or `perl`.
-     3. Saves it as `/tmp/anCTe`, makes it executable.
-     4. Executes it in the background.
-     5. Deletes both the binary and the base64 file to cover tracks.
+   2. Tries to decode it using `base64`, `openssl`, `python`, or `perl`.
+   3. Saves it as `/tmp/anCTe`, makes it executable.
+   4. Executes it in the background.
+   5. Deletes both the binary and the base64 file to cover tracks.
 
 
 5- So, the attacker:
 
-    - Sent a base64-encoded ELF reverse shell binary.
-    - Used port `4444` to receive an incoming connection. Port 4444 is a common Metasploit/reverse shell port.
-    - Hoped the payload would be decoded, executed, and connect back.
-    - Originated from IP `10.10.144.156`.
+   - Sent a base64-encoded ELF reverse shell binary.
+   - Used port `4444` to receive an incoming connection. Port 4444 is a common Metasploit/reverse shell port.
+   - Hoped the payload would be decoded, executed, and connect back.
+   - Originated from IP `10.10.144.156`.
 
 6- Now, let's start creating an IPS rule to drop all traffic coming from this port `4444`
 
-    - from `/etc/snort/rules/` edit local.rules
-    - ![Screenshot 2025-04-30 172949](https://github.com/user-attachments/assets/9fedb51d-ba70-444f-aac3-a61f97640918)
+   - from `/etc/snort/rules/` edit local.rules
+   - ![Screenshot 2025-04-30 172949](https://github.com/user-attachments/assets/9fedb51d-ba70-444f-aac3-a61f97640918)
 
 
 7- and we get the flag!
