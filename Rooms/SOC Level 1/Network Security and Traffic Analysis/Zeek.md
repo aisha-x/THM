@@ -21,6 +21,38 @@ Zeek generates a variety of log files for different protocol activities, such as
 - *ssl.log*: SSL/TLS handshake data.
 These logs are stored in plain text (TSV format) and are essential for threat detection and forensic analysis.
 
+## Answer the questions below
+
+### Q1. Investigate the sample.pcap file. Investigate the dhcp.log file. What is the available hostname?
+
+- `zeek -C -r sample.pcap`
+- ![image](https://github.com/user-attachments/assets/36b210dc-5948-4b27-80e2-14668fd4f54e)
+- Review the overall connections from `conn.log`
+   - `cat conn.log | zeek-cut id.orig_h id.orig_p id.resp_h id.resp_p service| head`
+   - ![image](https://github.com/user-attachments/assets/ff6f33be-e46d-4156-b3f6-e99db3d17820)
+- open `dhcp.log` to examine the fields and determine how to filter the data
+   - ![image](https://github.com/user-attachments/assets/a6d9e1fa-9eac-4e1c-b7eb-e961d0a317fe)
+- `cat dhcp.log | zeek-cut client_addr server_addr host_name  domain msg_types`
+- ![image](https://github.com/user-attachments/assets/c8aa3159-8a0e-4403-8d70-94ec65337277)
+
+Ans: ***Microknoppix***
+
+### Q2. Investigate the dns.log file. What is the number of unique DNS queries?
+
+- ![image](https://github.com/user-attachments/assets/35e13810-9320-4028-81d1-bf78220d4188)
+- `cat dns.log | zeek-cut query | uniq | wc -l`
+- ![image](https://github.com/user-attachments/assets/4e71de3d-f36c-4af5-9a21-bf5347ae1d7c)
+
+Ans: ***2***
+
+### Q3. Investigate the conn.log file. What is the longest connection duration?
+
+- `cat conn.log | zeek-cut duration | sort -nr | nl | head`
+- ![image](https://github.com/user-attachments/assets/f8b68c94-8f17-4b3a-93f8-a7152d930780)
+
+Ans: ***332.319364***
+
+
 ---
 
 # CLI Kung-Fu Recall: Processing Zeek Logs
