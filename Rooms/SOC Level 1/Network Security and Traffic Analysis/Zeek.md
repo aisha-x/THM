@@ -73,6 +73,62 @@ zeek-cut id.orig_h id.resp_h < conn.log | sort | uniq -c
 
 Zeek supports a signature framework that allows pattern matching on network traffic, similar to Snort or Suricata. Signatures are defined in .sig files and can match payload content, byte patterns, and headers. They trigger events that can be logged or trigger actions.
 
+## Answer the questions below
+
+### Q1. Investigate the `http.pcap` file. Create the  HTTP signature shown in the task and investigate the pcap. What is the source IP of the first event?
+
+- Create an HTTP signature that will detect HTTP cleartext passwords
+- ![image](https://github.com/user-attachments/assets/133be8aa-8aa5-4a01-9294-61362dd34d26)
+- Apply the signature on the pcap file -> `zeek -C -r http.pcap -s http-password.sig`
+- ![image](https://github.com/user-attachments/assets/d4a6c56b-5361-4717-af2b-d3a07fab4194)
+    - Network logs -> conn.log, http.log
+    - file log -> files.log
+    - Zeek diagnostic logs -> packet_filter.log
+- examine the files of the `http.log` using this command `cat http.log | sed -n 7p`
+- ![image](https://github.com/user-attachments/assets/adab4884-8ed7-4b14-aa87-571cc64dd2fd)
+- `cat http.log | zeek-cut id.orig_h id.resp_h method`
+- ![image](https://github.com/user-attachments/assets/cc0883ff-39c3-4930-b6ce-82ab9b6f4958)
+
+Ans: ***10.10.57.178***
+
+### Q2. What is the source port of the second event?
+
+- `cat http.log | zeek-cut id.orig_h id.orig_p id.resp_h | uniq`
+- ![image](https://github.com/user-attachments/assets/7ebfc795-8a33-42e4-a531-4bd65d3331d2)
+
+Ans: ***38712***
+
+### Q3. Investigate the conn.log. What is the total number of the sent and received packets from source port 38706?
+
+- `cat conn.log | zeek-cut id.orig_p orig_pkts resp_pkts | grep "38706"`
+- ![image](https://github.com/user-attachments/assets/295e5e82-66d8-4624-8386-27a6ff04e351)
+
+Ans: ***20***
+
+### Q4. Create the global rule shown in the task and investigate the ftp.pcap file. Investigate the notice.log. What is the number of unique events? 
+
+- Create three signatures for ftp protocol: FTP brute force attempt, ftp admin attempt, and ftp login attempt.
+- ![image](https://github.com/user-attachments/assets/dbd84bca-f477-402f-9000-b7c0b603f50f)
+- `zeek -C -r ftp.pcap -s ftp-bruteforce.sig`
+- ![Screenshot 2025-05-02 133631](https://github.com/user-attachments/assets/b82cec29-7adb-44c1-baf5-ef2dbf10719a)
+    - Network logs -> conn.log
+    - Detections -> notice.log, signatures.log
+    - Zeek diagnostic logs -> packet_filter.log
+    - Miscellaneous -> weird.log
+- `cat notice.log | zeek-cut uid | sort | uniq | wc -l`
+- ![image](https://github.com/user-attachments/assets/2d84b966-b519-4776-84ca-1840ca406185)
+
+Ans: ***1413***
+
+
+### What is the number of ftp-brute signature matches?
+
+- `cat notice.log | zeek-cut msg | grep "Brute-" | wc`
+- ![image](https://github.com/user-attachments/assets/41537178-6d25-4770-a667-91d2f8e8782d)
+
+Ans: ***1410***
+
+ 
 ---
 
 # Zeek Scripts | Fundamentals
