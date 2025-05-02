@@ -131,7 +131,7 @@ Ans: ***1410***
  
 ---
 
-# Zeek Scripts | Fundamentals
+# TASK-6: Zeek Scripts | Fundamentals
 
 Zeeks scripting language is event-driven and allows users to define behaviors when specific events (like a new connection or HTTP request) occur. Basic elements include:
 - event handlers
@@ -192,16 +192,67 @@ Ans: ***jaalam.net***
 
 ---
 
-# Zeek Scripts | Scripts and Signatures
+# TASK-7: Zeek Scripts | Scripts and Signatures
 
 Scripts can complement or extend signatures to provide context-aware detection. For instance, a script might check if an internal host is communicating with a known malicious IP, then log an alert. You can use scripts to:
 - Suppress false positives
 - Correlate multiple events
 - Trigger custom alerts
 
+## Answer the questions below
+
+### Q1. Go to folder TASK-7/101.Investigate the sample.pcap file with 103.zeek script. Investigate the terminal output. What is the number of the detected new connections?
+
+- ![image](https://github.com/user-attachments/assets/ceb8f7a0-6dda-4909-9868-470ae8f50a19)
+- `zeek -C -r sample.pcap 103.zeek`
+    - result: ![image](https://github.com/user-attachments/assets/f61ff66b-7a72-49fd-8c42-c6666d799c53)
+    - ![image](https://github.com/user-attachments/assets/dd1d2eb1-2e9e-482b-871b-87756bbc35cb)
+
+- `cat conn.log | zeek-cut uid | sort | uniq | wc`
+   - ![image](https://github.com/user-attachments/assets/1d8a8b13-9ae7-44b0-98dd-9bc7a58dd71d)
+ 
+Ans: ***87***
+
+### Q2. Go to folder TASK-7/201. Investigate the ftp.pcap file with ftp-admin.sig signature and  201.zeek script. Investigate the signatures.log file. What is the number of signature hits?
+
+- This basic script quickly checks if there is a signature hit and provides terminal output to notify us
+- ![image](https://github.com/user-attachments/assets/47046b22-727c-43c7-90b6-a2c4036086a9) ![image](https://github.com/user-attachments/assets/a6298120-aaf2-460a-8a6d-055bd83a1007)
+
+- `zeek -C -r ftp.pcap -s ftp-admin.sig 201.zeek`
+   - ![image](https://github.com/user-attachments/assets/d1ed39b1-0214-4c2c-8c2a-17ba182fc93b)
+- `cat signatures.log | zeek-cut uid | sort | uniq | wc`
+   - ![image](https://github.com/user-attachments/assets/4c2d4253-459f-4f44-b06a-2675b33b19f8)
+
+Ans: ***1401***
+
+### Q3. Investigate the signatures.log file. What is the total number of "administrator" username detections?
+
+- `cat signatures.log | zeek-cut sub_msg | grep "administrator" | wc`
+  - ![image](https://github.com/user-attachments/assets/29ab449d-718c-4cd7-97dd-36a39f831b75)
+
+Ans: ***731***
+
+### Q4. Investigate the ftp.pcap file with all local scripts, and investigate the loaded_scripts.log file. What is the total number of loaded scripts?
+
+- Clear previous logs with `./clear-logs.sh` script and run `ftp.pcap` on the local scripts `zeek -C -r ftp.pcap local`
+    - ![image](https://github.com/user-attachments/assets/7d32669f-dd61-40c6-b508-6362958afbd1)
+- `cat loaded_scripts.log | zeek-cut name | wc`
+    - ![image](https://github.com/user-attachments/assets/7256c29e-d423-40bc-8e7c-6050d8c78271)
+
+Ans: ***498***
+
+### Q5. Go to folder TASK-7/202. Investigate the ftp-brute.pcap file with "/opt/zeek/share/zeek/policy/protocols/ftp/detect-bruteforcing.zeek" script. Investigate the notice.log file. What is the total number of brute-force detections?
+
+- `zeek -C -r ftp-brute.pcap /opt/zeek/share/zeek/policy/protocols/ftp/detect-bruteforcing.zeek`
+   - ![image](https://github.com/user-attachments/assets/a8bf2a5a-48e7-4ff3-b41d-30e314d6e295)
+- `cat notice.log | zeek-cut note msg src dst`
+   -![image](https://github.com/user-attachments/assets/c9854fa8-d796-4f5d-ae3d-4192b292a098)
+
+Ans: ***2***
+
 ---
 
-# Zeek Scripts | Frameworks
+# TASK-8: Zeek Scripts | Frameworks
 
 Zeek includes built-in frameworks such as:
 - *Notice Framework*: For generating security notices.
