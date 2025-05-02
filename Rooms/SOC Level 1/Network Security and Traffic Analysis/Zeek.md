@@ -133,11 +133,62 @@ Ans: ***1410***
 
 # Zeek Scripts | Fundamentals
 
-Zeekâs scripting language is event-driven and allows users to define behaviors when specific events (like a new connection or HTTP request) occur. Basic elements include:
+Zeeks scripting language is event-driven and allows users to define behaviors when specific events (like a new connection or HTTP request) occur. Basic elements include:
 - event handlers
 - Variables and types
 - Conditional logic
 - Built-in functions
+
+**Zeek has base scripts installed by default, and these are not intended to be modified. These scripts are located in `/opt/zeek/share/zeek/base`.**
+     - ![image](https://github.com/user-attachments/assets/c8dc86f6-6e55-4510-90ae-f75e93552460)
+
+**User-generated or modified scripts should be located in a specific path. These scripts are located in `/opt/zeek/share/zeek/site`.**
+    - ![image](https://github.com/user-attachments/assets/447693c9-224b-43ef-b3f2-45a1dec7450b)
+
+**Policy scripts are located in a specific path.These scripts are located in `/opt/zeek/share/zeek/policy`.**
+    - ![image](https://github.com/user-attachments/assets/8f4b804d-a9e7-430a-8ac9-e3ae0973dd5b)
+
+**Like Snort, to automatically load/use a script in live sniffing mode, you must identify the script in the Zeek configuration file. You can also use a script for a single run, just like the signatures. The configuration file is located in `/opt/zeek/share/zeek/site/local.zeek`.**
+    - ![image](https://github.com/user-attachments/assets/06a659a0-be52-4d63-92ff-b92e78627ff5)
+
+
+## Answer the questions below
+
+### Q1. Investigate the smallFlows.pcap file. Investigate the dhcp.log file. What is the domain value of the "vinlap01" host?
+
+- ![image](https://github.com/user-attachments/assets/228c12cc-d033-4b82-b766-7b16f82c8a37)
+- `zeek -C -r smallFlows.pcap dhcp-hostname.zeek`
+    - ![image](https://github.com/user-attachments/assets/518497ab-faef-4387-82da-f71e2b207ba9)
+
+- `cat dhcp.log | zeek-cut host_name domain | grep "vinlap01"`
+   - ![image](https://github.com/user-attachments/assets/736f006f-65ad-40db-aff4-7f27a8a0f1c9)
+
+Ans: ***astaro_vineyard***
+
+### Q2. Investigate the bigFlows.pcap file. Investigate the dhcp.log file. What is the number of identified unique hostnames?
+
+- ![image](https://github.com/user-attachments/assets/4d48ea00-07ce-4bd4-b971-5447b9a30826)
+- `zeek -C -r bigFlows.pcap dhcp-hostname.zeek`
+   - ![image](https://github.com/user-attachments/assets/d810b6e3-b98b-43a5-9acb-eb903ab04e07)
+   - ![image](https://github.com/user-attachments/assets/67d79b66-9609-453c-acdd-1a6c988a74ed)
+    - **Network logs** -> conn.log, http.log, dns.log, sip.log, ssh.log, ssl.log, syslog.log, smb_files.log, smb_mapping.log, snmp.log, ntp.log, kerberos.log, ntlm.log, dce_rpc.log
+    - **file log** -> files.log, ocsp.log, x509.log
+    - **Zeek diagnostic logs** -> packet_filter.log, reporter.log
+    - **Miscellaneous** -> dpd.log, weird.log
+
+
+- `cat dhcp.log | zeek-cut host_name | sort | uniq | wc`
+- ![image](https://github.com/user-attachments/assets/fd925db3-1607-45b0-bb65-345fd2b5a185)
+- The empty value was counted, so it is 17 without it
+
+Ans: ***17***
+
+### Q3. Investigate the dhcp.log file. What is the identified domain value?
+
+- `cat dhcp.log | zeek-cut domain | sort -nr | uniq `
+- ![image](https://github.com/user-attachments/assets/20a6ed61-ee24-4d1f-bc7b-6c3790f3b728)
+
+Ans: ***jaalam.net***
 
 ---
 
