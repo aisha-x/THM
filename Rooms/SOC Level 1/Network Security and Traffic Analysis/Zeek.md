@@ -2,7 +2,7 @@
 
 Room URL: https://tryhackme.com/room/zeekbro
 
-# Network Security Monitoring and Zeek
+# TASK-2:  Network Security Monitoring and Zeek
 
 ## Network Security Monitoring (NSM)
 Network Security Monitoring involves the collection, analysis, and escalation of indications and warnings to detect and respond to intrusions. It relies on full packet capture, protocol analysis, and event logging to give security analysts insights into network activities.
@@ -12,7 +12,7 @@ Zeek (formerly Bro) is a powerful network analysis framework focused on security
 
 ---
 
-# Zeek Logs
+# TASK-3:  Zeek Logs
 
 Zeek generates a variety of log files for different protocol activities, such as:
 - *conn.log*: Connection summaries.
@@ -69,7 +69,7 @@ zeek-cut id.orig_h id.resp_h < conn.log | sort | uniq -c
 
 ---
 
-# Zeek Signatures
+# TASK-5: Zeek Signatures
 
 Zeek supports a signature framework that allows pattern matching on network traffic, similar to Snort or Suricata. Signatures are defined in .sig files and can match payload content, byte patterns, and headers. They trigger events that can be logged or trigger actions.
 
@@ -121,7 +121,7 @@ Ans: ***20***
 Ans: ***1413***
 
 
-### What is the number of ftp-brute signature matches?
+### Q5. What is the number of ftp-brute signature matches?
 
 - `cat notice.log | zeek-cut msg | grep "Brute-" | wc`
 - ![image](https://github.com/user-attachments/assets/41537178-6d25-4770-a667-91d2f8e8782d)
@@ -130,7 +130,6 @@ Ans: ***1410***
 
  
 ---
-
 # TASK-6: Zeek Scripts | Fundamentals
 
 Zeeks scripting language is event-driven and allows users to define behaviors when specific events (like a new connection or HTTP request) occur. Basic elements include:
@@ -251,8 +250,8 @@ Ans: ***498***
 Ans: ***2***
 
 ---
-
 # TASK-8: Zeek Scripts | Frameworks
+
 
 Zeek includes built-in frameworks such as:
 - *Notice Framework*: For generating security notices.
@@ -260,11 +259,102 @@ Zeek includes built-in frameworks such as:
 - *Input Framework*: For reading structured data from files.
 These frameworks simplify the creation of complex, structured detection logic.
 
+## Answer the questions below
+
+### Q1. Investigate the case1.pcap file with intelligence-demo.zeek script. Investigate the intel.log file. Look at the second finding, where was the intel info found? 
+
+- ![image](https://github.com/user-attachments/assets/85856f49-3691-4e50-9010-320b95ec6a63)
+- ![image](https://github.com/user-attachments/assets/4bdad732-cbaa-41bb-bc79-9b3581189fdd)
+- `zeek -C -r case1.pcap intelligence-demo.zeek`
+   - ![image](https://github.com/user-attachments/assets/df058bc8-6ace-40c2-bbd6-530e7d461cbe)
+- `cat intel.log | zeek-cut id.orig_h id.resp_h seen.indicator seen.where | sed -n '2p'`
+   - ![image](https://github.com/user-attachments/assets/1d655b50-3d14-4f3f-9b35-21b1f4b9049b)
+
+Ans: ***IN_HOST_HEADER***
+
+### Q2. Investigate the http.log file. What is the name of the downloaded .exe file?
+
+- `cat http.log | zeek-cut id.orig_h id.resp_h  host uri | grep "exe"`
+   - ![image](https://github.com/user-attachments/assets/3f0097a3-621e-4586-b503-5ff4ebad163a)
+
+Ans: ***knr.exe***
+
+### Q3. Investigate the case1.pcap file with hash-demo.zeek script. Investigate the files.log file. What is the MD5 hash of the downloaded .exe file?
+
+- ![image](https://github.com/user-attachments/assets/06a3064b-e154-471a-aff3-97dbbf8cc1f4)
+- ![image](https://github.com/user-attachments/assets/a430baff-61e5-4a35-9565-e0e00b749331)
+- `zeek -C -r case1.pcap hash-demo.zeek `
+  - ![image](https://github.com/user-attachments/assets/b344d261-18d2-482b-a42c-533eec4feb05)
+- `cat files.log | zeek-cut tx_hosts rx_hosts mime_type md5  | grep "x-dosexec"` 
+- ![image](https://github.com/user-attachments/assets/7e77ec16-9c22-4773-8aea-ffc565ed9647)
+- `application/x-dosexec` is a MIME type used by Zeek to classify Windows executable files—typically .exe files.Zeek identifies this type based on file signatures (magic bytes), not file extensions.
+
+Ans: ***cc28e40b46237ab6d5282199ef78c464***
+
+### Q4. Investigate the case1.pcap file with file-extract-demo.zeek script. Investigate the "extract_files" folder. Review the contents of the text file. What is written in the file?
+
+- ![image](https://github.com/user-attachments/assets/534bbc24-1807-4d5f-b693-9904027fb214)
+- This script captures and writes out all files transferred over the network (e.g., via HTTP, FTP, SMTP), saving them in the extract_files/ directory.
+-`zeek -C -r case1.pcap file-extract-demo.zeek`
+   - ![image](https://github.com/user-attachments/assets/f2ca2d0c-1eee-49c8-900f-95f4f3533dd4)
+- ![image](https://github.com/user-attachments/assets/dac60784-a536-4bf1-a086-87cda87f5f7a)
+   1. A plain ASCII text file.Could be a script, a config, or some harmless payload.
+   2. A Microsoft Word document (likely .doc or .docm) saved with metadata.Possible macro-enabled file (.docm), which can be suspicious if downloaded from untrusted sources.
+   3. A Windows executable (.exe)
+
+- ![image](https://github.com/user-attachments/assets/81350843-15d7-493a-8b0b-b1429a320509)
+
+Ans: ***Microsoft NCSI***
+
 ---
 
-# Zeek Scripts | Packages
+# TASK-9 Zeek Scripts | Packages
 
 Zeek supports a package manager (zkg) to install and manage scripts from the community. Packages extend Zeek's capabilities without needing to write new code from scratch. Examples include:
 - Detecting Tor traffic
 - Analyzing industrial protocols
 - Enhancing log enrichment
+
+## Answer the questions below
+
+### Q1. Investigate the http.pcap file with the zeek-sniffpass module. Investigate the notice.log file. Which username has more module hits?
+
+- this package creates alerts for cleartext passwords found in HTTP traffic.
+- `zeek -Cr http.pcap /opt/zeek/share/zeek/site/zeek-sniffpass`
+   - ![image](https://github.com/user-attachments/assets/e54e0061-fb0c-4d45-bee8-c9bcf12d4fd6)
+- `cat notice.log | zeek-cut  id.orig_h id.resp_h note msg`
+  - ![image](https://github.com/user-attachments/assets/e9fb2be1-e780-450a-b81d-001e53418b2b)
+
+Ans: ***BroZeek***
+
+### Q2. Investigate the case2.pcap file with geoip-conn module. Investigate the conn.log file. What is the name of the identified City?
+
+- This package provides geolocation information for the IP addresses in the conn.log file
+- lets first find the module,
+- ![image](https://github.com/user-attachments/assets/3db8939b-c35d-4fbb-8f9d-31b59dc3e8ca)
+- `zeek -Cr case2.pcap /opt/zeek/share/zeek/site/geoip-conn`
+   - ![image](https://github.com/user-attachments/assets/6a5515d5-6533-4266-922d-2b77af2598b5)
+
+- `cat conn.log | zeek-cut id.orig_h id.resp_h id.resp_p geo.resp.region geo.resp.city | head`
+- ![image](https://github.com/user-attachments/assets/7d899b96-35ce-469e-931a-8bda2737d3bb)
+
+Ans: ***Chicago***
+
+### Q3. Which IP address is associated with the identified City?
+
+- The response location is in Chicago
+- ![image](https://github.com/user-attachments/assets/f1f484c4-a2b8-46c7-8c4c-29dcfae3b207)
+
+Ans: ***23.77.86.54***
+
+### Q4. Investigate the case2.pcap file with sumstats-counttable.zeek script. How many types of status codes are there in the given traffic capture?
+
+- ![image](https://github.com/user-attachments/assets/736e6d4a-15e1-4b94-bb34-c74ff718c61a)
+- This Zeek script uses the `SumStats` framework (specifically the `zeek-sumstats-counttable` module) to track HTTP status codes seen over time, grouped by responding host (IP). It counts the frequency of each HTTP status code (like 200, 404, 500, etc.) returned by each server (i.e., resp_h) and prints a summary once per hour.
+- `zeek -Cr case2.pcap sumstats-counttable.zeek `
+   - ![image](https://github.com/user-attachments/assets/30c7b12e-de1f-497f-ad00-c132e06f7239)
+- types returned is (301,404,302,200)
+
+Ans: ***4***
+
+
