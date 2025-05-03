@@ -64,7 +64,7 @@ Using the command line to analyze Zeek logs includes:
 
 Example:
 bash
-zeek-cut id.orig_h id.resp_h < conn.log | sort | uniq -c
+`zeek-cut id.orig_h id.resp_h < conn.log | sort | uniq -c`
 
 
 ---
@@ -84,7 +84,7 @@ Zeek supports a signature framework that allows pattern matching on network traf
     - Network logs -> conn.log, http.log
     - file log -> files.log
     - Zeek diagnostic logs -> packet_filter.log
-- examine the files of the `http.log` using this command `cat http.log | sed -n 7p`
+- examine the fields of the `http.log` using this command `cat http.log | sed -n 7p`
 - ![image](https://github.com/user-attachments/assets/adab4884-8ed7-4b14-aa87-571cc64dd2fd)
 - `cat http.log | zeek-cut id.orig_h id.resp_h method`
 - ![image](https://github.com/user-attachments/assets/cc0883ff-39c3-4930-b6ce-82ab9b6f4958)
