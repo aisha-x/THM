@@ -43,9 +43,33 @@ Ans: ***6***
 - ![image](https://github.com/user-attachments/assets/fdb5df36-14a9-48ae-84c5-ae0399763621)
 - `cat conn.log | zeek-cut id.orig_h id.resp_h service | awk  '/10.20.57.3/ && /10.10.2.21/' | grep "dns" | wc   `
 - ![image](https://github.com/user-attachments/assets/2c09d968-e6c4-4773-ae58-06bb9cb0f1db)
-- there are 2851 number of DNS connections between the two IPs
+- There are 2851 DNS connections between the two IPs, so it 
 
 Ans: ***10.20.57.3***
 
+## is it True Positive?
+Yes — based on the evidence below, this strongly appears to be a true positive.
+pic
 
+**Why This Is Likely a True Positive?**
+
+1. Patterned, Random Subdomains
+   - Hostnames like `d5c8016cb1e77e46b46acb16c24df1aea3.cisco-update.com` are typical of encoded payloads in DNS tunneling.
+2. Consistent Base Domain
+   - The repeated use of cisco-update.com mimics a legitimate vendor (Cisco), which is a common tactic for evasion.
+   - But it's not a legitimate Cisco domain — Cisco uses *.cisco.com.
+3. High-Frequency Queries
+   - Dozens of queries per second are not normal DNS client behavior.
+   - Regular clients would typically query only once per domain and cache the result.
+4. Internal-to-Internal DNS Traffic
+The DNS server (10.10.2.21) is inside the network, which is suspicious if it's being used to resolve external-looking fake domains.
+
+
+
+---
+# TASK-3 Phishing
+
+An alert triggered: **"Phishing Attempt"**.
+
+The case was assigned to you. Inspect the PCAP and retrieve the artefacts to confirm this alert is a true positive. 
 
