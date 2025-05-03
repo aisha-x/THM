@@ -73,3 +73,63 @@ An alert triggered: **"Phishing Attempt"**.
 
 The case was assigned to you. Inspect the PCAP and retrieve the artefacts to confirm this alert is a true positive. 
 
+
+## Answer the questions below
+
+### Q1. Investigate the logs. What is the suspicious source address? Enter your answer in defanged format.
+
+- `zeek -Cr phishing.pcap file-extract-demo.zeek hash-demo.zeek `
+- ![image](https://github.com/user-attachments/assets/9ae11e45-816c-4805-b75e-0930d2456dd2)
+- `cat http.log | zeek-cut id.orig_h id.resp_h method host uri`
+- ![image](https://github.com/user-attachments/assets/0a3673e6-b88d-4026-a425-2b1684194f1f)
+- Why suspicious? Because this IP is requesting an executable file from a suspicious domain that may be associated with malware or phishing 
+
+Ans: ***10[.]6[.]27[.]102***
+
+### Q2. Investigate the http.log file. Which domain address were the malicious files downloaded from? Enter your answer in defanged format.
+
+- We already know the domain that is associated with the downloaded file from question 1
+- Use cyberchef to defang the domain address
+- ![image](https://github.com/user-attachments/assets/f87737bf-095a-41e5-bc86-af401643c319)
+
+Ans: ***smart-fax[.]com***
+
+### Q3. Investigate the malicious document in VirusTotal. What kind of file is associated with the malicious document?
+
+- view extracted files and hash the malicious document using `md5sum` to generate md5 hash and search for this file in `VirusToal`
+- ![image](https://github.com/user-attachments/assets/fb6451ac-ac5a-4215-afc9-c68ca74958c4)
+- Go to the Community tab to confirm the file type and properties  
+- ![image](https://github.com/user-attachments/assets/78f06258-c5d9-46e3-b9aa-6cebacddb824)
+- ![image](https://github.com/user-attachments/assets/7c869ca3-78cf-4f01-bcd8-6c7122adf1f1)
+- The malicious document is a Microsoft Word file containing `VBA` (Visual Basic for Applications) macros. The embedded component `ThisDocument.cls` suggests that it includes a macro-enabled script, which is commonly used to execute malicious code when the document is opened. These types of files are typically used to download or execute malware on the victim's system.
+
+Ans: ***VBA***
+
+### Q3. Investigate the extracted malicious .exe file. What is the given file name in Virustotal?
+
+- gernerate `md5` hash to search for this file in VirusTotal website
+- ![image](https://github.com/user-attachments/assets/e662318c-7a9b-4338-833e-2142b3714861)
+- Go to the Community tab to confirm the file type and properties  
+- ![image](https://github.com/user-attachments/assets/5a78bfd6-bf03-473a-a2b7-a14a7169f471)
+- in the Details Tab, under the names section
+- ![image](https://github.com/user-attachments/assets/b1041175-4e29-4505-a3f9-5d05e910ca08)
+
+Ans: ***PleaseWaitWindow.exe***
+
+### Q4. Investigate the malicious .exe file in VirusTotal. What is the contacted domain name? Enter your answer in defanged format.
+
+- Continue from question 2, Behaviour > Network Communication > DNS Resolutions
+- ![image](https://github.com/user-attachments/assets/885d89ff-81af-4a93-b2de-f91f099317b3)
+- ![image](https://github.com/user-attachments/assets/862977c8-ebfb-4ca9-afd1-f03f061539d1)
+
+Ans: ***hopto[.]org***
+
+### Q5. Investigate the http.log file. What is the request name of the downloaded malicious .exe file?
+
+- `cat http.log | zeek-cut method host uri`
+- ![image](https://github.com/user-attachments/assets/8e00fe28-4472-43ec-9b11-f67e16cfadb2)
+
+Ans: ***knr.exe***
+
+
+
