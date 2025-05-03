@@ -1,6 +1,7 @@
-# TryHackMe: Zeek Room Summary
+# TryHackMe: Zeek Room — Summary and Answers to the Room's Questions
 
 Room URL: https://tryhackme.com/room/zeekbro
+
 
 # TASK-2:  Network Security Monitoring and Zeek
 
@@ -356,5 +357,16 @@ Ans: ***23.77.86.54***
 - types returned is (301,404,302,200)
 
 Ans: ***4***
+
+---
+# References
+
+- Corelight log cheat sheet -> *https://corelight.com/products/compare-to-zeek*
+- Zeek Frameworks -> *https://docs.zeek.org/en/master/frameworks/index.html*
+- Zeek's official documentation -> *https://docs.zeek.org/en/current/script-reference/log-files.html*
+- RFC 765 -> *https://datatracker.ietf.org/doc/html/rfc765*
+- Zeek Scripting language Official training platform -> *https://try.bro.org/#/?example=hello*
+- Zeek repo -> *https://docs.zeek.org/en/master/script-reference/scripts.html*
+- ZeekPro TryHackMe Room -> *https://tryhackme.com/room/zeekbro*
 
 
