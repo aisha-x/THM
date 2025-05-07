@@ -256,3 +256,66 @@ Ans: ***10[.]1[.]12[.]2***
 
 Ans: ***xp1$***
 
+---
+# Tunneling Traffic: DNS and ICMP
+
+##  1. DNS (Domain Name System) Analysis
+
+### What It Is
+DNS translates human-readable domain names (like `www.google.com`) into IP addresses. It uses UDP port 53 by default (and TCP in some cases like zone transfers).
+
+### 🔍 Common Wireshark Filters
+- `dns` – Show all DNS traffic.
+- `udp.port == 53` – DNS over UDP.
+- `tcp.port == 53` – DNS over TCP.
+- `dns.qry.name == "example.com"` – Show queries for a specific domain.
+- `dns.flags.response == 0` – Only show DNS queries.
+- `dns.flags.response == 1` – Only show DNS responses.
+
+### 🚩 Common Anomalies to Look For
+- **DNS Tunneling**: Excessive, abnormal subdomain queries (e.g., very long or encoded query names).
+- **NXDOMAIN Floods**: Too many “Non-Existent Domain” responses indicating possible reconnaissance.
+- **DNS Spoofing/Poisoning**: Responses with suspicious or incorrect IPs.
+- **Slow Resolution**: Long response times.
+- **Unexpected Port Usage**: DNS traffic on non-standard ports.
+
+
+## 2. ICMP (Internet Control Message Protocol) Analysis
+
+### What It Is
+ICMP is used for diagnostic and control purposes, such as the common `ping` command. It's not used to carry user data, but to report errors and network conditions.
+
+### 🔍 Common Wireshark Filters
+- `icmp` – Show all ICMP traffic.
+- `icmp.type == 8` – Echo request (ping).
+- `icmp.type == 0` – Echo reply.
+- `icmp.type == 3` – Destination unreachable.
+- `icmp.type == 11` – Time Exceeded (e.g., from traceroute).
+- `icmp.code` – Further refines the type (e.g., `icmp.type == 3 and icmp.code == 1` for "host unreachable").
+
+### 🚩 Common Anomalies to Look For
+- **ICMP Flooding**: High rate of echo requests may indicate a DoS attack.
+- **Unexpected Types**: Rare ICMP message types might suggest scanning or probing.
+- **TTL Exceeded**: Might indicate routing loops or traceroute activity.
+- **Large ICMP Packets**: Can be used for covert channels or data exfiltration.
+
+
+## Answer the questions below
+
+### Q1.Investigate the anomalous packets. Which protocol is used in ICMP tunnelling?
+
+- `data.len > 64 and  icmp `
+- ![Screenshot 2025-05-07 123058](https://github.com/user-attachments/assets/fc4292b2-4487-48c0-8cdb-c12771fe4b39)
+- look in the packet byte panel, and inspect the ASCII characters
+
+Ans: ***ssh***
+
+### Q2.Investigate the anomalous packets. What is the suspicious main domain address that receives anomalous DNS queries? (Enter the address in defanged format.)
+
+- `dns.qry.name.len > 15 and !mdns and (dns.qry.type==5)`
+- ![Screenshot 2025-05-07 133257](https://github.com/user-attachments/assets/a22ef87f-7060-4b3d-89f8-6dfca03c8233)
+
+
+Ans: ***dataexfil[.]com***
+
+
