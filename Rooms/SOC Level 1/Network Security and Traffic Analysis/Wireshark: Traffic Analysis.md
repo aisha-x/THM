@@ -3,7 +3,7 @@
 Room URL: https://tryhackme.com/room/wiresharktrafficanalysis
 
 ---
-# TASK-2 Nmap Scans
+# TASK-2:  Nmap Scans
 
 How can you detect **nmap** scan activity using Wireshark? 
 
@@ -59,7 +59,7 @@ Ans: ***68***
 
 
 ---
-# ARP Poisoning & Man In The Middle!
+# TASK-3: ARP Poisoning & Man In The Middle!
 
 ## What is ARP?
 ARP is used to map IP addresses (e.g., 192.168.1.1) to MAC addresses (e.g., 00:0c:29:e2:18:b4) on a local area network (LAN).
@@ -135,7 +135,7 @@ Ans: ***Nice work!***
 
 
 ---
-# Identifying Hosts: DHCP, NetBIOS and Kerberos
+# TASK-4: Identifying Hosts: DHCP, NetBIOS and Kerberos
 
 
 ##  1. DHCP (Dynamic Host Configuration Protocol) Analysis
@@ -257,7 +257,7 @@ Ans: ***10[.]1[.]12[.]2***
 Ans: ***xp1$***
 
 ---
-# Tunneling Traffic: DNS and ICMP
+# TASK-5: Tunneling Traffic: DNS and ICMP
 
 ##  1. DNS (Domain Name System) Analysis
 
@@ -319,7 +319,7 @@ Ans: ***ssh***
 Ans: ***dataexfil[.]com***
 
 ---
-# Cleartext Protocol Analysis: FTP
+# TASK-6: Cleartext Protocol Analysis: FTP
 
 ## FTP Overview
 
@@ -420,7 +420,7 @@ Ans: ***CHMOD 777***
 
 
 ---
-# Cleartext Protocol Analysis: HTTP
+# TASK-7: Cleartext Protocol Analysis: HTTP
 
 ## HTTP Analysis (in a nutshell)
 
@@ -468,12 +468,32 @@ Ans: ***CHMOD 777***
 
 ### Q1. Investigate the user agents. What is the number of anomalous  "user-agent" types?
 
-- pic
-- 
-- 
-Ans: ******
-### Q2.
-Ans: ******
+- ![Screenshot 2025-05-07 211629](https://github.com/user-attachments/assets/bb08754c-64c4-435d-b3ee-217802014b7e)
+- all available user-agents have been inspected, and the result:
+
+| User-Agent String                                                               | Verdict       | Reason                   |
+| ------------------------------------------------------------------------------- | ------------- | ------------------------ |
+| Mozilla/5.0 (Windows NT 6.4) Chrome/8.0                                         | ⚠️ Suspicious | Outdated + fake OS       |
+| Mozilla/5.0 Firefox/68.0 (Linux)                                                | ✅ Legitimate  | Common browser           |
+| Google Chrome/83.0.4103.116 Windows                                             | ⚠️ Suspicious | Incomplete format        |
+| Mozilla/5.0 (compatible; Nmap Scripting Engine)                                 | ❌ Malicious   | Port scanning tool       |
+| Wfuzz/2.4                                                                       | ❌ Malicious   | Web fuzzing tool         |
+| sqlmap/1.4#stable                                                               | ❌ Malicious   | SQL injection automation |
+| \${jndi\:ldap\://...}                                                           | ❌ Exploit     | Log4j RCE attack         |
+| Mozilla/5.0 Chrome/52.0 (Linux)                                                 | ✅ Legitimate  | Real browser             |
+| Firefox/100.0 (Ubuntu)                                                          | ✅ Legitimate  | Normal traffic           |
+| Mozilla/5.0 (X11; Ubuntu; Linux x86\_64; rv:100.0) Gecko/20100101 Firefox/100.0 | ✅ Legitimate  | Standard browser string  |
+| Microsoft-WNS/10.0                                                              | ✅ Legitimate  | Windows system service   |
+
+Ans: ***6***
+
+### Q2.What is the packet number with a subtle spelling difference in the user agent field?
+
+- The packet number 52
+- `Mozlila/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0`
+- `Mozlila` instead of `Mozilla`, that subtle misspelling is often used in malicious traffic
+
+Ans: ***52***
 
 ### Q3.Locate the "Log4j" attack starting phase. What is the packet number?
 
