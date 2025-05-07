@@ -512,5 +512,180 @@ Ans: ***444***
 Ans: ***62[.]210[.]130[.]250***
 
 
+---
+# TASK-8: Encrypted Protocol Analysis: Decrypting HTTPS
+ 
+## 🔐 Decrypting HTTPS Traffic in Wireshark
+
+### Requirements for Decryption:
+
+Wireshark can **decrypt HTTPS (TLS)** traffic only if one of the following is available:
+
+#### 1. **Pre-Master Secret Logging (Preferred for browsers like Firefox/Chrome)**
+
+* Set the environment variable:
+  `SSLKEYLOGFILE=/path/to/sslkeys.log`
+* Wireshark → Preferences → Protocols → TLS → Use (Pre)-Master Secret log file
+
+#### 2. **Private Key (for RSA Key Exchange – rare today)**
+
+* Requires server’s private key — only works if the session didn’t use Perfect Forward Secrecy (PFS).
+* Works with `.p12` or `.pem` certificates
+
+> ⚠️ **Modern HTTPS traffic often uses forward secrecy**, making decryption with private keys impossible unless secrets were logged.
+
+---
+
+### 📉 Common Anomalies in HTTPS Traffic:
+
+| Anomaly                         | Description                                         |
+| ------------------------------- | --------------------------------------------------- |
+| ❗ Unusual TLS Versions          | Old versions (e.g., TLS 1.0, 1.1) are insecure      |
+| 🚨 Self-signed Certificates     | May indicate MITM or poorly configured test systems |
+| 🔁 Excessive Handshakes         | Could be scanning tools or misconfigured clients    |
+| ⛔ Frequent TLS Alert Messages   | Indicates failed negotiation or abrupt terminations |
+| 🌐 SNI Mismatch                 | Server Name Indication doesn't match certificate CN |
+| 🧬 Encrypted Malicious Payloads | Exfiltration over HTTPS to unknown or shady domains |
+
+---
+
+### 🔍 Common Wireshark Filters for HTTPS Analysis:
+
+| Filter                         | Purpose                                         |
+| ------------------------------ | ----------------------------------------------- |
+| `tls`                          | Show all TLS packets                            |
+| `tcp.port == 443`              | Show traffic on HTTPS port                      |
+| `tls.handshake`                | Focus only on TLS handshake process             |
+| `tls.record.version < 0x0303`  | Detect weak TLS versions (e.g., SSLv3, TLS 1.0) |
+| `tls.handshake.type == 1`      | Show only `Client Hello` packets                |
+| `ip.addr == x.x.x.x`           | Focus on a single host (src or dst)             |
+| `frame contains "example.com"` | Match a string in any decrypted content         |
+
+---
+
+### 🎯 Tips:
+
+* **Always start decryption early** in the session; if the handshake is missed, decryption fails.
+* Decryption works only on captured data **with matching keys or secrets**.
+* Combine `http`, `tls`, and `dns` filters to trace full flow (e.g., from DNS to HTTP GET).
+
+## Answer the questions below
+
+### Q1.What is the frame number of the "Client Hello" message sent to "accounts.google.com"?
+
+
+- Apply the extensions_server_name field of the TLS layer as a column, then search for this specific server name
+- `(tls.handshake.type==1) && (tls.handshake.extensions_server_name == "accounts.google.com")`
+
+Ans: ***16***
+
+### Q2.Decrypt the traffic with the "KeysLogFile.txt" file. What is the number of HTTP2 packets?
+
+- to decrypt the traffic with a key log file, right click on the TLS layer in packet details panel > Protocol Preferences >  (pre)-Master-Secret log filename.. then add the file and click ok
+- ![Screenshot 2025-05-07 222754](https://github.com/user-attachments/assets/63163ef6-b8c1-4e26-85e8-e9f0c89dac59)
+![Screenshot 2025-05-07 222821](https://github.com/user-attachments/assets/a65eeb30-3bb4-47ab-89b6-c9b2e8268201)
+- The second approach is from  "Edit --> Preferences --> Protocols --> TLS" menu
+- then search for `http2` 
+
+Ans: ***115***
+
+### Q3.Go to Frame 322. What is the authority header of the HTTP2 packet? (Enter the address in defanged format.)
+
+- `frame.number == 322`
+- ![Screenshot 2025-05-07 224249](https://github.com/user-attachments/assets/04b4a1ae-3306-49b3-a3e0-013bce973cdd)
+
+
+Ans: ***safebrowsing[.]googleapis[.]com***
+
+### Q4.Investigate the decrypted packets and find the flag! What is the flag?
+
+- file > Export Objects > http select the text file and export it to your desktop 
+- pic 
+
+Ans: ***FLAG{THM-PACKETMASTER}***
+
+
+---
+# TASK-9: Bonus: Hunt Cleartext Credentials!
+
+##  Hunt Cleartext Credentials (Wireshark)
+
+Key Points:
+- Wireshark is not an IDS, but it can highlight some anomalies through the Expert Info tab.
+- Credential hunting is difficult by just viewing raw packets—brute-force vs. user error can look similar.
+- Wireshark 3.1+ includes a "Credentials" tool that extracts credentials from certain protocols.
+- Supported Protocols: `http`, `ftp`, `IMAP`, `POP`, `SMTP`
+
+**How to Use:**
+- Tools > Credentials
+- ![Screenshot 2025-05-07 231851](https://github.com/user-attachments/assets/dcc634e7-e02c-41af-b14c-9aa39f8f11ce)
+
+>  Note: Only works with cleartext protocols and specific Wireshark versions. Manual inspection is still crucial.
+
+## Answer the questions below
+
+### Q1.What is the packet number of the credentials using "HTTP Basic Auth"?
+
+
+- `(http) && (http.authorization contains "Basic")`
+- ![Screenshot 2025-05-07 231128](https://github.com/user-attachments/assets/6bf2c7f1-c290-40b7-8ad7-ab0f4e3a5971)
+
+Ans: ***237***
+
+### Q2. What is the packet number where "empty password" was submitted?
+
+- `(ftp.request.command=="PASS") && !(ftp.request.arg)`
+- ![Screenshot 2025-05-07 231614](https://github.com/user-attachments/assets/6b9c526b-b90c-45a1-b946-ee3ba9603ced)
+
+Ans: ***170***
+
+---
+# TASK-10: Bonus: Actionable Results!
+
+## (Firewall Rule Generation)
+
+**Purpose:** Translate suspicious packet activity into firewall rules directly from Wireshark.
+
+### Key Feature:
+- Generate Access Control List (ACL) rules based on packet data.
+
+### How to Use:
+- Go to `Tools` → `Firewall ACL Rules`
+- Choose from:
+  - IP address
+  - Port
+  - MAC address
+
+### Supported Firewall Formats:
+- Netfilter (iptables)
+- Cisco IOS (standard & extended)
+- IP Filter (ipfilter)
+- IPFirewall (ipfw)
+- Packet Filter (pf)
+- Windows Firewall (netsh)
+
+>  Speeds up incident response by converting threat data into security enforcement.
+
+
+![Screenshot 2025-05-07 231817](https://github.com/user-attachments/assets/4edb734b-3048-4a23-a92e-75d49c036846)
+![Screenshot 2025-05-07 232328](https://github.com/user-attachments/assets/72dac1f2-5bba-4cc1-9fef-42ba4733122b)
+![Screenshot 2025-05-07 232347](https://github.com/user-attachments/assets/07ca7e1d-578b-4521-8ec2-d41f22283b7a)
+
+
+## Answer the questions below
+
+### Q1.Select packet number 99. Create a rule for "IPFirewall (ipfw)". What is the rule for "denying source IPv4 address"?
+
+- ![Screenshot 2025-05-07 233129](https://github.com/user-attachments/assets/5ca06027-e589-4141-8cb2-d43dded789db)
+
+Ans: ***add deny ip from 10.121.70.151 to any in***
+
+### Q2.Select packet number 231. Create "IPFirewall" rules. What is the rule for "allowing destination MAC address"?
+
+- Uncheck the deny button
+- ![Screenshot 2025-05-07 233418](https://github.com/user-attachments/assets/94d5316f-1cd5-4f62-ac06-e97de4363afd)
+
+
+Ans: ***add allow MAC 00:d0:59:aa:af:80 any in***
 
 
