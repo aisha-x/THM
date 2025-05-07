@@ -575,7 +575,7 @@ Wireshark can **decrypt HTTPS (TLS)** traffic only if one of the following is av
 
 
 - Apply the extensions_server_name field of the TLS layer as a column, then search for this specific server name
-- `(tls.handshake.type==1) && (tls.handshake.extensions_server_name == "accounts.google.com")`
+- `tls.handshake.extensions_server_name == "accounts.google.com"`
 
 Ans: ***16***
 
@@ -584,7 +584,6 @@ Ans: ***16***
 - to decrypt the traffic with a key log file, right click on the TLS layer in packet details panel > Protocol Preferences >  (pre)-Master-Secret log filename.. then add the file and click ok
 - ![Screenshot 2025-05-07 222754](https://github.com/user-attachments/assets/63163ef6-b8c1-4e26-85e8-e9f0c89dac59)
 ![Screenshot 2025-05-07 222821](https://github.com/user-attachments/assets/a65eeb30-3bb4-47ab-89b6-c9b2e8268201)
-- The second approach is from  "Edit --> Preferences --> Protocols --> TLS" menu
 - then search for `http2` 
 
 Ans: ***115***
@@ -600,7 +599,6 @@ Ans: ***safebrowsing[.]googleapis[.]com***
 ### Q4.Investigate the decrypted packets and find the flag! What is the flag?
 
 - file > Export Objects > http select the text file and export it to your desktop 
-- pic 
 
 Ans: ***FLAG{THM-PACKETMASTER}***
 
@@ -627,7 +625,7 @@ Key Points:
 ### Q1.What is the packet number of the credentials using "HTTP Basic Auth"?
 
 
-- `(http) && (http.authorization contains "Basic")`
+- `http.authorization contains "Basic"`
 - ![Screenshot 2025-05-07 231128](https://github.com/user-attachments/assets/6bf2c7f1-c290-40b7-8ad7-ab0f4e3a5971)
 
 Ans: ***237***
