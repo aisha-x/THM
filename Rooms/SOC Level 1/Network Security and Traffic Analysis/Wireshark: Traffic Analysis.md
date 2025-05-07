@@ -318,4 +318,104 @@ Ans: ***ssh***
 
 Ans: ***dataexfil[.]com***
 
+---
+# Cleartext Protocol Analysis: FTP
+
+## FTP Overview
+
+File Transfer Protocol (FTP) is a standard network protocol used to transfer files between a client and a server over a TCP-based network.
+
+![Screenshot 2025-05-07 141058](https://github.com/user-attachments/assets/1df22757-e581-4625-a312-68984c4ebde5)
+
+---
+
+## Common FTP Attacks
+
+| Attack Type           | Description                                                                 |
+| --------------------- | --------------------------------------------------------------------------- |
+| Brute Force Attack    | Repeated login attempts to guess username/password combinations.            |
+| Anonymous Login Abuse | Exploiting open anonymous FTP servers to upload/download files.             |
+| FTP Bounce Attack     | Using the PORT command to request the server to connect to arbitrary hosts. |
+| Packet Sniffing       | FTP transmits credentials in cleartext, allowing interception.              |
+| Directory Traversal   | Attempting to access restricted files by manipulating file paths.           |
+| File Upload Attack    | Uploading malicious files (e.g., malware) to a writable directory.          |
+
+
+
+## Using Wireshark to Identify FTP Anomalies
+
+1. **Filter FTP Traffic:**
+
+   * Use the display filter `ftp` to isolate FTP protocol communications.
+
+2. **Inspect Credentials:**
+
+   * Look for `USER` and `PASS` commands in plain text to detect cleartext credentials.
+
+3. **Check for Anonymous Logins:**
+
+   * Identify login attempts with `USER ftp` and see if `230` response codes are returned.
+
+4. **Monitor Command Usage:**
+
+   * Unusual commands like repeated `RETR`, `STOR`, or failed `MKD` may indicate malicious behavior.
+
+5. **Look for Abnormal Transfers:**
+
+   * Large or unexpected file uploads/downloads may be suspicious.
+
+6. **Analyze Connection Behavior:**
+
+   * Multiple EPSV/PASV connections or high-frequency commands may indicate brute force or automated attacks.
+
+## Common FTP Commands
+
+| Command | Description                 |
+| ------- | --------------------------- |
+| USER    | Specify the username        |
+| PASS    | Provide the password        |
+| RETR    | Retrieve (download) a file  |
+| STOR    | Store (upload) a file       |
+| LIST    | List files in the directory |
+| PWD     | Print working directory     |
+| CWD     | Change working directory    |
+| MKD     | Make a new directory        |
+| RMD     | Remove a directory          |
+| QUIT    | End the FTP session         |
+
+
+- ![Screenshot 2025-05-07 142304](https://github.com/user-attachments/assets/38f0a493-8eea-45aa-9070-14418f6af151)
+- ![Screenshot 2025-05-07 142343](https://github.com/user-attachments/assets/8922859b-becf-4da7-89c7-9f7f358cb348)
+
+
+## Notes
+
+FTP is inherently insecure due to lack of encryption. Always prefer FTPS or SFTP in production environments.
+
+## Answer the questions below
+
+### Q1. How many incorrect login attempts are there?
+
+- `ftp.response.code==530`
+
+Ans: ***737***
+
+### Q2.What is the size of the file accessed by the "ftp" account?
+
+- `ftp.request.command=="CWD"` then follow the packet TCP stream
+- ![Screenshot 2025-05-07 143348](https://github.com/user-attachments/assets/6a251c3a-8e61-4a1d-9d25-bd3890e06049)
+
+Ans: ***39424***
+
+### Q3.The adversary uploaded a document to the FTP server. What is the filename?
+
+- pic
+Ans: ***resume.doc***
+
+### Q4.The adversary tried to assign special flags to change the executing permissions of the uploaded file. What is the command used by the adversary?
+
+- ![Screenshot 2025-05-07 144028](https://github.com/user-attachments/assets/fb06659a-8aff-430d-a521-0c0a38cf3c59)
+
+Ans: ***CHMOD 777***
+
 
