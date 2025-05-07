@@ -133,3 +133,126 @@ Ans: ***clientnothere!***
 
 Ans: ***Nice work!***
 
+
+---
+# Identifying Hosts: DHCP, NetBIOS and Kerberos
+
+
+##  1. DHCP (Dynamic Host Configuration Protocol) Analysis
+
+![Screenshot 2025-05-07 110926](https://github.com/user-attachments/assets/cba6616d-7219-4d35-b861-5234841f1502)
+
+### **Purpose**
+DHCP dynamically assigns IP addresses and other network configuration parameters to devices on a network.
+
+### **Common Wireshark Filters**
+```wireshark
+bootp                     # Show all DHCP traffic (DHCP is based on BOOTP)
+bootp.option.type == 53   # Filter specific DHCP message types (e.g., Discover, Offer)
+bootp.hw.addr == xx:xx:xx:xx:xx:xx  # Filter by MAC address
+```
+
+### **Common DHCP Packet Types**
+- DHCP Discover (client → broadcast)
+- DHCP Offer (server → broadcast)
+- DHCP Request (client → broadcast)
+- DHCP ACK (server → broadcast or unicast)
+
+### **Common Anomalies**
+- Multiple DHCP servers offering IPs (DHCP spoofing)
+- Unexpected DHCP Offer from unauthorized sources
+- IP address conflicts
+- DHCP ACK missing (can indicate network issues or rogue DHCP)
+
+---
+
+## 2. NetBIOS Name Service (NBNS) Analysis
+
+![Screenshot 2025-05-07 110936](https://github.com/user-attachments/assets/e6db0032-f401-4761-866c-ee26d91e8fde)
+
+### **Purpose**
+NBNS is used for name resolution of NetBIOS names to IP addresses (legacy systems, Windows networking).
+
+### **Common Wireshark Filters**
+```wireshark
+nbns                         # Show all NetBIOS Name Service traffic
+udp.port == 137              # Specific NBNS port
+nbns.flags.response == 0     # Only queries
+nbns.flags.response == 1     # Only responses
+```
+
+### **Common Anomalies**
+- **Broadcast storms**: Many name queries flooding the network
+- **Name spoofing**: Unexpected NB names like `ISATAP<00>`, `CONVEYANCING<00>` (possibly enumeration or misconfigured hosts)
+- **Duplicate name requests**: Can indicate misconfigured clients
+- **Excessive queries from a single IP**: Can be indicative of scanning or malware activity
+
+---
+
+## 3. Kerberos Analysis
+
+![Screenshot 2025-05-07 112025](https://github.com/user-attachments/assets/0d322617-158b-45eb-9003-45edfc587703)
+
+### **Purpose**
+Kerberos is used for authentication in Active Directory environments using ticket-based access (AS-REQ, TGS-REQ, etc.).
+
+### **Common Wireshark Filters**
+```wireshark
+kerberos                    # Show all Kerberos traffic
+tcp.port == 88              # Standard Kerberos port (if not using a dissector)
+kerberos.CNameString        # Client username
+kerberos.SNameString        # Target service/hostname
+kerberos.msg_type == 10     # AS-REQ (Authentication Service Request)
+kerberos.msg_type == 12     # TGS-REQ (Ticket Granting Service Request)
+kerberos.error_code         # Show errors (e.g., KRB5KDC_ERR_*)
+```
+
+### **Common Anomalies**
+- **Repeated AS-REQ or TGS-REQ failures**: May indicate brute-force attempts or time desync
+- **KRB5KDC_ERR_PREAUTH_REQUIRED**: Normal in AS-REQ but excessive retries can signal issues
+- **KRB5KDC_ERR_BADOPTION / ERR_S_PRINCIPAL_UNKNOWN**: Sign of service misconfiguration or attack
+- **Username enumeration**: Multiple requests with different `cname` fields
+- **Ticket requests from unexpected IPs**: May suggest lateral movement or credential misuse
+
+
+## Answer the questions below
+
+### Q1.What is the MAC address of the host "Galaxy A30"?
+
+
+- `dhcp.option.hostname contains "Galaxy" `
+- ![Screenshot 2025-05-07 114506](https://github.com/user-attachments/assets/b05cea59-a411-4a83-99c4-ca5d0dd7778e)
+
+
+Ans: ***9a:81:41:cb:96:6c***
+
+### Q2.How many NetBIOS registration requests does the "LIVALJM" workstation have?
+
+- `nbns.name == "LIVALJM<00>"`
+
+Ans: ***16***
+
+### Q3.Which host requested the IP address "172.16.13.85"?
+
+- `dhcp.option.requested_ip_address == 172.16.13.85`
+- search in option(12) host name
+
+Ans: ***Galaxy-A12***
+
+### Q4.What is the IP address of the user "u5"? (Enter the address in defanged format.)
+
+- `kerberos.CNameString contains "u5"`
+- then defang the source ip of the first packet result
+
+Ans: ***10[.]1[.]12[.]2***
+
+### Q5.What is the hostname of the available host in the Kerberos packets?
+
+- `kerberos.CNameString contains "$"`
+- ![Screenshot 2025-05-07 120618](https://github.com/user-attachments/assets/c126dcc9-86e9-4bcc-b2de-87831e752ea3)
+- `cname` field -> is the username of the client making the  Kerberos request.
+- `sname` field -> is the service or host the client is trying to access. It tells you which service or hostname is being requested.
+
+
+Ans: ***xp1$***
+
