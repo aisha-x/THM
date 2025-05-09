@@ -36,7 +36,7 @@ Room URL: https://tryhackme.com/room/tsharkcliwiresharkfeatures
 | Contains                   | `contains`             | Checks if a field contains a specified string                              | `http contains "login"`                           |
 | Matches                    | `matches`              | Uses regex to match field content                                           | `ip.addr matches "^192\.168\.1\.\d+$"`            |
 | Field-based filters        | `<protocol>.<field>`   | Filters based on specific field values                                      | `ip.src == 192.168.1.10`                          |
-| And / Or                   | `&&`, `||`             | Logical operations in filters                                               | `ip.src == 10.0.0.1 && tcp.port == 443`|
+| And / Or                   | `and`, `or`             | Logical operations in filters                                               | `ip.src == 10.0.0.1 && tcp.port == 443`|
 | Display specific fields    | `-T fields -e <field>` | Extract and print specific fields                                           | `tshark -r capture.pcap -T fields -e ip.src`       |
 | Multiple fields output     | Combine `-e` options   | Output multiple specific fields from each packet                            | `tshark -r capture.pcap -T fields -e ip.src -e ip.dst` |
 
