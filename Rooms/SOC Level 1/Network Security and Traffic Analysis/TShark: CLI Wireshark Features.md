@@ -93,7 +93,7 @@ tshark -r session.pcap -q -z "follow,tcp,ascii,$STREAM_INDEX" > extracted_stream
 
 **Objective:** A victim login to a malicious website thinking it was a legitimate one.
 
-> Note: this case from **TShark Challenge I: Teamwork**
+> Note: this case from [**TShark Challenge I: Teamwork**](https://tryhackme.com/room/tsharkchallengesone)
 
 1. Identify the domain
    - `tshark -r teamwork.pcap -T fields -e http.host -q |awk NF | sort | uniq -c`
