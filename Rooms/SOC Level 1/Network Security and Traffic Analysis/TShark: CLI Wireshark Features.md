@@ -87,3 +87,31 @@ tshark -r session.pcap -q -z "follow,tcp,ascii,$STREAM_INDEX" > extracted_stream
 - Finds the TCP stream index associated with a specific IP
 - Extracts the full ASCII stream and saves it to a file
 - You can inspect `extracted_stream.txt` for plaintext credentials (e.g., from FTP, HTTP Basic Auth)
+
+
+### Use Case 4: Identify suspicious domain and follow TCP stream
+
+**Objective:** A victim login to a malicious website thinking it was a legitimate one.
+
+> Note: this case from **TShark Challenge I: Teamwork**
+
+1. Identify the domain
+   - `tshark -r teamwork.pcap -T fields -e http.host -q |awk NF | sort | uniq -c`
+   - ![image](https://github.com/user-attachments/assets/34ca7f61-2b4a-4d28-a984-fe13eb403bef)
+   - the malicious domain -> `paypal`
+2. Identify the IP address of the malicious domain
+  - `tshark -r teamwork.pcap -T fields -e http.host -e ip.dst -q |awk NF | sort | uniq -c`
+  - ![image](https://github.com/user-attachments/assets/2082103b-2ea4-4906-954d-138c0fe23774)
+  - malicious domain ip address -> `184[.]154[.]127[.]226`
+3. Search for POST method
+  - `tshark -r teamwork.pcap -Y 'http contains "mail"' -T fields -e tcp.stream`
+  - The above command will return the TCP stream of that packet containing mail text, which is -> `28`. You can also search for  `http.method=="POST"`
+  - Follow this TCP stream and write the result into extracted-stream.txt file `tshark -r teamwork.pcap -z follow,tcp,ascii,28  -q > extracted-stream.txt`
+  - ![image](https://github.com/user-attachments/assets/0b0c917b-0f89-4613-9f00-b30ebb05187a)
+
+4. Return the email of the victim
+  - ![image](https://github.com/user-attachments/assets/b1462c03-9c50-4b57-bdca-69f802137bbb)
+  - email -> `johnny5alive[at]gmail[.]com`
+  - passowrd -> `johnny5alive`
+
+
