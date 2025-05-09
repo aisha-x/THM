@@ -1,4 +1,4 @@
-# TryHackMe: TShark Challenge II: Directory Challenge
+# TryHackMe: TShark Challenge II: Directory 
 
 Room URL: https://tryhackme.com/room/tsharkchallengestwo
 
