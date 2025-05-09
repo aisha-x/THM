@@ -20,8 +20,9 @@ Your tools: [TShark](https://www.wireshark.org/docs/man-pages/tshark.html), [Vir
 
 ### Q1. What is the name of the malicious/suspicious domain?
 
-- `tshark -r directory-curiosity.pcap -T fields -e http.host | awk NF | sort | uniq -c`
-
+```bash
+`tshark -r directory-curiosity.pcap -T fields -e http.host | awk NF | sort | uniq -c`
+```
 ![Screenshot 2025-05-09 203730](https://github.com/user-attachments/assets/d8fc58d4-eabc-4863-9a2b-b9f32617bb8e)
 
 - the domain `jx2` flagged as malicious in VirusTotal
@@ -40,8 +41,9 @@ Ans: ***14***
 
 ### Q3.What is the IP address associated with the malicious domain?
 
-- `tshark -r directory-curiosity.pcap -Y 'http.host contains "jx2"' -T fields -e ip.dst -e http.host -q | head -n1`
-
+```bash
+`tshark -r directory-curiosity.pcap -Y 'http.host contains "jx2"' -T fields -e ip.dst -e http.host -q | head -n1`
+```
  ![Screenshot 2025-05-09 204503](https://github.com/user-attachments/assets/b02ca9ae-ede9-47b3-ad04-f5fe0391f3fa)
 
 
