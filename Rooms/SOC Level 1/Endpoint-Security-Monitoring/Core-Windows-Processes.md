@@ -171,7 +171,7 @@ These columns can be enabled by right-clicking any column header:
 
 # System
 
-## 🧠 What is the **System Process**?
+## What is the **System Process**?
 
 - **Name in Task Manager**: `System`
 - **PID**: Usually `4`
@@ -187,29 +187,16 @@ What is user mode? Kernel-mode? Visit the following [link](https://docs.microsof
 
 The **System** process in Windows should behave in a very specific manner. Any deviations from this can indicate potential issues or even malicious activity. Below are common **unusual behaviors** to watch for:
 
-### 1. **A Parent Process (aside from System Idle Process)**
-
-- The **System** process should typically not have a parent process. If it has a parent process (other than `System Idle Process`), this could indicate **malicious activity** or interference from an external program attempting to manipulate kernel processes.
-
-### 2. **Multiple Instances of System**
-
-- **Normal Behavior**: Only one instance of the **System** process should be running.
-- **Unusual Behavior**: If you notice **multiple instances** of the **System** process in the Task Manager, this is a strong indication that something is wrong. This could point to **malware** or a **malfunction** within the system’s kernel processes.
-
-### 3. **A Different PID (Not PID 4)**
-
-- **Normal Behavior**: The **System** process should always have a **PID of 4**.
-- **Unusual Behavior**: If you notice that the **System** process is running with a **different PID**, it is likely an **indication of compromised system integrity** or **malicious code** attempting to mimic system processes.
-
-### 4. **Not Running in Session 0**
-
-- **Normal Behavior**: The **System** process should be running in **Session 0** because it's a kernel-level process.
-- **Unusual Behavior**: If the **System** process is running in a different session, it can be indicative of **malware** or **incorrect system configuration**, as the **System** process should be isolated in **Session 0** for security reasons.
+- What is unusual behaviour for this process?
+- A parent process (aside from System Idle Process (0))
+- Multiple instances of System. (Should only be one instance) 
+- A different PID. (Remember that the PID will always be PID 4)
+- Not running in Session 0
 
 ---
 # System > smss.exe
 
-The **smss.exe** process stands for **Session Manager Subsystem**. It's an essential system process in Windows, responsible for creating and managing the **user sessions**. However, its presence under the **System** process can sometimes indicate unusual behavior that needs further investigation.
+The **smss.exe** process stands for **Session Manager Subsystem**. It's an essential system process in Windows, responsible for creating and managing the **user sessions**. 
 
 
 ### **What Does smss.exe Do?**
