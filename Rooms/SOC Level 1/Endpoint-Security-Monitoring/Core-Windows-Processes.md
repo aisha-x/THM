@@ -89,12 +89,6 @@ The **Details** tab in Task Manager provides in-depth, technical insights about 
 
 ---
 
-## Screenshot Example
-
-![Task Manager Details Tab](images/task-manager-details-tab.png)  
-*Example: Screenshot showing `notepad.exe` in Task Manager's Details tab.*
-
----
 
 ## Example Entry from the Details Tab
 
@@ -238,17 +232,33 @@ The **csrss.exe** (Client/Server Runtime Subsystem) is a critical system process
 
 ---
 # wininit.exe
-###  **System > wininit.exe** 
 
-The **wininit.exe** (Windows Initialization) is a crucial system process in the Windows operating system, responsible for initializing the Windows environment during startup. It handles system processes that run after the kernel has loaded and starts essential services to prepare the system for user operation.
-
+**wininit.exe** (Windows Initialization) is a critical system process in the Windows operating system. It operates in **Session 0**, which is reserved for trusted system services. It is launched by `smss.exe` early in the boot process and is responsible for initializing key system services necessary for Windows to function.
 
 
-### **What Does wininit.exe Do?**
+### What Does wininit.exe Do?
 
-1. **Initial System Processes**: **wininit.exe** starts key system services, such as the **Service Control Manager (SCM)**, which is responsible for starting, stopping, and interacting with system services.
-2. **Session Manager Subsystem (smss.exe) Launch**: **wininit.exe** is responsible for launching the **smss.exe** process, which in turn starts other system processes like **csrss.exe** and **winlogon.exe**.
-3. **Manages Boot Processes**: It handles the initial boot-up of Windows, including initializing system-level processes that run during the startup phase.
+- **Launched by smss.exe**:`smss.exe` starts `wininit.exe` as part of its initialization of **Session 0**.
+  
+- **Starts Essential Services**:
+  - **services.exe** – the Service Control Manager (SCM) responsible for managing Windows services.
+  - **lsass.exe** – Local Security Authority Subsystem Service that enforces security policies and handles user logins.
+  - **lsm.exe** – Local Session Manager responsible for managing user sessions.
+
+- **Prepares Windows Environment**: It sets up the environment so the system can reach a usable state for both services and user interaction.
+
+
+### Correct Startup Sequence
+
+1. **System (PID 4)** starts → `smss.exe`
+2. `smss.exe` launches → `wininit.exe` and `csrss.exe` in Session 0
+3. `wininit.exe` launches:
+   - `services.exe`
+   - `lsass.exe`
+   - `lsm.exe`
+
+This chain of startup ensures that all necessary system services are initialized properly before the user session begins.
+
 
 ### **Unusual Behavior for wininit.exe**
 
