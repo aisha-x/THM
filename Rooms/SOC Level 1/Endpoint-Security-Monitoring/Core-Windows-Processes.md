@@ -1,8 +1,9 @@
 # TryHackMe: Core Windows Processes Room Summary
 
-# Introducation
+Room URL: https://tryhackme.com/room/btwindowsinternals
 
-## Before We Begin...
+---
+# Introducation
 
 Before diving into the details of this room, here are some key concepts you need to understand.
 
@@ -177,7 +178,17 @@ The **System process** is a critical part of the Windows operating system. It ac
 
 What is user mode? Kernel-mode? Visit the following [link](https://docs.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/user-mode-and-kernel-mode) to understand each of these.
 
-## **Unusual Behavior** for the System Process
+## What is normal?
+
+- **Image Path**: N/A  
+- **Parent Process**: None  
+- **Number of Instances**: One  
+- **User Account**: Local System  
+- **Start Time**: At boot time  
+- **Image Path**: `C:\Windows\System32\ntoskrnl.exe` (NT OS Kernel)  
+- **Parent Process**: System Idle Process (PID 0)  
+
+## What is unusual?
 
 The **System** process in Windows should behave in a very specific manner. Any deviations from this can indicate potential issues or even malicious activity. Below are common **unusual behaviors** to watch for:
 
@@ -198,7 +209,15 @@ The **smss.exe** process stands for **Session Manager Subsystem**. It's an essen
 1. **Session Creation**: It initializes system sessions during boot-up, including loading the Windows environment and the necessary drivers.
 2. **Launching Other Important Processes**: After the kernel and Session 0 start, **smss.exe** is responsible for launching important processes like the **winlogon.exe** and **csrss.exe** (Client/Server Runtime Subsystem).
 
-### **Unusual Behavior for smss.exe**
+## What is normal?
+
+- **Image Path**: `%SystemRoot%\System32\smss.exe`
+- **Parent Process**: System
+- **Number of Instances**: One master instance and a child instance per session. The child instance exits after creating the session.
+- **User Account**: Local System
+- **Start Time**: Within seconds of boot time for the master instance
+
+## What is unusual?
 
 - A different parent process other than System (4)
 - The image path is different from C:\Windows\System32
@@ -220,8 +239,15 @@ The **csrss.exe** (Client/Server Runtime Subsystem) is a critical system process
 2. **Console Window Management**: **csrss.exe** manages console windows (command prompt) and ensures the proper display and interaction with the user.
 3. **Graphical User Interface (GUI)**: It plays a role in handling window management and user interface tasks.
 
+## What is normal?
 
-### **Unusual Behavior for csrss.exe**
+- **Image Path**: `%SystemRoot%\System32\csrss.exe`
+- **Parent Process**: Created by an instance of `smss.exe`
+- **Number of Instances**: Two or more
+- **User Account**: Local System
+- **Start Time**: Within seconds of boot time for the first two instances (for Session 0 and 1). Start times for additional instances occur as new sessions are created, although only Sessions 0 and 1 are often created.
+
+## What is unusual?
 
 **csrss.exe** should run in **Session 0** as part of the system processes. If you observe any of the following, it may indicate potential **malware activity** or **system compromise**:
 
@@ -259,9 +285,15 @@ The **csrss.exe** (Client/Server Runtime Subsystem) is a critical system process
 
 This chain of startup ensures that all necessary system services are initialized properly before the user session begins.
 
+## What is normal?
 
-### **Unusual Behavior for wininit.exe**
+- **Image Path**:  %SystemRoot%\System32\wininit.exe
+- **Parent Process**:  Created by an instance of smss.exe
+- **Number of Instances**:  One
+- **User Account**:  Local System
+- **Start Time**:  Within seconds of boot time
 
+## What is unusual?
 - An actual parent process. (smss.exe calls this process and self-terminates)
 - Image file path other than C:\Windows\System32
 - Subtle misspellings to hide rogue processes in plain sight
@@ -282,9 +314,15 @@ The **services.exe** process (Service Control Manager) is a vital part of the Wi
 2. **Service Control Manager (SCM)**: It acts as the **Service Control Manager**, providing an interface between the operating system and service applications to start, stop, or pause services.
 3. **Process Creation**: It is responsible for launching other system processes, such as **svchost.exe**, which host system services in their own processes.
 
+## What is normal?
 
+- **Image Path**:  %SystemRoot%\System32\services.exe
+- **Parent Process**:  wininit.exe
+- **Number of Instances**:  One
+- **User Account**:  Local System
+- **Start Time**:  Within seconds of boot time
 
-### **Unusual Behavior for services.exe**
+## What is normal?
 - A parent process other than wininit.exe
 - Image file path other than C:\Windows\System32
 - Subtle misspellings to hide rogue processes in plain sight
@@ -303,7 +341,6 @@ The **svchost.exe** (Service Host) process is a system process in Windows that a
 2. **Service Grouping**: Different instances of **svchost.exe** can run multiple services grouped together by functionality. For example, **svchost.exe** can run all networking-related services in one instance and other system-related services in another.
 3. **Manage Background Operations**: The services hosted by **svchost.exe** handle various background tasks such as Windows Update, network connectivity, and other system operations.
 
----
 
 ### **Common Services Run by svchost.exe**
 - **Windows Update** (`wuauserv`)
@@ -313,9 +350,113 @@ The **svchost.exe** (Service Host) process is a system process in Windows that a
 
 These are just a few examples, and each instance of **svchost.exe** can host different services depending on the system’s configuration and the number of services installed.
 
+The services running in this process are implemented as DLLs. The DLL to implement is stored in the registry for the service under the `Parameters` subkey in `ServiceDLL`. The full path is `HKLM\SYSTEM\CurrentControlSet\Services\SERVICE NAME\Parameters`.
+
+To view `ServiceDLL` value for the Dcomlaunch service from within Process Hacker, right-click the svchost.exe process. In this case, it will be PID 864.
+
+![image](https://github.com/user-attachments/assets/897078f5-cee4-45c4-bd3e-f0e540c257af)
+
+Right-click the service and select Properties. Look at Service DLL.
+
+![image](https://github.com/user-attachments/assets/50fad00a-1fe0-4714-8683-955445cb51fd)
+
+From the above screenshot, the Binary Path is listed.
+
+Also, notice how it is structured. There is a key identifier in the binary path, and that identifier is `-k `. This is how a legitimate svchost.exe process is called.
+The -k parameter is for grouping similar services to share the same process. This concept was based on the OS design and implemented to reduce resource consumption. Starting from Windows 10 Version 1703, services grouped into host processes changed. On machines running more than 3.5 GB of memory, each service will run its own process.
+
+## What is normal?
+
+- **Image Path**: %SystemRoot%\System32\svchost.exe
+- **Parent Process**: services.exe
+- **Number of Instances**: Many
+- **User Account**: Varies (SYSTEM, Network Service, Local Service) depending on the svchost.exe instance. In Windows 10, some instances run as the logged-in user.
+- **Start Time**: Typically within seconds of boot time. Other instances of svchost.exe can be started after boot.
+
 ### What is unusual ?
 
 - A parent process other than services.exe
 - Image file path other than C:\Windows\System32
 - Subtle misspellings to hide rogue processes in plain sight
 - The absence of the -k parameter
+
+---
+# lsass.exe
+
+## What is `lsass.exe`?
+
+`lsass.exe` stands for **Local Security Authority Subsystem Service**. It's a critical process in Microsoft Windows that enforces security policies and manages user authentication.
+
+## Key Functions
+
+- **User Authentication**: Verifies credentials during logon.
+- **Password Management**: Handles changes and enforces password policies.
+- **Access Token Creation**: Issues tokens used to control access to system resources.
+- **Security Logging**: Records security events in the Windows Security Log.
+
+>  **Important**: Terminating `lsass.exe` will crash the system or cause a forced restart.
+
+_Source: [Wikipedia](https://en.wikipedia.org/wiki/Local_Security_Authority_Subsystem_Service)_
+
+
+## What is normal?
+- **image Path**:  %SystemRoot%\System32\lsass.exe
+- **Parent Process**:  wininit.exe
+- **Number of Instances**:  One
+- **User Account**:  Local System
+- **Start Time**:  Within seconds of boot time
+
+## What is unusual?
+- A parent process other than wininit.exe
+- Image file path other than C:\Windows\System32
+- Subtle misspellings to hide rogue processes in plain sight
+- Multiple running instances
+- Not running as SYSTEM
+
+Extra reading: [How LSASS is maliciously used and additional features that Microsoft has put into place to prevent these attacks.](https://yungchou.wordpress.com/2016/03/14/an-introduction-of-windows-10-credential-guard/)
+
+---
+# winlogon.exe
+
+
+## What is `winlogon.exe`?
+
+`winlogon.exe` is a critical system process in Microsoft Windows responsible for managing user logon and logoff procedures. It also handles secure logon events like the Ctrl+Alt+Delete Secure Attention Sequence (SAS) and loads user profiles.
+
+_Disabling or modifying this process can make your system unusable._
+
+_Source: [Win10.io](https://win10.io/article/System-EXE-Files/winlogon.html)_
+
+## Key Functions
+
+- **User Authentication**  
+  Initiates and manages the logon process by passing user credentials to the Local Security Authority (LSA).
+
+- **Secure Attention Sequence (SAS) Handling**  
+  Listens for Ctrl+Alt+Delete to initiate secure logon.
+
+- **User Profile Loading**  
+  Loads the user’s profile into the registry (i.e., `HKEY_CURRENT_USER`) after successful authentication.
+
+- **Desktop Management**  
+  Creates and manages different desktop environments such as the Winlogon desktop and screensaver desktop.
+
+- **Screen Saver and Lock Control**  
+  Monitors inactivity to trigger the screen saver or lock the computer.
+
+_Sources: [HowToGeek](https://www.howtogeek.com/322411/what-is-windows-logon-application-winlogon.exe-and-why-is-it-running-on-my-pc/), [Wikipedia](https://en.wikipedia.org/wiki/Winlogon)_
+
+
+## What is normal?
+- **image Path**:  %SystemRoot%\System32\winlogon.exe
+- **Parent Process**:  Created by an instance of smss.exe that exits, so analysis tools usually do not provide the parent process name.
+- **Number of Instances**:  One or more
+- **User Account**:  Local System
+- **Start Time**:  Within seconds of boot time for the first instance (for Session 1). Additional instances occur as new sessions are created, typically through Remote Desktop or Fast User Switching logons.
+
+## What is unusual?
+- An actual parent process. (smss.exe calls this process and self-terminates)
+- Image file path other than C:\Windows\System32
+- Subtle misspellings to hide rogue processes in plain sight
+- Not running as SYSTEM
+- Shell value in the registry other than explorer.exe
