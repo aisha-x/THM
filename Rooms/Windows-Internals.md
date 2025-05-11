@@ -3,11 +3,6 @@
 Room URL: https://tryhackme.com/room/windowsinternals
 
 # Introduction
-
-# Windows Internals Overview
-
-## Summary
-
 Operating systems like Windows have complex underlying technologies and architectures that aren't always visible at first glance. This learning module focuses on exploring the internal components of the Windows operating system.
 
 ## Learning Objectives
@@ -195,9 +190,9 @@ When an application uses a DLL, it becomes **dependent** on it. This makes DLLs 
 
 ### Common Attack Techniques
 
-- **DLL Hijacking** – T1574.001
-- **DLL Side-Loading** – T1574.002
-- **DLL Injection** – T1055.001
+- **DLL Hijacking** – [T1574.001](https://attack.mitre.org/techniques/T1574/001/)
+- **DLL Side-Loading** – [T1574.002](https://attack.mitre.org/techniques/T1574/002/)
+- **DLL Injection** – [T1055.001](https://attack.mitre.org/techniques/T1055/001/)
 
 ## Example: Creating a DLL in C++
 
@@ -363,8 +358,3 @@ Understanding the PE format is critical for:
 - Secure application design
 
 The import directory and `.rdata`/`.idata` sections reveal how executables interact with external code, especially through DLLs and Windows APIs.
-
-
-
-نسخ
-تحرير
