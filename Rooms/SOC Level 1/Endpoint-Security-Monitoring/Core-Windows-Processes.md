@@ -61,16 +61,6 @@ A **child process** is a process that is **created by another process** (the par
 - In **forensics**, abnormal parent-child behavior (e.g., Word spawning PowerShell) can signal an attack.
 - In **programming**, you use parent/child processes for tasks like daemons, subprocesses, or job scheduling.
 
----
-
-## Want to Check This Yourself?
-
-- On **Linux/macOS**:  
-  Run `ps -ef` or `pstree` to see relationships.
-
-- On **Windows**:  
-  Use **Task Manager** or `Get-Process` in PowerShell.
-
 
 ---
 # Task Manager
@@ -460,3 +450,35 @@ _Sources: [HowToGeek](https://www.howtogeek.com/322411/what-is-windows-logon-app
 - Subtle misspellings to hide rogue processes in plain sight
 - Not running as SYSTEM
 - Shell value in the registry other than explorer.exe
+
+---
+# explorer.exe
+
+**explorer.exe** is a critical system process in Microsoft Windows operating systems. It provides the graphical user interface (GUI) shell that users interact with, including the desktop, taskbar, Start menu, and File Explorer (formerly Windows Explorer). Without explorer.exe, you would be left with a largely unusable command-line interface.
+
+## Functionality and Components
+
+- **Desktop**: Displays the desktop background, icons, and shortcuts.  
+- **Taskbar**: Provides access to running applications, the Start menu, system tray (notification area), and quick launch shortcuts.  
+- **Start Menu**: Allows users to launch applications, access system settings, and shut down or restart the computer.  
+- **File Explorer (formerly Windows Explorer)**: Enables users to browse and manage files and folders on their computer and network.  
+- **Notification Area (System Tray)**: Displays icons for system services and applications running in the background.  
+- **Task View (Windows 10 and later)**: Allows users to manage virtual desktops and switch between open windows.  
+- **Action Center (Windows 10) / Notification Center (Windows 11)**: Provides access to notifications and quick settings.  
+- **Shell Extensions**: explorer.exe hosts shell extensions, which are COM (Component Object Model) objects that add functionality to the shell. These can include context menu handlers, property sheet extensions, and icon handlers. This is a key reason why poorly written or malicious shell extensions can negatively impact explorer.exe.
+
+_Sources: [win10](https://win10.io/article/System-EXE-Files/explorer.html)_
+
+## What is Normal?
+- **Image Path**: %SystemRoot%\explorer.exe  
+- **Parent Process**: Created by userinit.exe and exits  
+- **Number of Instances**: One or more per interactively logged-in user  
+- **User Account**: Logged-in user(s)  
+- **Start Time**: First instance when the first interactive user logon session begins
+
+## What is unusual?
+- An actual parent process. (userinit.exe calls this process and exits)
+- Image file path other than C:\Windows
+- Running as an unknown user
+- Subtle misspellings to hide rogue processes in plain sight
+- Outbound TCP/IP connections
