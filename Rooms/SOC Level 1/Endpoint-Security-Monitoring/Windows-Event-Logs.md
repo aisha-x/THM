@@ -226,7 +226,7 @@ Get-WinEvent -LogName Security -FilterXPath '*/EventData/Data[@Name="TargetUserN
  
  ![Screenshot 2025-05-13 214939](https://github.com/user-attachments/assets/a17ea145-d05e-4246-a8a8-dc0e46d870e8)
 
- - use `View> Group by > Date and Time to group sort by date and time`, since there was test on this event, on Decemeber 18, the attack took on place
+ - Use `View> Group by > Date and Time` to group sort by date and time, since there was a test on this event, on December 18, the attack took place
  
  ![Screenshot 2025-05-13 215453](https://github.com/user-attachments/assets/a80b3f8a-864d-4de7-affb-19465a6f5a2f)
 
@@ -245,8 +245,7 @@ Ans: ***12/18/2020 7:50:33 AM***
 
 - `Evnet Id 104` --> This event is logged when the log file was cleared.
 - `Event ID 1102` --> Whenever Windows Security audit log is cleared, event ID 1102 is logged.
-
-(Source)[https://www.socinvestigation.com/most-common-windows-event-ids-to-hunt-mind-map/#:~:text=Event%20ID%201102%2C%20Whenever%20Windows,the%20log%20file%20was%20cleared.]
+  [**Source**](https://www.socinvestigation.com/most-common-windows-event-ids-to-hunt-mind-map/#:~:text=Event%20ID%201102%2C%20Whenever%20Windows,the%20log%20file%20was%20cleared.)
 
 - use filter current log option to filter for event id `104`.
 - and to find the `Event Record Id` and the `computer name`, Search in the XML 
@@ -269,7 +268,7 @@ Ans: ***PC01.example.corp***
 ```powershell
  Get-WinEvent -Path C:\Users\Administrator\Desktop\merged.evtx -FilterXPath '*/System/EventID=4104 and */EventData/Data[@Name="ScriptBlockText"]' -Oldest -MaxEvents 1 | Format-List *
 ```
-- look for the first variable name in the message value
+- Look for the first variable name in the message value
 
 ![Screenshot 2025-05-13 223747](https://github.com/user-attachments/assets/52befc4d-2d4e-4f81-bf4e-6200210666c9)
 
@@ -291,15 +290,13 @@ Ans: ***6620***
 ### Q8. What is the Group Security ID of the group she enumerated?
 
 - Search for enumeration event id
-- 4799(S) ->  A security-enabled local group membership was enumerated
-
-[source](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/audit-security-group-management)
+- 4799(S) ->  A security-enabled local group membership was enumerated. [**source**](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/audit-security-group-management)
 
 ```powershell
  Get-WinEvent -Path C:\Users\Administrator\Desktop\merged.evtx -FilterXPath '*/System/EventID=4799 and */EventData/Data[@Name="CallerProcessName"]="C:\Windows\System32\net1.exe"' -MaxEvents 1  | format-list *
 ```
-- this command uses `-FilterXPath` to search in the xml. if you dont know what item to inspect in xml, search in the event viewer for this event id and inspect xml items.
-- since we have the `callerProsessName` value, you wont need to specify the event ID 
+- This command uses `-FilterXPath` to search in the xml. If you don't know what item to inspect in XML, search in the event viewer for this event ID and inspect the XML items.
+- since we have the `callerProsessName` value, you won't need to specify the event ID 
 
 ![Screenshot 2025-05-13 231602](https://github.com/user-attachments/assets/ceb9e46f-5c1b-46d0-9fe9-82cab86a704e)
 
@@ -310,7 +307,7 @@ Ans: ***S-1-5-32-544***
 Ans: ***4799***
 
 
-## Trusted References
+## References
 
 - Microsoft Docs: [Get-EventLog](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-eventlog)
 - Microsoft Docs: [About Event Logs](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_eventlogs)
