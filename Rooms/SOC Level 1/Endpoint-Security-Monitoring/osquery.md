@@ -6,7 +6,7 @@ Room URL: https://tryhackme.com/room/osqueryf8
 # What is osqueryi?
 osqueryi provides a standalone, interactive shell that transforms your operating system into a relational database. This enables you to write and execute SQL queries to retrieve detailed information about various system components, such as running processes, user accounts, installed software, network connections, and more. It's particularly useful for tasks like system monitoring, incident response, and security analytics.
 
-[osquery](https://osquery.io/)
+[osquery documentation](https://osquery.io/), [kalilinuxtutorials](https://kalilinuxtutorials.com/osquery/)
 
 ---
 # Creating SQL queries
