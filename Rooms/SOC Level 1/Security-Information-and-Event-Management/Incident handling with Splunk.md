@@ -49,7 +49,7 @@ Reconnaissance is an attempt to discover and collect information about a target.
     - `index=botsv1 imreallynotbatman.com`
     - inspect the source logs field to see which log includes the traces of our domain.
    
-    ![Screenshot 2025-05-20 125043](https://github.com/user-attachments/assets/3b696b63-deb9-4772-adbc-3d5c17b14e9f)
+    ![image](https://github.com/user-attachments/assets/c5b89079-e458-48bc-b18b-1d1e8d02647a)
 
 2. select `stream:http` log which contains the http traffic logs
     - `index=botsv1 imreallynotbatman.com sourcetype=stream:http`
