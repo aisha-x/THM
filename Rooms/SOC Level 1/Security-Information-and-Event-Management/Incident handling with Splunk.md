@@ -47,25 +47,25 @@ Reconnaissance is an attempt to discover and collect information about a target.
 
 1. start by examining any reconnaissance attempt against the webserver `imreallynotbatman.com`
     - `index=botsv1 imreallynotbatman.com`
-    - inspect the source logs field to see which log includes the traces of our domain.
+    - Inspect the source logs field to see which log includes the traces of our domain.
    
     ![image](https://github.com/user-attachments/assets/c5b89079-e458-48bc-b18b-1d1e8d02647a)
 
-2. select `stream:http` log which contains the http traffic logs
+2. Select `stream:http` log, which contains the http traffic logs
     - `index=botsv1 imreallynotbatman.com sourcetype=stream:http`
-    - since we are searching for reconnaissance attemp, we will be the destination target
-    - look in the `src_ip ` field:
+    - since we are searching for reconnaissance attempt, we will be the target
+    - Look in the `src_ip ` field:
   
    ![Screenshot 2025-05-19 134231](https://github.com/user-attachments/assets/40d154f1-3764-46eb-a5d9-48e55c411f56)
  
-       - `40.80.148.42`, `23.22.63.114`
-       - The first IP seems to contain a high percentage of the logs as compared to the other IP
-3. investigate `40.80.148.42`, 
-       - `index=botsv1 imreallynotbatman.com src=40.80.148.42`
-       - and look in the these fields: `User-Agent, Post request, URIs` to see what kind of traffic is coming from this particular IP.
+    - `40.80.148.42`, `23.22.63.114`
+    - The first IP seems to contain a high percentage of the logs as compared to the other IP
+3. Investigate `40.80.148.42`, 
+    - `index=botsv1 imreallynotbatman.com src=40.80.148.42`
+    - and look in these fields: `User-Agent, Post request, URIs` to see what kind of traffic is coming from this particular IP.
 4. use `suricata` logs to validate the scanning attempt from this suspicious ip address, and see if any rule is triggered on this communication.
-      - `index="botsv1" imreallynotbatman.com sourcetype=suricata dest_ip="192.168.250.70" eventtype=suricata_eve_ids_attack status=404 scan`
-      - I used the `status` feild because the attacker will try to brute-force hidden pages in the website, as for `scan`, I wanted to search for any scan string. and this is what it returned
+    - `index="botsv1" imreallynotbatman.com sourcetype=suricata dest_ip="192.168.250.70" eventtype=suricata_eve_ids_attack status=404 scan`
+    - I used the `status` field because the attacker will try to brute-force hidden pages in the website, as for `scan`, I wanted to search for any scan string. and this is what it returned
      
      ![Screenshot 2025-05-19 153328](https://github.com/user-attachments/assets/5f55553f-df88-4487-bb16-04c5e90f6402)
 
@@ -74,12 +74,12 @@ Reconnaissance is an attempt to discover and collect information about a target.
 
 ### Q1. One suricata alert highlighted the CVE value associated with the attack attempt. What is the CVE value?
 - `index=botsv1 imreallynotbatman.com src=40.80.148.42 sourcetype=suricata`
-- inspect the `alert.signature` field
+- Inspect the `alert.signature` field
 
 ![Screenshot 2025-05-19 142032](https://github.com/user-attachments/assets/8975628f-7dd7-42ca-b567-63482f05102b)
 
 - [CVE-2014-6271](https://nvd.nist.gov/vuln/detail/CVE-2014-6271)
-- this flaw allows attackers to execute arbitrary commands on a system by crafting malicious **environment variables**, exploiting how Bash processes function definitions within these variables
+- This flaw allows attackers to execute arbitrary commands on a system by crafting malicious **environment variables**, exploiting how Bash processes function definitions within these variables
 
 ![Screenshot 2025-05-19 134343](https://github.com/user-attachments/assets/9ec9edc9-63d8-4048-9803-890b0f342f61)
 
@@ -92,7 +92,7 @@ Ans: ***CVE-2014-6271***
    - `/wp-content/` → WordPress
    -` /sites/all/` → Drupal
    - `/administrator/` → Joomla
-   - `/index.php?option=com_ `→ Joomla componen
+   - `/index.php?option=com_ `→ Joomla component
 
 - `index="botsv1" imreallynotbatman.com src_ip="40.80.148.42" sourcetype=suricata http_method=POST` 
 
@@ -106,7 +106,7 @@ Ans: ***acunetix***
 
 ### Q4. What is the IP address of the server imreallynotbatman.com?
 
-- the attacker is burte-forcing the website, so the destionation is `imreallynotbatman.com` servevr
+- the attacker is brute-forcing the website, so the destination is `imreallynotbatman.com` server
 
 Ans:  ***192.168.250.70***
 
@@ -120,19 +120,19 @@ In this task, we will look at the potential exploitation attempt from the attack
 
 ## Steps to take in the Exploitation Phase
 
-1. first see the number of counts by each source IP against the webserver.
+1. First see the number of counts by each source IP against the web server.
    - `index=botsv1 imreallynotbatman.com sourcetype=stream* | stats count(src_ip) as Requests by src_ip | sort - Requests`
    
    ![image](https://github.com/user-attachments/assets/bda2d020-e752-4e7d-9158-368678a32791)
  
-2. see the requests sent to our web server
+2. See the requests sent to our web server
    - `index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70"`
-   - inspect both of `src_ip` and `http_method` fileds 
+   - inspect both of `src_ip` and `http_method` fields 
    
    ![Screenshot 2025-05-19 134435](https://github.com/user-attachments/assets/79296d27-7135-434e-b305-ccaa19bd2602)
    ![image](https://github.com/user-attachments/assets/b15f07d6-4184-41bb-9ec8-6b4ba7bde92a)
 
-3. most of the requests coming to our server were from POST requests, narrwo down on the field `http_method=POST`
+3. Most of the requests coming to our server were from POST requests, narrowed down in the field `http_method=POST`
    - `index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST `
 
   ![image](https://github.com/user-attachments/assets/d888aa68-e1e4-4812-8685-52c0b57ddda8)
@@ -143,15 +143,15 @@ In this task, we will look at the potential exploitation attempt from the attack
    - The admin login page of the Joomla CMS will show as -> `/joomla/administrator/index.php`
    - this uri contains the **login page** to access the web portal therefore, we will be examining the traffic coming into this **admin** panel for a potential **brute-force attack**.
    - `index=botsv1 imreallynotbatman.com sourcetype=stream:http dest_ip="192.168.250.70"  uri="/joomla/administrator/index.php"`
-   - inspect the `form_data` field, it contains the requests sent through the form on the admin panel page, which has a login page
-5. the attacker may have tried multiple credentials in an attempt to gain access to the admin panel
+   - Inspect the `form_data` field, it contains the requests sent through the form on the admin panel page, which has a login page
+5. The attacker may have tried multiple credentials in an attempt to gain access to the admin panel
    - `ndex=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST uri="/joomla/administrator/index.php" | table _time uri src_ip dest_ip form_data`
   
   ![image](https://github.com/user-attachments/assets/d25d9c3c-e62b-4fb6-9f39-0cff00e4eb85)
 
    - It seems like the IP `23.22.63.114 ` is trying to brute-force the admin account.
 6. Extracting Username and Passwd Fields using Regex
-   - since we know the username admin is the target, use `rex` to extract the passwd values only. 
+   - Since we know the username admin is the target, use `rex` to extract the passwd values only. 
    - `index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST form_data=*username*passwd* | rex field=form_data "passwd=(?<creds>\w+)"  | table src_ip creds`
    
    ![Screenshot 2025-05-20 122005](https://github.com/user-attachments/assets/b6b1f749-5710-4da5-8d2d-d42cd4a0778c)
@@ -179,7 +179,7 @@ Ans:  ***batman***
 ### Q4. How many unique passwords were attempted in the brute force attempt?
 
 - in the use_agent field, the attacker used a python script to automate the brute force attack against our server, but one request came from Mozilla browser. 
-- if we exclude the one request came from  Mozilla browser, 412 request was send to our server to brout-force the admin account
+- If we exclude the one request that came from  Mozilla browser, 412 requests were sent to our server to brute-force the admin account
 
 Ans:  ***412***
 
@@ -259,12 +259,12 @@ As the website was defaced due to a successful attack by the adversary, it would
    - Here we see three external IPs towards which our web server initiates the outbound traffic
 3. Pivot into the destination IPs one by one to see what kind of traffic/communication is being carried out.
    - `index=botsv1 src=192.168.250.70 sourcetype=suricata dest_ip=23.22.63.114`
-   - inspect the url field
+   - Inspect the URL field
  
   ![image](https://github.com/user-attachments/assets/590a1586-22c9-43ad-8c80-62b438722841)
 
 4. The URL field shows 2 PHP files and one jpeg file
-   - investigate the jpeg file
+   - Investigate the jpeg file
    - `index=botsv1 url="/poisonivy-is-coming-for-you-batman.jpeg" dest_ip="192.168.250.70" | table _time src dest_ip http.hostname url`
 
 ## Answer the questions below
@@ -295,7 +295,7 @@ To investigate the communication to and from the adversary's IP addresses, we wi
 
 ![image](https://github.com/user-attachments/assets/c8f9871a-da21-4df9-aa56-e3ef679502bd)
 
-   - we can see the src IP, destination IP, and URL, that our server is communicating with this ip `23.22.63.114`
+   - We can see the src IP, destination IP, and URL, that which our server is communicating with this ip `23.22.63.114`
 3. Inspect the url field to identify FQDN (fully Qualified Domain Name)
    
    ![image](https://github.com/user-attachments/assets/b0e31b19-9430-4c61-95ee-2a72e5169681)
