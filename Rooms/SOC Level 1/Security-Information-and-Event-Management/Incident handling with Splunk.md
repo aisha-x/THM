@@ -208,7 +208,7 @@ In the previous Exploitation phase, we found evidence of the webserver `iamreall
    
    ![Screenshot 2025-05-20 124819](https://github.com/user-attachments/assets/5e098413-3ea0-4e21-8962-2c237a81f6e0)
 
-2. file **3791.exe** was uploaded on the server, we need to look on the **host-centric** log sources to confirm if the filed was executed
+2. file **3791.exe** was uploaded on the server, we need to look at the **host-centric** log sources to confirm if the file was executed
    - `index=botsv1 "3791.exe"`
    - Inspect the `source_log `field
    
@@ -227,17 +227,19 @@ In the previous Exploitation phase, we found evidence of the webserver `iamreall
 
 ### Q1. Sysmon also collects the Hash value of the processes being created. What is the MD5 HASH of the program 3791.exe?
 - in the  `Hashes` field
+  
 Ans: ***AAE3F5A29935E6ABCC2C2754D12A9AF0***
 
 ### Q2.Looking at the logs, which user executed the program 3791.exe on the server?
 
 - in the `User` field
+
 Ans: ***NT AUTHORITY\IUSR***
 
 ### Q3. Search hash on the virustotal. What other name is associated with this file 3791.exe?
 
 - in the DETAILS tab
-- 
+
 ![Screenshot 2025-05-20 130834](https://github.com/user-attachments/assets/a0f3576f-165e-4fee-8013-41c5de7fb293)
 
 Ans: ***ab.exe***
