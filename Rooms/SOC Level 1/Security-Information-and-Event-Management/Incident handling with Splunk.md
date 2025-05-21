@@ -291,7 +291,7 @@ The attacker uploaded the file to the server before defacing it. While doing so,
 
 To investigate the communication to and from the adversary's IP addresses, we will be examining the network-centric log sources mentioned above.
 
-## Steps to take in the 
+## Steps to take in the Command and Control Phase
 1. first use `fortigate_utm` to review the firewall logs.
    - `index=botsv1 sourcetype=fortigate_utm"poisonivy-is-coming-for-you-batman.jpeg"`
 
@@ -317,6 +317,7 @@ To investigate the communication to and from the adversary's IP addresses, we wi
 
 - as you can see, the attacker used `8.8.8.8` DNS, to resolve the malicious domain
 > to solve the question, remove the defanging 
+
 Ans: ***prankglassinebracket[.]jumpingcrab[.]com***
 
 # Weaponization Phase
@@ -371,17 +372,17 @@ Threat Intel report suggested that this adversary group Poison lvy appears to ha
 - [ThreatMiner](https://www.threatminer.org/host.php?q=23.22.63.114#gsc.tab=0&gsc.q=23.22.63.114&gsc.page=1)
 - [ Hybrid-Analysis](https://www.hybrid-analysis.com/sample/9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8?environmentId=100)
 
-## Steps to take:
+## Steps to take in Delivery Phase:
 1. use VirusTotal to search for `23.22.63.114`, from the RELATIONS Tab inspect the Communicating Files 
  
   ![Screenshot 2025-05-21 131000](https://github.com/user-attachments/assets/a79dfd7b-a943-43d3-bb08-fb6bef34220a)
 
-  - We found four files associated with this IP, one of them seems suspicious `MirandaTateScreensaver.scr.exe`
+   - We found four files associated with this IP, one of them seems suspicious `MirandaTateScreensaver.scr.exe`
 2. click on this file `MirandaTateScreensaver.scr.exe`
   
   ![image](https://github.com/user-attachments/assets/4736887f-5757-4715-b32d-0ee2238e87c2)
   
-  - we can also use [ Hybrid-Analysis](https://www.hybrid-analysis.com/sample/9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8?environmentId=100) to get a lot of information about this malware
+   - we can also use [ Hybrid-Analysis](https://www.hybrid-analysis.com/sample/9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8?environmentId=100) to get a lot of information about this malware
 
 ## Answer the questions below
 
