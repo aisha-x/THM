@@ -49,13 +49,16 @@ Ans: ***Amel1a***
 
 ### Q3.Which user from the HR department was observed to be running scheduled tasks?
 
-- if we search on events relates to this suspicious user
 ```sql
-index=win_eventlogs Amel1a
+index=win_eventlogs schtasks HostName="HR_0*"
 ```
-![Screenshot 2025-05-23 111229](https://github.com/user-attachments/assets/5e83fd07-b80d-4b5d-8197-77fc3a901e26)
 
-- The suspicious user is executing some commands on the host `HR_02` which belongs to the legitimate user "Chris.fort" 
+![image](https://github.com/user-attachments/assets/53745ce7-fa17-4103-88f4-8c3ad33540d5)
+
+- In the CommandLine field, the user Chris.fort executes a scheduled task.
+- `OfficUpdater` — Misspelled to mimic "`OfficeUpdater`", a common trick to hide in plain sight.
+- `update.exe` in `Temp` folder — This is unusual and often used by malware to persist on a system.
+- `/sc onstart` — Ensures the file runs every time the system boots — a persistence mechanism.
 
 Ans: ***Chris.fort***
 
@@ -123,5 +126,8 @@ Ans: ***https://controlc.com/e4d11035***
 
 ## Findings
 
-1. at **2022-03-04T10:38:28Z**, the user **haroon** (**HR_01**), used a LOLBIN tool to download a payload from a file-sharing website and save it in the system as `benign.exe`
-2. the second day at **2022-03-05T12:54:30Z**, A suspisious user named **Amel1a** was seen in the host **HR_02**(belongs to Chris.fort) executing some commands.
+1. at **2022-03-04 T10:38:28Z**, the user **haroon** (**HR_01**), used a LOLBIN tool to download a payload from a file-sharing website and save it in the system as `benign.exe`
+2. the second day at **2022-03-05 T12:54:30Z**, A suspisious user named **Amel1a** was seen in the host **HR_02**(belongs to Chris.fort) executing some commands.
+   ![Screenshot 2025-05-23 111229](https://github.com/user-attachments/assets/d39d0617-8639-479f-8f5f-7a25825af44d)
+   
+4. **2022-03-06 T13:52:37Z**, the suspicious user created a persistence on the **HR_02** machine using the task scheduler tool
