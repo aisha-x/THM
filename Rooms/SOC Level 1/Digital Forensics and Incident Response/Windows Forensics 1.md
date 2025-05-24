@@ -43,7 +43,7 @@ This data is highly valuable in **computer forensics** to track system and user 
 
 ### Accessing the Registry
 
-You can view and edit the registry using **`regedit.exe`**, a built-in Windows utility. Additional tools can also help analyze the registry, which will be explored in future tasks.
+You can view and edit the registry using **`regedit.exe`**, a built-in Windows utility. Additional tools can also help analyze the registry.
 
 ### Registry Structure
 
