@@ -78,17 +78,12 @@ Ans: ***08-00-27-2c-c4-b9***
 
 ### Q7. What is the name of the network card on this computer?
 
-- use keyboard Search option to search for network cards
-- `[Nn]etwork.?[Cc]ards?` -> a regular expression search
-    - Matches "N" or "n".
-    - Matches the literal characters "etwork" -> Network or network
-    - . -> any single charachter, ? -> zero or one occurrence.
-    - [Cc]ards? -> C or c,  match for card or cards
+- Use the keyword Search option to search for network cards
 ![Screenshot 2025-05-27 134343](https://github.com/user-attachments/assets/cc0b14c8-c173-4fc0-b0bc-afd89b56d32c)
 
-- the file `MpRtp.dll` returned a reqistry key for network card
-- then go to the operation system information and click on the SOFTWARE registy and select Application option
-- from there, go to the network card registry -> SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkCards
+- The file `MpRtp.dll` returned a registry key for the network card
+- Go to the operating system information and click on the SOFTWARE registry and select the Application option
+- From there, go to the network card registry -> SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkCards
 
 ![Screenshot 2025-05-27 141809](https://github.com/user-attachments/assets/dde6f055-eef5-4890-9934-765f2a16f12b)
 
@@ -105,7 +100,7 @@ Ans: ***Intel(R) PRO/1000 MT Desktop Adapter***
 
 ![Screenshot 2025-05-27 142133](https://github.com/user-attachments/assets/058212d0-5eb9-4260-9115-23340a7cf806)
 
-- Look@Lan is an advanced network monitor that allows you to monitor your net in few clicks. 
+- Look@Lan is an advanced network monitor that allows you to monitor your network. 
 - for more information about this too -> [Source ](https://www.majorgeeks.com/files/details/looklan.html)
 
 Ans: ***Look@LAN***
@@ -137,8 +132,8 @@ Ans: ***Anto Joshwa***
 
 ### Q11. A user had a file on her desktop. It had a flag but she changed the flag using PowerShell. What was the first flag?
 
-- this file `ConsoleHost_history.txt` stores powershell command history -> for more information visti [hack stuff website](https://0xdf.gitlab.io/2018/11/08/powershell-history-file.html#history-file-information)
-- use keyborad search option to search for this file 
+- this file `ConsoleHost_history.txt` stores powershell command history -> for more information visit [hack stuff website](https://0xdf.gitlab.io/2018/11/08/powershell-history-file.html#history-file-information)
+- Use the keyword search option to search for this file 
 
 ![Screenshot 2025-05-28 115043](https://github.com/user-attachments/assets/c32f8eb2-fb1a-44b5-8469-4f203a03f059)
 
@@ -171,12 +166,12 @@ Ans: ***Lazagne,Mimikatz***
 
 ### Q14. There is a YARA file on the computer. Inspect the file. What is the name of the author?
 
-- use keyword search option to search for .yar extention of the yara file
+- Use keyword search option to search for .yar extension of the Yara file
 
 ![Screenshot 2025-05-28 123846](https://github.com/user-attachments/assets/ef396cef-a739-463e-8fb9-73149e7af515)
 
-- the result returned the location of the kiwi_passwords.yar -> C:\Users\H4S4N\Desktop\mimikatz_trunk\kiwi_passwords.yar
-- but the file wasnt in the desktop folder it was in the downloads folder
+- The result returned the location of the kiwi_passwords.yar -> C:\Users\H4S4N\Desktop\mimikatz_trunk\kiwi_passwords.yar
+- but the file wasn't in the desktop folder, it was in the downloads folder
 
 ![Screenshot 2025-05-28 125210](https://github.com/user-attachments/assets/4affdca7-3d88-4c33-b6a1-f303d62dbd67)
 
