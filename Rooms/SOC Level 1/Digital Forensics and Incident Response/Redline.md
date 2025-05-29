@@ -135,8 +135,8 @@ Ans: ***C:\Program Files (x86)\Windows Mail\SomeMailFolder\flag.txt***
 
 ### Q8.Provide the message the intruder left for you in the file.
 
-- click on the **Timeline** option, then search for flag.txt file
-- on the bottom right, click on the **Show Details**, select string option to view the content of the file
+- Click on the **Timeline** option, then search for flag.txt file
+- On the bottom right, click on the **Show Details**, select the string option to view the content of the file
 
 ![Screenshot 2025-05-28 150518](https://github.com/user-attachments/assets/117d82db-849e-4285-a90e-39055fac96f8)
 
@@ -161,7 +161,7 @@ So far, you only know the following artifacts for the file:
 
 > Note: Use the existing Redline Session found in: C:\Users\Administrator\Documents\Analysis\Sessions\AnalysisSession1.
 
-- creat IOC file using IOC Editor and add the artifcats
+- Create an IOC file using the IOC Editor and add the artifacts
 
 ![Screenshot 2025-05-28 162854](https://github.com/user-attachments/assets/c517c59a-6568-434c-b817-406efa328da3)
 
@@ -190,7 +190,7 @@ Ans: ***BUILTIN\Administrators***
 
 ### Q4. Provide the subsystem for the file.
 
-- click on the *i* option, under the PE Info, copy the subsystem
+- Click on the *i* option, under the PE Info, copy the subsystem
 
 ![Screenshot 2025-05-28 165009](https://github.com/user-attachments/assets/9e0c5efc-51b2-4ddf-986e-a6a656f29e7c)
 
@@ -199,7 +199,7 @@ Ans: ***Windows_CUI***
 
 ### Q5. Provide the Device Path where the file is located.
 
-- same location as the previous quetion, under File Info, copy the device path
+- same location as the previous question, under File Info, copy the device path
 
 Ans: ***\Device\HarddiskVolume2***
 
@@ -213,7 +213,7 @@ Ans: ***57492d33b7c0755bb411b22d2dfdfdf088cbbfcd010e30dd8d425d5fe66adff4***
 
 ### Q7. The attacker managed to masquerade the real filename. Can you find it having the hash in your arsenal? 
 
-- continue from the previous question and look under names option
+- Continue from the previous question and look under the names option
 
 ![Screenshot 2025-05-28 170612](https://github.com/user-attachments/assets/a3cf0be5-ec9b-4d66-8d6e-2b3258c1b1bd)
 
@@ -249,7 +249,7 @@ Ans: ***_R_E_A_D___T_H_I_S___AJYG1O_.txt***
 
 ### Q3.Find the Windows Defender service; what is the name of its service DLL? 
 
-- search for windows defender in **windows services** section
+- search for Windows Defender in **Windows Services** section
 
 ![Screenshot 2025-05-29 112917](https://github.com/user-attachments/assets/e355fb2c-866d-447a-86fa-4c6eb15a4a0a)
 
@@ -258,7 +258,7 @@ Ans: ***MpSvc.dll***
 
 ### Q4.The user manually downloaded a zip file from the web. Can you find the filename? 
 
-- search in the **File Download History** section for `.zip` file extention, then show details of that file
+- search in the **File Download History** section for `.zip` file extension, then show details of that file
 
 ![Screenshot 2025-05-29 113200](https://github.com/user-attachments/assets/38f1955b-e60f-40da-b24f-b7912c62eeb0)
 
@@ -266,7 +266,7 @@ Ans: ***eb5489216d4361f9e3650e6a6332f7ee21b0bc9f3f3a4018c69733949be1d481.zip***
 
 ### Q5. Provide the filename of the malicious executable that got dropped on the user's Desktop.
 
-- search in the **File System** section for files under desktop folder
+- search in the **File System** section for files under the desktop folder
 
 ![Screenshot 2025-05-29 121058](https://github.com/user-attachments/assets/dc415516-14f2-459a-ba4d-f42346e1f657)
 
@@ -287,7 +287,7 @@ Ans: ***Cerber***
 
 
 
-# Refernces:
+# References:
 
 - *[Redline User Guide](https://fireeye.market/assets/apps/211364/documents/877936_en.pdf)*
 - *[IOC Editor User Guide](https://fireeye.market/assets/apps/S7cWpi9W//9cb9857f/ug-ioc-editor.pdf)*
