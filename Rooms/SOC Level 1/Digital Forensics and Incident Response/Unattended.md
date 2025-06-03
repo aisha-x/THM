@@ -157,3 +157,8 @@ Ans: ***https://pastebin.com/1FQASAav***
 
 
 Ans: ***ne7AIRhi3PdESy9RnOrN***
+
+
+# Conclusion
+
+At this point, we already have a good idea of what happened. The malicious threat actor was able to successfully find and exfiltrate data. While we could not determine who this person is, it is clear that they knew what they wanted and how to get it.
