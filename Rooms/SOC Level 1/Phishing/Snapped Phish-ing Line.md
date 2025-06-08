@@ -49,7 +49,7 @@ Ans: ***Accounts.Payable@groupmarketingonline.icu***
 ### Q3.What is the redirection URL to the phishing page for the individual Zoe Duncan? (defanged format)
 
 
-- open Zoe's email, save the html attachment and extract the md5 hash to search for this file in VirusTotal
+- Open Zoe's email, save the HTML attachment, and extract the MD5 hash to search for this file in VirusTotal
 
 ![Screenshot 2025-06-08 133145](https://github.com/user-attachments/assets/b2811903-cddd-4b24-aff2-6386d3374542)
 
@@ -62,7 +62,7 @@ Ans: ***hxxp[://]kennaroads[.]buzz/data/Update365/office365/40e7baa2f826a57fcf04
 
 ### Q4.What is the URL to the .zip archive of the phishing kit? (defanged format)
 
-- use `curl` to get us a detailed information about the HTTP response headers
+- Use `curl` to get detailed information about the HTTP response headers
 
 ![Screenshot 2025-06-08 140017](https://github.com/user-attachments/assets/9751bff6-de86-4a6b-9d53-474597cdbe40)
 
@@ -84,7 +84,7 @@ Ans: ***ba3c15267393419eb08c7b2652b8b6b39b406ef300ae8a18fee4d16b19ac9686***
 
 ### Q6.When was the phishing kit archive first submitted? (format: YYYY-MM-DD HH:MM:SS UTC)
 
-- copy the sha256 hash and search for it in [VirusTotal](https://www.virustotal.com/gui/file/ba3c15267393419eb08c7b2652b8b6b39b406ef300ae8a18fee4d16b19ac9686/details)
+- Copy the SHA256 hash and search for it in [VirusTotal](https://www.virustotal.com/gui/file/ba3c15267393419eb08c7b2652b8b6b39b406ef300ae8a18fee4d16b19ac9686/details)
 
 ![Screenshot 2025-06-08 140703](https://github.com/user-attachments/assets/bfce932e-5c08-4595-aa2d-307545324381)
 
@@ -102,7 +102,7 @@ Ans: ***2020-06-25***
 
 ### Q8.What was the email address of the user who submitted their password twice?
 
-- I explored the subdomains in VM and found a log.txt that contains user's emails and passwords
+- I explored the subdomains in VM and found a log.txt that contains users' emails and passwords
 
 ![Screenshot 2025-06-08 143959](https://github.com/user-attachments/assets/b703d1d9-d0fe-4477-8dd5-9e27438bf924)
 
@@ -113,11 +113,11 @@ Ans: ***michael.ascot@swiftspend.finance***
 
 ### Q9. What was the email address used by the adversary to collect compromised credentials?
 
-- download the zip in the vm and unzip it
+- Download the zip in the VM and unzip it
 
 ![Screenshot 2025-06-08 144740](https://github.com/user-attachments/assets/c1e61060-17ca-4cfd-b605-73615b939093)
 
-- it was in the `office365/Validation/submit.php` file
+- It was in the `office365/Validation/submit.php` file
 
 ![Screenshot 2025-06-08 145000](https://github.com/user-attachments/assets/f16fe4ec-4ea3-4292-aeb5-528926c161cc)
 
@@ -128,7 +128,7 @@ Ans: ***m3npat@yandex.com***
 
 ### Q10. The adversary used other email addresses in the obtained phishing kit. What is the email address that ends in "@gmail.com"?
 
-- the other email wan it this location:  `office365/Validation/update`
+- the other email was in this location:  `office365/Validation/update`
 
 ![Screenshot 2025-06-08 145641](https://github.com/user-attachments/assets/e26b2be7-ced5-452a-86c8-e989c621484f)
 
