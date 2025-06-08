@@ -34,6 +34,7 @@ As an IT department personnel of SwiftSpend Financial, one of your responsibilit
 ![Screenshot 2025-06-08 130950](https://github.com/user-attachments/assets/1784eb16-b386-4b0b-b117-cd5d53aeacf4)
 
 Ans: ***William McClean***
+
 ---
 
 ### Q2. What email address was used by the adversary to send the phishing emails?
