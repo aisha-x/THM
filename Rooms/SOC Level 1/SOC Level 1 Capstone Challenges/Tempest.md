@@ -248,7 +248,7 @@ In addition, the unusual executions are related to the malicious C2 binary used 
 
 ![Screenshot 2025-06-11 154500](https://github.com/user-attachments/assets/0f223e61-f0bc-4aab-890f-7b07420b586f)
 
-6. After the account creation, at **17:26:29**, the attacker executed a technique to establish persistent administrative access. This command registers `C:\ProgramData\final.exe` as a persistent Windows service on a machine named **TEMPEST** under the name **TempestUpdate2**. Since it's set to `start= auto`, it will run on every reboot.
+6. At **17:26:29**, the attacker executed a technique to establish persistent administrative access. This command registers `C:\ProgramData\final.exe` as a persistent Windows service on a machine named **TEMPEST** under the name **TempestUpdate2**. Since it's set to `start= auto`, it will run on every reboot.
 
 ![image](https://github.com/user-attachments/assets/73c8ad52-0667-479a-9445-f6ad4d59a722)
 
