@@ -39,7 +39,7 @@ The security team was able to flag the suspicious execution of the attachment, i
 
 **You are tasked to analyse and assess the impact of the compromise.**
 
-## Investigation Guide:
+## Analysis Steps:
 
 - Cat the content of the `dump.eml`.
 - I paste the content in the [Message Header Analyzer](https://mha.azurewebsites.net/).
@@ -77,7 +77,7 @@ Based on the initial findings, we discovered how the malicious attachment compro
 - A PowerShell command was executed.
 - Decoding the payload reveals the starting point of endpoint activities. 
 
-## Investigation Guide:
+## Analysis Steps:
 
 - using `jq` tool to convert JSON format and output the filter to standard output, as a sequence of newline-separated JSON data.
 
@@ -134,7 +134,7 @@ Based on the PowerShell logs investigation, we have seen the full impact of the 
 - The domains and ports used for the network activity were discovered, including the tool used by the threat actor for exfiltration.
 
 
-## Investigation Guide:
+## Analysis Steps:
 
 - Based on the custom header the attacker crafted, filter the pcap file for http contains this header. In the Server header, it indicates the web server software responding to the request is **Python Built-in SimpleHTTPServer**
 
