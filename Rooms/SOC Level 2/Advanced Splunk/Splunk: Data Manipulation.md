@@ -108,6 +108,7 @@ sourcetype = vpn_logs
 interval = 5
 ```
 The above lines tell Splunk to run the script `vpnlogs` every `5` seconds and send the output to the `main index` with sourcetype `vpn_logs` and host value as `vpn_server`
+
 2. Restart Splunk: 
 ```bash
 ubuntu@tryhackme:/opt/splunk/etc/apps$ sudo /opt/splunk/bin/splunk restart
@@ -230,7 +231,7 @@ sudo /opt/splunk/bin/splunk restart
 ![Screenshot 2025-06-18 231334](https://github.com/user-attachments/assets/da2cfa18-d135-4bf1-96d6-8774ba260190)
 
 
-
+---
 # Extracting Custom Fields
 
 We will demonstrate how to extract fields with `vpn_log`.
