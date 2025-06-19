@@ -10,12 +10,12 @@ You are presented with a Splunk Instance and the network logs being ingested fro
 
 ## 1. Fix Event Boundaries
 
-we started Splunk and search for `index=main`
+Starte Splunk and search for `index=main`
 
 ![Screenshot 2025-06-19 122504](https://github.com/user-attachments/assets/bcc55af6-53d9-4b4b-a16d-acc84f387357)
 
-As you can see, the events are scattered, we need to fix the event boundaries first.
-1. view the content of `inputs.conf`:
+As you can see, the events are scattered, and we need to fix the event boundaries first.
+1. View the content of `inputs.conf`:
 ```bash
 ubuntu@tryhackme:/opt/splunk/etc/apps$ sudo cat fixit/default/inputs.conf
 [script:///opt/splunk/etc/apps/fixit/bin/network-logs]
@@ -38,16 +38,16 @@ BREAK_ONLY_BEFORE = \[Network-log\]
 ```
 
 ---
-## 2.Extract Custom Fields
+## 2. Extract Custom Fields
 
-Now that we have fixied the boundaries, lets extract the fields. 
+Now that we have fixed the boundaries, let's extract the fields. 
 - Username
 - Country
 - Source_IP
 - Department
 - Domain
 
-1. Create Regex Patten:
+1. Create a Regex Pattern:
 
 ![Screenshot 2025-06-19 124550](https://github.com/user-attachments/assets/97f781d6-8b91-4f59-bcf0-64d1760612ca)
 
