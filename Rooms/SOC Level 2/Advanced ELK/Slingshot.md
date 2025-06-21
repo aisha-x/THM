@@ -38,7 +38,6 @@ To aid in your investigation, you've received an Elastic Stack instance containi
 - A successful login attempt was observed.
 - The credentials were obtained from a Base64-encoded `Authorization` header:
   - Decoded to: `admin:thx1138`.
-
 - After logging in, the attacker changed the user-agent to: `Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0` 
 
 
@@ -56,14 +55,10 @@ To aid in your investigation, you've received an Elastic Stack instance containi
 ## Lateral Movement & Data Access
 
 - Path traversal attempts were observed.
-- The attacker accessed: `/etc/phpmyadmin/config-db.php`
-
-which contained database credentials.
-
+- The attacker accessed: `/etc/phpmyadmin/config-db.php`which contained database credentials.
 - Using these credentials, the attacker accessed the **phpMyAdmin** interface.
 - The attacker exported the `customer_credit_cards` database:
 - A POST request to `export.php` with `db=customer_credit_cards` was used.
-
 - Later, the attacker **inserted data** into the database (possibly to plant or manipulate records).
 
 ---
