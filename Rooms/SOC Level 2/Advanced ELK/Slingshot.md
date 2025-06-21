@@ -4,6 +4,13 @@ Room URL: https://tryhackme.com/room/slingshot
 
 
 ---
+# Scenario
+
+**Slingway Inc.**, a leading toy company, has recently noticed suspicious activity on its e-commerce web server and potential modifications to its database. To investigate the suspicious activity, they've hired you as a SOC Analyst to look into the web server logs and uncover any instances of malicious activity.
+
+To aid in your investigation, you've received an Elastic Stack instance containing logs from the suspected attack. Below, you'll find credentials to access the Kibana dashboard. Slingway's IT staff mentioned that the suspicious activity started on `July 26, 2023`.
+
+---
 # Investigation Report
 
 ## Initial Findings
