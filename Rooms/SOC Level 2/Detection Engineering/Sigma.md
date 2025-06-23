@@ -59,15 +59,15 @@ To complete the task, you will require two Sigma rules processed into ElasticSea
 - The file creation process would be run via `cmd.exe`.
 - Change the default time window on Kibana from the default last 30 days to last 1 year (or ensure it encompasses 2022).
 
-**1. Detecting Suspicious Sceduled Task**
+**1. Detecting Suspicious Scheduled Task**
 
 ```yml
-title: susicious Scheduled Task
+title: Suspicious Scheduled Task
 id: 1000002
-status: Expermential
-description: detect suspicious scheduled task.
+status: Experimental
+description: Detect suspicious scheduled tasks.
 author: Aisha
-date: 23/6/2025 10:00 pm
+date: 23/6/2025 
 logsource:
   category: process_creation
   product: windows
@@ -107,9 +107,9 @@ tags:
 ```yml
 title: Detect Ransomware Activity
 id: 1000003
-status: Expermential
+status: Experimental
 author: Aisha
-date: 23/6/2025 10:00 pm
+date: 23/6/2025
 logsource: 
   category: file_creation
   product: windows
