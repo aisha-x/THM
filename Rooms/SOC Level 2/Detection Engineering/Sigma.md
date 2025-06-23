@@ -14,8 +14,7 @@ title: AnyDesk Installation.
 id: 10000001
 status: experimental
 description: AnyDesk Remote Desktop installation can be used by attacker to gain remote access
-author: Aisha Ahmad
-date: 23/6/2025
+date: 
 modified: #When was it updated
 logsource: 
   category: process_creation
