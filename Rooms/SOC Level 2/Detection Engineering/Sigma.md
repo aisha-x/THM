@@ -135,3 +135,8 @@ fields:
 (winlog.event_id:11 AND file.path:/.*\.[Tt][Xx][Tt]/ AND process.executable:/.*\\[Cc][Mm][Dd]\.[Ee][Xx][Ee]/)
 ```
 ![Screenshot 2025-06-23 231500](https://github.com/user-attachments/assets/00628f2c-994f-4d56-8132-03375c055823)
+
+
+
+
+## [Sigma Cheat Sheet](https://www.studocu.com/en-gb/document/edinburgh-napier-university/computer-systems-1/sigma-cheatsheet-try-hack-me/66806417)
