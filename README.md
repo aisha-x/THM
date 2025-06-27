@@ -1,6 +1,5 @@
-# THM
+# THM 
 
-Welcome to my TryHackMe repository!
 
-here you will find walkthroughs and detailed explanations for various 
-rooms and challenges on TryHackMe. 
+This repo contains walkthroughs and detailed explanations for various 
+rooms and challenges I completed on [TryHackMe](https://tryhackme.com) platform. 
