@@ -1,7 +1,7 @@
 
 # Task-28
 
-the goal is to reverse engineer the binary and try to break the service. <target-ip> 9008
+the goal is to reverse engineer the binary and try to break the service. target-ip: 9008
 
 ---
 
