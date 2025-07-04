@@ -1,5 +1,8 @@
 # tryhackme: Threat Hunting: Foothold cheat sheet
 
+Room URL: https://tryhackme.com/room/threathuntingfoothold
+
+---
 
 | Tactic            | Hunting Methodology |
 |-------------------|---------------------|
