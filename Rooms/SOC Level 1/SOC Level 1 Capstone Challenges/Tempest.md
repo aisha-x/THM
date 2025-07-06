@@ -1,14 +1,16 @@
+
+
 # TryHackMe: Tempest Challenge
 
 Room URL: https://tryhackme.com/room/tempestincident
 
 1. [Preparation](#preparation---tools-and-artifacts)
-2. [Initial Access - Malicious Document](#task-4-initial-access---malicious-document)
-3. [Execution](#task-5-initial-access---stage-2-execution)
-4. [C2](#task-6-initial-access---malicious-document-traffic)
-5. [Reconnaissance](#task-7-discovery---internal-reconnaissance)
-6. [Privilege Escalation](#taks-8-privilege-escalation---exploiting-privileges)
-7. [Persistent](#task-9-actions-on-objective---fully-owned-machine)
+2. [Initial Access - Malicious Document](#initial-access---malicious-document)
+3. [Execution](#initial-access---stage-2-execution)
+4. [C2](#initial-access---malicious-document-traffic)
+5. [Reconnaissance](#discovery---internal-reconnaissance)
+6. [Privilege Escalation](#privilege-escalation---exploiting-privileges)
+7. [Persistent](#persistent)
 
 ---
 
@@ -37,7 +39,7 @@ We will prepare the artifacts and introduce the tools needed for the investigati
 
 
 ---
-# TASK-4: Initial Access - Malicious Document
+# Initial Access - Malicious Document
 
 **Tempest Incident**
 
@@ -89,7 +91,7 @@ As reported by the SOC analyst, the intrusion started from a malicious document.
 
 
 ---
-# TASK-5: Initial Access - Stage 2 execution
+# Initial Access - Stage 2 execution
 
 **Malicious Document - Stage 2**
 
@@ -123,7 +125,7 @@ Based on the initial findings, we discovered that there is a stage 2 execution:
 
 
 ---
-# TASK-6: Initial Access - Malicious Document Traffic
+# Initial Access - Malicious Document Traffic
 
 **Malicious Document Traffic**
 
@@ -148,7 +150,7 @@ Based on the collected findings, we discovered that the attacker fetched the sta
 
 
 ---
-# TASK-7: Discovery - Internal Reconnaissance
+# Discovery - Internal Reconnaissance
 
 **Internal Reconnaissance**
 
@@ -179,7 +181,7 @@ Based on the collected findings, we have discovered that the malicious binary co
 
 
 ---
-# TAKS-8: Privilege Escalation - Exploiting Privileges
+# Privilege Escalation - Exploiting Privileges
 
 **Privilege Escalation**
 
@@ -217,7 +219,7 @@ Based on the collected findings, the attacker gained a stable shell through a re
 
 
 ---
-# TASK-9: Actions on Objective - Fully-owned Machine
+# Actions on Objective - Fully-owned Machine
 **Fully-Owned Machine**
 
 Now, the attacker has gained administrative privileges inside the machine. Find all persistence techniques used by the attacker.
