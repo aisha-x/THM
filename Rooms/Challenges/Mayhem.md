@@ -99,9 +99,6 @@ Copy the frame as a hex stream, then start extracting the encryption keys.
 **Encryption Keys:**
 
 ```txt
-lenght field: 00000113
-magic value: deadbeef
-Agent ID: b7d8
 AES KEY: 946cf2f65ac2d2b868328a18dedcc296cc40fa28fab41a0c34dcc010984410ca
 IV key: 8cd00c3e349290565aaa5a8c3aacd430
 Mood: CTR
@@ -149,7 +146,7 @@ He was also able to find an important file in the target's desktop folder.
 
 <img width="1615" height="846" alt="Screenshot 2025-07-13 105806" src="https://github.com/user-attachments/assets/af05f883-1788-4da5-8154-8749d114ca50" />
 
-Inside the client.csv file: 
+This is what is inside the client.csv file: 
 
 <img width="1706" height="887" alt="Screenshot 2025-07-13 110055" src="https://github.com/user-attachments/assets/f6c782ab-fbef-453f-b911-a92809d1b244" />
 
