@@ -20,7 +20,7 @@ There are 6 TCP streams; we will view all of them and search for interesting fin
 
 Both streams, the source `10.0.2.38` established a TCP handshake, but closed the connection immediately without sending any payloads.
 
-## stream-2
+## Stream-2
 
 <img width="1920" height="964" alt="Screenshot_2025-07-12_09_01_49" src="https://github.com/user-attachments/assets/b9d85b7d-4712-4fc0-9103-519dd5bfec34" />
 
@@ -78,11 +78,11 @@ Referred to this article -> https://www.immersivelabs.com/resources/blog/havoc-c
 
 under **Obtaining the encryption keys from packet capture** section in the artical, it says that we need to search for the magic value which is -> **0xDEADBEEF**, from there, we will be able to find: **agent ID**, **agent length**, **IV key**, and **AES key**, which will help us in the decryption process.
 
-<img width="1368" height="808" alt="Screenshot 2025-07-12 220139" src="https://github.com/user-attachments/assets/e09bdb65-8a38-4082-b07e-7fb8978d622f" />
+<img width="991" height="448" alt="Screenshot 2025-07-12 220145" src="https://github.com/user-attachments/assets/6375819c-d20d-493b-aa57-685f73b4ee1f" />
 
 In the article, it also noted: *"The encryption keys appear to be sent in the first non-check-in HTTP POST request from the agent to the teamserver"*. Based on that, I filtered the packet for the hex values `dead beef`, searched for the first HTTP POST that `dead beef` in it, and I found it on frame number 182.
 
-<img width="991" height="448" alt="Screenshot 2025-07-12 220145" src="https://github.com/user-attachments/assets/6375819c-d20d-493b-aa57-685f73b4ee1f" />
+<img width="1920" height="964" alt="Screenshot_2025-07-12_15_41_45" src="https://github.com/user-attachments/assets/c232e53c-f435-457e-a7e8-46d6b1a6fcdf" />
 
 Copy the frame as a hex stream, then start extracting the encryption keys.
 
