@@ -104,7 +104,7 @@ To search for internet history, search in Internet Explorer. For some reason, it
 <img width="978" height="601" alt="image" src="https://github.com/user-attachments/assets/64bdfb25-7a07-4619-bce7-6406ecce1ef6" />
 
 
-## exploit CVE-2019-1388
+## Exploit CVE-2019-1388
 
 
 **CVE-2019-1388** is a privilege escalation vulnerability that affects the Windows Certificate Dialog. It occurs when a user runs a signed executable like `hhupd.exe`, and the dialog fails to enforce privilege separation correctly
@@ -112,19 +112,26 @@ To search for internet history, search in Internet Explorer. For some reason, it
 To exploit it:
 - Double-click on `hhupd.exe`.
 - In the prompt that appears, click “`Show more details`”.
+
+<img width="474" height="475" alt="image" src="https://github.com/user-attachments/assets/3a19a6a5-dd12-42d1-b94b-7195fbbecf36" />
+
 - Then click “`Show information about the publisher's certificate.`”
+
+<img width="515" height="525" alt="image" src="https://github.com/user-attachments/assets/80203a24-7705-4ca4-bfa6-e8deb0431b1c" />
+
 - In the certificate window, click on the “`Issued by`” link.
+
+<img width="460" height="520" alt="image" src="https://github.com/user-attachments/assets/70d99968-0609-4450-a60d-7fc4e127a437" />
+
 - This opens Internet Explorer with elevated privileges.
+
+<img width="976" height="641" alt="image" src="https://github.com/user-attachments/assets/8d2c8867-63a9-430b-a57d-04b3a38cb17d" />
+
 - Press `Ctrl + S` to open the Save As window.
 - In the File Explorer window, type `cmd` in the address bar and hit Enter.
 This gives you a command prompt with administrator privileges, effectively bypassing UAC.
 
-<img width="474" height="475" alt="image" src="https://github.com/user-attachments/assets/3a19a6a5-dd12-42d1-b94b-7195fbbecf36" />
-<img width="515" height="525" alt="image" src="https://github.com/user-attachments/assets/80203a24-7705-4ca4-bfa6-e8deb0431b1c" />
-<img width="460" height="520" alt="image" src="https://github.com/user-attachments/assets/70d99968-0609-4450-a60d-7fc4e127a437" />
-<img width="976" height="641" alt="image" src="https://github.com/user-attachments/assets/8d2c8867-63a9-430b-a57d-04b3a38cb17d" />
 <img width="993" height="741" alt="image" src="https://github.com/user-attachments/assets/7cae96d0-aa00-4bbb-b74f-b654150a7faa" />
-
 
 ## Persistence
 
