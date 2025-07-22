@@ -34,7 +34,7 @@ whoami
 name 'whoami' is not defined
 ```
 
-This error confirms to us that we are in a Python environment. 
+This error confirms that this server is running in a Python environment.
 
 ```bash
 nc 10.10.74.250  8000
