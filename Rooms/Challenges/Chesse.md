@@ -13,20 +13,28 @@ Start by enumerating the target machine
 
 <img width="1078" height="676" alt="image" src="https://github.com/user-attachments/assets/f6d52b3f-e474-4492-8a12-45b6617bbaa9" />
 
+
 There are a lot of open ports, and that could be the use of [**Portspoof**](https://www.blackhillsinfosec.com/how-to-use-portspoof-cyber-deception/) tool, this is to make a system appear as if it's running many different services on many different ports. We can see that port 80 is open and it is hosting a `cheese.thm` website page.
+
 
 <img width="1390" height="835" alt="image" src="https://github.com/user-attachments/assets/16568f7a-771e-4973-ada1-fe5356fb223a" />
 
+
 I used `dirsearch` to search for hidden pages.
+
 
 <img width="976" height="744" alt="image" src="https://github.com/user-attachments/assets/2b88e640-9e76-43fe-985f-31b367d24084" />
 
+
 Checked both `users.html` and `orders.html` and found nothing useful. I tested the login page with default credentials and received the error: `Login failed. Please check your username and password`. Before attempting to brute-force the login page, I tested for XSS and SQLi vulnerabilities. You can use SQLMap to automate this process, you need to intercept the request with Burp Suite and save it, then run `sqlmap -r <login.req>`.
+
 
 <img width="1302" height="764" alt="image" src="https://github.com/user-attachments/assets/4aac57fd-cf27-4ae1-80c9-cc579dce39a8" />
 <img width="1257" height="778" alt="image" src="https://github.com/user-attachments/assets/e95fd416-047b-4cd4-a598-eaf84ba683f3" />
+
  
 We got a redirecting response to this page -> `secret-script.php?file=supersecretadminpanel.html`. We can access this page without logging in.
+
 
 <img width="1220" height="401" alt="image" src="https://github.com/user-attachments/assets/1f2cb0df-55ab-4a35-8c11-d818e381e26a" />
 
