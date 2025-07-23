@@ -84,7 +84,7 @@ Redline shows this file as the entry point of the infection. The next step is to
 ### Malware Behavior
 
 The ransomware created the following artifacts:
--` d60dff40.lock` – Hidden, Archive file (possibly encrypted file or marker)
+- `d60dff40.lock` – Hidden, Archive file (possibly encrypted file or marker)
 - `t48s39la-readme.txt` – Likely the ransom note
 
 **Timeline**: This tab provides a list of events sorted by time, which can be an overwhelming number of events. Adjust the event by checking how many files got affected and renamed to this extension `.48s39la` . Under files, check modified and changed, and set this regex filter -> `^.*\.*\.t48s39la`.
