@@ -1,8 +1,10 @@
-# Analyzing Memory Dump with Volatility 3
+# Forensics Write-up with Volatility 3
+
+[Tryhackme Room](https://tryhackme.com/room/forensics)
 
 ## Introduction:
 
-I obtained the dump from [Fronsics](https://tryhackme.com/room/forensics) challenge on the TryHackMe platform. The challenge is to analyze the memory dump of a compromised system.
+The challenge is to analyze the memory dump of a compromised system.
 
 ## Volatility Overview:
 
@@ -117,7 +119,7 @@ PID     PPID    ImageFileName   Offset(V)       Threads Handles SessionId       
 ```
 
 Look for: 
-- suspicious running processes.
+- Suspicious running processes.
 - Suspicious parent-child relationship. pstree will spot these malicious processes masquerading as legitimate Windows processes.
 - A Windows legitimate process running from a different set of locations. For instance, taskhostw runs from this location → `%systemroot%\system32\taskhostw.exe` , and its parent is → `svchost.exe` .  If you saw `taskhostw` running other than its location or from a different parent, then this is flagged as suspicious.
 
