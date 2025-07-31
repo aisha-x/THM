@@ -107,5 +107,6 @@ SELECT * FROM users WHERE username = 'admin'--'
 - [PortSwigger Web Security Academy - SQLi](https://portswigger.net/web-security/sql-injection)
 - [Acunetix - Types of SQL Injection](https://www.acunetix.com/blog/articles/sql-injection-types/)
 - [Cheat Sheet Series: SQL Injection](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+- [SQL_Injection_Bypassing_WAF](https://owasp.org/www-community/attacks/SQL_Injection_Bypassing_WAF)
 
 ---
