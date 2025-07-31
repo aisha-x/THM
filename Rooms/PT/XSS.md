@@ -1,3 +1,5 @@
+# TryHackMe: Intro to Cross-site Scripting Summary
+
 Room URL: https://tryhackme.com/room/xss
 
 Cross-Site Scripting (XSS) is a web security vulnerability that allows attackers to inject malicious scripts into web pages viewed by other users. XSS attacks are classified into three main types:
@@ -101,7 +103,8 @@ Testing blind XSS on the  **Support Tickets** tab.
 
 First, create a simple ticket to check on how tickets are reflected on the page by viewing the page source
 
-![image.png](attachment:72e3de6a-dfa9-4fe6-bec6-029bfc11bd2c:image.png)
+<img width="1276" height="722" alt="Screenshot 2025-07-31 145121" src="https://github.com/user-attachments/assets/28a99a79-b6c5-4938-a1bc-b45a7d6fece8" />
+
 
 ```jsx
             <div class="panel panel-default" style="margin:25px">
@@ -123,7 +126,8 @@ Escaping textarea tag: create another ticket and put this text inside Ticket Con
 
 `</textarea>test`
 
-![image.png](attachment:fcba153b-5cea-474d-be6f-e1ef5101f01c:image.png)
+<img width="1267" height="586" alt="Screenshot 2025-07-31 145612" src="https://github.com/user-attachments/assets/18325aa0-16cc-485d-9f96-510c37e6e297" />
+
 
 page source
 
@@ -152,7 +156,8 @@ Now that we have confirmed a blind XSS vulnerability, we can exploit it to **ste
 
 ```
 
-![Screenshot 2025-07-31 150901.png](attachment:01bbb407-ba24-4d6e-aa73-a154ef2b87f4:Screenshot_2025-07-31_150901.png)
+<img width="1294" height="682" alt="Screenshot 2025-07-31 150901" src="https://github.com/user-attachments/assets/52d43e4c-8b64-4451-8aa1-40a72b3e489b" />
+
 
 Set up the listening port to receive the information. 
 
