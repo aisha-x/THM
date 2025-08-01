@@ -51,11 +51,11 @@ Capture the request and send it to the intruder. Set the following configuration
 - **Payload type** → Numbers
 - **Number range:** 1 to 100
 
-<img width="1796" height="874" alt="Screenshot 2025-08-01 212753" src="https://github.com/user-attachments/assets/457813f3-786b-4096-b979-d637ecde08fd" />
+<img width="1844" height="844" alt="Screenshot 2025-08-01 204656" src="https://github.com/user-attachments/assets/b0274353-855c-4ddb-bb25-70d019adb665" />
 
 Start the attack
 
-<img width="1800" height="840" alt="Screenshot 2025-08-01 213235" src="https://github.com/user-attachments/assets/f59a58fc-4fdf-4ad5-8230-1c3878e45d36" />
+<img width="1865" height="883" alt="Screenshot 2025-08-01 205058" src="https://github.com/user-attachments/assets/dab9ef60-4bf9-4558-ab93-032a23389c77" />
 
 Five entries found: 6, 83, 78, 47, and 57
 
