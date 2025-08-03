@@ -158,7 +158,7 @@ index=* powershell.exe AND NOT 	*splunkd.exe*
 
 Time: `09/08/2021 03:52:09 PM`
 
-Analyze the payload with AI, and this is the result:
+Analyzed the payload with AI, and this is the result:
 
 **Deobfuscated Components**
 
