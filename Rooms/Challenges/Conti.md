@@ -8,6 +8,10 @@ An Exchange server was compromised with ransomware. Use Splunk to investigate ho
 Some employees from your company reported that they can’t log into Outlook. The Exchange system admin also reported that he can’t log in to the Exchange Admin Center. After initial triage, they discovered some weird readme files settled on the Exchange server.
 
 Below is a copy of the ransomware note.
+<img width="1526" height="503" alt="image" src="https://github.com/user-attachments/assets/93d9ff45-e537-458c-b5af-a3ae648741cb" />
+
+**Task**: You are assigned to investigate this situation. Use Splunk to answer the questions below regarding the Conti ransomware. 
+
 
 ### Q1. Can you identify the location of the ransomware?
 
