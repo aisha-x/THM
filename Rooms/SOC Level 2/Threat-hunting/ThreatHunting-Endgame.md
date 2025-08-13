@@ -441,17 +441,9 @@ winlog.event_data.ProcessId : "1972"
 
 | **Tactic** | **Hunting Methodology** |
 | --- | --- |
-| Collection | • Implement baselining and monitor file changes.
-• Monitor network traffic data spikes and anomalies.
-• Monitor driver installations.
-• Monitor process and registry activities. |
-| Exfiltration | • Monitor command executions.
-• Monitor file access.
-• Monitor network traffic data. |
-| Impact | • Monitor command executions.
-• Monitor file modification and deletion.
-• Monitor snapshot, volume, drive and image load, access and deletion.
-• Monitor AS API execution. |
+| **Collection** | • Implement baselining and monitor file changes• Monitor network traffic data spikes and anomalies• Monitor driver installations• Monitor process and registry activities |
+| **Exfiltration** | • Monitor command executions• Monitor file access• Monitor network traffic data |
+| **Impact** | • Monitor command executions• Monitor file modification and deletion• Monitor snapshot, volume, drive and image load, access and deletion• Monitor AS API execution |
 
 The list below will help you create a proactive hunting ability and a more resilient attack surface.
 
