@@ -393,7 +393,7 @@ The total number of sent ICMP packets is 21
 
 (Helps detect suspicious command-line activity.)
 
-### **Best Practices for Defense**
+**Best Practices for Defense**
 
 ✅ **Regular threat hunting & risk assessments**.
 
@@ -430,10 +430,12 @@ winlog.event_data.ProcessId : "1972"
 ## Timeline
 
 | `Sep 1, 2023 @ 12:16:02.189` | `chrome-update_api.ps1` was downloaded and saved in the victim’s temp folder |
+| --- | --- |
 | `Sep 1, 2023 @ 12:19:14.091` | the attacker used notepad.exe to open a db file  |
 | `Sep 1, 2023 @ 12:21:31.650` | The DB file logged the victim mail account |
 | `Sep 3, 2023 @ 21:48:19.782` | The attacker used vssadmin.exe to delete all shadow copies and disable the recovery system mode |
 | `Sep 3, 2023 @ 22:56:17.159` | The attacker exfilterate db file using this icmp protocol on 10.10.87.116  |
+
 
 ## Summary
 
