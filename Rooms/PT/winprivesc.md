@@ -907,10 +907,10 @@ Now, run the command prompt as administrator. When prompted for credentials, cli
 
 Here are some tools that can be used to automate the enumeration process.
 
-- [**WinPEAS](https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS):** search for possible **Privilege Escalation Paths** in Windows environments.
-- [**PrivescCheck](https://github.com/itm4n/PrivescCheck): P**owerShell script used to list Local Privilege Escalation (LPE) vulnerabilities
-- [**WES-NG](https://github.com/bitsadmin/wesng):** list potential vulnerabilities based on the result of `systeminfo` command
-- **Metasploit:** use **`multi/recon/local_exploit_suggester`**
+- [WinPEAS](https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS): search for possible **Privilege Escalation Paths** in Windows environments.
+- [PrivescCheck](https://github.com/itm4n/PrivescCheck): PowerShell script used to list Local Privilege Escalation (LPE) vulnerabilities
+- [WES-NG](https://github.com/bitsadmin/wesng) :list potential vulnerabilities based on the result of `systeminfo` command
+- **Metasploit:** use `multi/recon/local_exploit_suggester`
 
 ### Additional Resources
 
