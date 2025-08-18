@@ -26,7 +26,7 @@ Time: Sep 15, 2023 @ 18:41:00
 <img width="1630" height="682" alt="image" src="https://github.com/user-attachments/assets/914fe42d-fca6-4ce8-abdf-a284889e4661" />
 
 - Time: Sep 15, 2023 @ 18:41:11
-- mdf hash: 402b79ca0d63da93be3488ad70a6644a
+- md5 hash: 402b79ca0d63da93be3488ad70a6644a
 
 **Ans: Payment_Invoice.pdf.lnk.lnk**
 
