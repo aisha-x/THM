@@ -15,7 +15,7 @@ Last **September 26, 2023**, one of the security analysts observed something un
 
 ## Initial Access
 
-on  `Sep 26, 2023 @ 14:22:07.433` The user downloaded the software using chrome.exe from suspicious website http...[://]www.7zipp.org[/]a[/]7z2301-x64[.]msi This domain is a typosquat on the legitimate **`7-zip.org`** domain.
+on  `Sep 26, 2023 @ 14:22:07.433` The user downloaded the software using chrome.exe from suspicious website hxxp[://]www[.]7zipp[.]org/a/7z2301-x64[.]msi This domain is a typosquat on the legitimate **`7-zip.org`** domain.
 
 <img width="1865" height="776" alt="image" src="https://github.com/user-attachments/assets/83fd5f26-1627-4ee2-8a28-fee00d4ee697" />
 
