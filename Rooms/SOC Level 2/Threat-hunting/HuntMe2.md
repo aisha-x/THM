@@ -78,7 +78,7 @@ winlog.event_id: 1 AND process.command_line: (*mimikatz* OR *DumpCreds* OR *priv
 
 on `Sep 26, 2023 @ 14:28:53.575.` The attacker downloaded and executed Mimikatz to extract saved credentials. Successfully extracted the NTLM hash for user **`james.cromwell: B852A0B8BD4E00564128E0A5EA2BC4CF`**.
 
-There was also the usage of the PowerShell tool `Invoke-PowerExtract`  which parses and extracts secrets (LSA / MSV and Kerberos) of the LSASS process.
+There was also the usage of the PowerShell tool `Invoke-PowerExtract`.
 
 ```
 process.command_line.keyword :  *Invoke-PowerExtract* and event.code: 1
