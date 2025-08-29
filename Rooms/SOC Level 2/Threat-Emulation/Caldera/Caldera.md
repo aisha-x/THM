@@ -1,6 +1,8 @@
+# TryHackMe: Caldera Guide
+
 Room URL: https://tryhackme.com/room/caldera
 
-**Learning Objectives:**
+**Table of Contents:**
 
 - Breakdown of CALDERA's core terminologies and functionalities.
 - Application of planning and grouping of adversarial use cases.
