@@ -1,7 +1,7 @@
 # Phishing SOC Simulation
 
 
-## **Introduction to Phishing **
+## **Introduction to Phishing**
 
 Sim  Link: https://tryhackme.com/soc-sim/scenarios
 
