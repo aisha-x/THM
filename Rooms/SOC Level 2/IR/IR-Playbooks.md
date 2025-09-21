@@ -2,6 +2,16 @@
 
 Room Link: https://tryhackme.com/room/irplaybooks
 
+
+# Objectives
+
+
+In this room, we will be able to answer the following questions:
+
+- What are IR playbooks, and how are they used?
+- How do we capture the different steps of the IR process in a playbook?
+- What roles and responsibilities are assigned to the different members of the SOC in a playbook?
+
 # The Incident Response Documentation Universe
 
 The text explains how mature organizations, particularly Security Operations Centers (SOCs), use structured processes to handle security incidents efficiently and consistently.
