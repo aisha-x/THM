@@ -746,33 +746,33 @@ Now, let's execute the response operation and observe the behaviour
 
 Choose the blue-team agent reverse shell
 
-![image.png](attachment:e141e3fd-e9e7-4052-9cdd-fec18ee8ecb0:image.png)
+<img width="1071" height="510" alt="image" src="https://github.com/user-attachments/assets/76cdcefe-3f79-4a5a-9677-895a04b5bfe7" />
 
 Execute it on the victim machine.
 
-![image.png](attachment:b9487ba9-de06-43f4-8c56-38211370606d:image.png)
+<img width="996" height="293" alt="image" src="https://github.com/user-attachments/assets/8b8ff126-e950-4161-9919-61174369fe71" />
 
 The Agent is now active
 
-![image.png](attachment:6740e3af-9f6c-41ad-8338-a5fdbc5447de:image.png)
+<img width="1401" height="453" alt="image" src="https://github.com/user-attachments/assets/c9057bce-90a3-4dab-935c-2640576353de" />
 
 **Third**: Create a new blue operation
 
-![image.png](attachment:3caa288b-3338-4630-8c86-64d352f4a39c:image.png)
+<img width="728" height="690" alt="image" src="https://github.com/user-attachments/assets/37f48fd1-02f7-42ac-954e-85c508813303" />
 
 Start the operation.
 
-![image.png](attachment:28ce63da-22bc-4cbe-a899-06623aa528ea:image.png)
+<img width="1744" height="799" alt="image" src="https://github.com/user-attachments/assets/5ea666b3-2a27-4e94-a3e1-eb2d1c59adb7" />
 
 The output of `Find unauthorized processes` ****ability
 
-![image.png](attachment:5b95fad3-fe4a-4da7-885c-0b0129f6dd13:image.png)
+<img width="1111" height="220" alt="image" src="https://github.com/user-attachments/assets/17f3f504-a780-4a04-96a9-3a9975f2a6a3" />
 
-![image.png](attachment:d015d7fc-452d-4e5b-8e8b-8e390368c125:image.png)
+<img width="1108" height="596" alt="image" src="https://github.com/user-attachments/assets/43afb145-7994-440e-8e34-b5ae78fb120c" />
 
 the output of `Enable Outbound TCP/UDP firewall rule` ability
 
-![image.png](attachment:2a3e62d4-99ca-482f-9575-dedea892f736:image.png)
+<img width="1233" height="262" alt="image" src="https://github.com/user-attachments/assets/243cbbe3-d076-4520-b6ee-ca74578120b4" />
 
 ```powershell
 
@@ -780,13 +780,13 @@ New-NetFirewallRule -DisplayName "Block out-bound UDP traffic to port 4444 from 
 
 ```
 
-![image.png](attachment:f475631e-915a-425f-b56a-add0e3846369:image.png)
+<img width="1110" height="640" alt="image" src="https://github.com/user-attachments/assets/724243a5-0dcb-44a5-9719-37843ffc7d84" />
 
 The output of `Kill rogue process` response ability
 
-![image.png](attachment:260d340e-f4bd-4b4b-80d8-2e9ad95a302d:image.png)
+<img width="1209" height="273" alt="image" src="https://github.com/user-attachments/assets/9ac16814-fb63-4504-b6c5-1125d9478d67" />
 
-![image.png](attachment:2268a3fc-0de7-48f2-8d30-49826aa8b2d2:image.png)
+<img width="1651" height="325" alt="image" src="https://github.com/user-attachments/assets/faa00ed0-9ed9-4c59-8747-1ead86907cc4" />
 
 The malicious process has been successfully killed. 
 
@@ -822,35 +822,35 @@ You may follow these guidelines, which is a summary of the methodology covered f
 
 Login to Red account and create a new agent
 
-![image.png](attachment:a60ce4ab-f9e1-4165-a624-d01fc74eafe6:image.png)
+<img width="1108" height="628" alt="image" src="https://github.com/user-attachments/assets/d38984c1-90b8-46dc-9e42-80be72292996" />
 
 Copy the reverse shell
 
-![image.png](attachment:976a0379-f0a0-4b80-910b-50b3080566da:image.png)
+<img width="1063" height="506" alt="image" src="https://github.com/user-attachments/assets/e792d2dc-0b03-42f1-bbbc-9b29d355b513" />
 
 Paste it to the victim machine
 
-![image.png](attachment:4e0d49cf-64a4-4e48-8e29-fa2fdfe39c11:image.png)
+<img width="985" height="255" alt="image" src="https://github.com/user-attachments/assets/2b3da424-c3cd-484f-ae60-2a4c40d0b356" />
 
-![image.png](attachment:544680d6-154c-4519-bf72-41cd8464ee05:image.png)
+<img width="1144" height="77" alt="image" src="https://github.com/user-attachments/assets/f3d668ca-c56b-4cc3-b2cf-2df61a5501ed" />
 
 Create a threat profile and add the listed abilities mentioned above; make sure the abilities are configured correctly.
 
-![image.png](attachment:7010aa58-de2d-4c16-8852-d299bcbe25d2:image.png)
+<img width="1149" height="593" alt="image" src="https://github.com/user-attachments/assets/3525dfba-8064-412f-a7a8-125f1f186c9e" />
 
-![image.png](attachment:2d5abd0c-298f-40d6-8410-19921d443c02:image.png)
+<img width="1656" height="721" alt="image" src="https://github.com/user-attachments/assets/73d70cb9-aefb-4103-856c-8a149f060fcc" />
 
 Create and start a new operation, but before that, make sure the Sysmon log and Application log are cleared
 
-![image.png](attachment:dcec0ed7-3a74-43f6-844c-c94f1857b7cd:image.png)
+<img width="863" height="673" alt="image" src="https://github.com/user-attachments/assets/91b4815c-56ee-43fa-9fa0-bbccbb66a4ec" />
 
-![image.png](attachment:5235b6f4-9bae-4298-bb88-f52d70603d2d:image.png)
+<img width="881" height="262" alt="image" src="https://github.com/user-attachments/assets/1caf0849-6618-46a9-8e40-22961896f2b7" />
 
 ### Initial Access: Download Macro-Enabled Phishing Attachment
 
-![image.png](attachment:177bf577-690d-46b3-8dcc-5283c1c0a795:image.png)
+<img width="970" height="738" alt="image" src="https://github.com/user-attachments/assets/0925a67f-4b22-4a1e-8074-c03929923ae5" />
 
-![image.png](attachment:2a534920-2118-4504-b5ea-f70b77a003d4:image.png)
+<img width="818" height="333" alt="image" src="https://github.com/user-attachments/assets/c3235888-12cf-4cce-82a1-44ff9f74a5c3" />
 
 **Aurora Rule Matched:**
 
@@ -863,17 +863,17 @@ Sigma rule match found: Usage Of Web Request Commands And Cmdlets
 
 ### Execution: Create a Process using obfuscated Win32_Process
 
-![image.png](attachment:d93878f6-9ffc-4507-a5de-289554f88397:image.png)
+<img width="1135" height="446" alt="image" src="https://github.com/user-attachments/assets/d6174ef8-f770-463a-8a69-649cd8e638a6" />
 
 **Sysmon log**
 
-![image.png](attachment:54a17c25-61c9-4793-a865-90e56b321866:image.png)
+<img width="889" height="660" alt="image" src="https://github.com/user-attachments/assets/ed875df1-e177-4fa6-81dc-9a2323adca2e" />
 
 **Spawned Process:**
 
-![image.png](attachment:a6e0eb62-ad99-4be3-975e-428a07214509:image.png)
+<img width="869" height="673" alt="image" src="https://github.com/user-attachments/assets/a73d7d65-554e-4bc3-ac34-0de44c71a57d" />
 
-![image.png](attachment:8499a883-9517-4989-a13f-f41bd3f3d6b4:image.png)
+<img width="798" height="100" alt="image" src="https://github.com/user-attachments/assets/913fb670-6538-4a81-8943-f7aff5fd502b" />
 
 **Aurora Matched Rules**
 
@@ -884,11 +884,11 @@ Sigma rule match found: WmiPrvSE Spawned A Process
 
 ### Execution: Execute a Command as a Service
 
-![image.png](attachment:77b50e1e-8524-4c5c-be27-dbffa8fcef11:image.png)
+<img width="1086" height="370" alt="image" src="https://github.com/user-attachments/assets/e16f2708-888a-417e-939e-6a28f0e549ff" />
 
 Sysmon log
 
-![image.png](attachment:3908de81-ae55-4e29-a0f9-e6dc83f05143:image.png)
+<img width="834" height="652" alt="image" src="https://github.com/user-attachments/assets/786acbd7-9ec1-4093-afde-6e69bff7eeea" />
 
 **Aurora Matched Rule**
 
@@ -899,11 +899,11 @@ Sigma rule match found: Change PowerShell Policies to an Insecure Level
 
 ### Persistence: PowerShell Cmdlet Scheduled Task
 
-![image.png](attachment:f46b8a81-48db-4bca-a055-dab03dcf6284:image.png)
+<img width="1103" height="510" alt="image" src="https://github.com/user-attachments/assets/cafdf6cd-a10b-482f-aad5-c0a387f914f8" />
 
 **Sysmon Log:**
 
-![image.png](attachment:7e108d25-1b1b-4112-9bac-9119e3108908:image.png)
+<img width="852" height="663" alt="image" src="https://github.com/user-attachments/assets/9b0b6e0b-d78b-48fd-b060-93dbbd456d0c" />
 
 **Aurora Rule Matched:**
 
@@ -940,13 +940,13 @@ CimSystemProperties   : Microsoft.Management.Infrastructure.CimSystemProperties
 
 ### Persistence: Create a new user in a command prompt
 
-![image.png](attachment:31c4f3be-9067-4bc4-a2d1-43fb749b3d43:image.png)
+<img width="1091" height="589" alt="image" src="https://github.com/user-attachments/assets/82238416-bbfd-4e43-9367-faa3b1dc5cb2" />
 
 Sysmon log
 
-![image.png](attachment:cab47537-f14e-4ff1-91b6-15e27004d8d2:image.png)
+<img width="878" height="676" alt="image" src="https://github.com/user-attachments/assets/ad6e954f-93cb-405d-9bcf-bfd908f03e54" />
 
-![image.png](attachment:7ebfe5f2-44a7-4448-80e6-c70208e39e18:image.png)
+<img width="792" height="468" alt="image" src="https://github.com/user-attachments/assets/ea6aee12-7a58-465c-a700-4bc95bf50fe9" />
 
 **Aurora Rule Matched**
 
@@ -957,11 +957,11 @@ Sigma rule match found: New User Created Via Net.EXE
 
 ### Defence Evasion: Clear Log
 
-![image.png](attachment:a5efda54-aa58-4198-b669-894d89b9d392:image.png)
+<img width="1164" height="702" alt="image" src="https://github.com/user-attachments/assets/9b4c685b-8b64-44b6-ba10-57ba23706ea9" />
 
 **Sysmon log**
 
-![image.png](attachment:e02e9ca3-679e-44ce-b5d7-4762af57351f:image.png)
+<img width="864" height="685" alt="image" src="https://github.com/user-attachments/assets/6e3361ab-6797-470c-ae2d-652555541cf1" />
 
 **Aurora Rule Matched:**
 
@@ -973,9 +973,9 @@ Sigma rule match found: Suspicious Eventlog Clearing or Configuration Change Act
 
 ### Discovery: File and Directory Discovery (PowerShell)
 
-![image.png](attachment:4e88fac7-403a-4382-8678-e7881a454c44:image.png)
+<img width="1081" height="397" alt="image" src="https://github.com/user-attachments/assets/3a3a41ef-dcf3-49d2-85b8-be2bfbff3cc7" />
 
-![image.png](attachment:f14044ac-5b3c-4274-8b12-3bc1266adb7e:image.png)
+<img width="838" height="610" alt="image" src="https://github.com/user-attachments/assets/f36aaa7f-22d8-432e-a4a8-c10c2134cc3b" />
 
 **Aurora Rule Matched**
 
@@ -1037,7 +1037,7 @@ To start with, let's follow this guide to emulate a single adversary profile suc
 ﻿
 **Connecting to the CALDERA Instance** 
 
-![image.png](attachment:ca1b3c74-ed97-4016-b4cc-669c6ec30de8:image.png)
+<img width="1100" height="540" alt="image" src="https://github.com/user-attachments/assets/a175da40-0621-4afb-85b9-c0ed76966d95" />
 
 **Prerequisites:**
 
